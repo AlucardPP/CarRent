@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context>
+	<Resource name="jdbc/car_rent"
+	auth="Container"
+	type="javax.sql.DataSource"
+	initialSize="10"
+	maxTotal="100"
+	maxIdle="30"
+	maxWaitMills="10000"
+	username="root"
+	password="kbd061fdg"
+	driverClassName="com.mysql.jdbc.Driver"
+	url="jdbc:mysql://localhost:3306/car_rent" />
+</Context>
