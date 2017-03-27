@@ -1,0 +1,39 @@
+CREATE SCHEMA `car_rent` ;
+CREATE TABLE `car_rent`.`client` (
+  `idcustomer` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `born` DATE NOT NULL,
+  `idcardnumber` VARCHAR(45) NOT NULL,
+  `street` VARCHAR(45) NOT NULL,
+  `housenumber` VARCHAR(45) NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `country` VARCHAR(45) NOT NULL,
+  `gender` VARCHAR(45) NOT NULL,
+  `telephone` VARCHAR(45) NOT NULL,`file` MEDIUMBLOB NOT NULL,
+  `created` DATE NOT NULL,
+  `edited` DATE NOT NULL,
+  PRIMARY KEY (`idcustomer`));
+
+
+
+CREATE TABLE `car_rent`.`employee` (
+  `idemployee` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `born` VARCHAR(45) NOT NULL,
+  `idcardnumber` VARCHAR(45) NOT NULL,
+  `street` VARCHAR(45) NOT NULL,
+  `housenumber` VARCHAR(45) NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `country` VARCHAR(45) NOT NULL,
+  `gender` VARCHAR(45) NOT NULL,
+  `telephone` VARCHAR(45) NOT NULL,
+  `education` VARCHAR(45) NOT NULL,
+  `salary` VARCHAR(45) NOT NULL,
+  `role` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `file` MEDIUMBLOB NOT NULL,
+  `created` DATE NOT NULL,
+  `edited` DATE NOT NULL,
+  PRIMARY KEY (`idemployee`));
