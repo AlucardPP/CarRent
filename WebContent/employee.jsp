@@ -566,7 +566,7 @@
 									<div class="col-md-9"></div>
 									<div class="col-md-1">
 										<button class="btn btn-md btn-primary" type="reset"
-											 name="cancel" data-toggle="collapse" data-target="#collapseOne"> Cancel </button>
+											 name="cancel" data-toggle="collapse" data-target="#${employee.idEmployee }"> Cancel </button>
 											
 									</div>
 									<div class="col-md-1">

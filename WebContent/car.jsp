@@ -426,15 +426,15 @@
 											<c:choose>
 											<c:when test="${car.available eq 'yes' }">
 												<input type="checkbox" id="visible" value="yes" name="upavailable" checked/>Available
-												<input type="hidden" id="notvisible" value="no" name="upavailable" />
+												
 											</c:when>
 											<c:otherwise>
 												<input type="checkbox" id="visible" value="yes" name="upavailable" />Available
-												<input type="hidden" id="notvisible" value="no" name="upavailable" />
+												
 												
 											</c:otherwise>
 											</c:choose>
-												
+												<input type="hidden" id="notvisible" value="no" name="upavailable" />
 											</label>
 										</div>
 									</div>
@@ -452,8 +452,9 @@
 								<div class="row show-grid">
 									<div class="col-md-9"></div>
 									<div class="col-md-1">
+									
 										<button class="btn btn-md btn-primary" type="reset"
-											 name="cancel" data-toggle="collapse" data-target="#collapseOne"> Cancel </button>
+											 name="cancel" data-toggle="collapse" data-target="#${car.idCar }"> Cancel </button>
 											
 									</div>
 									<div class="col-md-1">
