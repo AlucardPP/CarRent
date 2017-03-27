@@ -164,6 +164,7 @@ public class EmployeeDAO {
 
 	private void releaseResource(Connection conn, PreparedStatement prepstmt, ResultSet res) {
 		try {
+			//to siê powtarza 3 razy w 3 ró¿nych klasach - mo¿e jakaœ klasa nadrzêdna GenericDAO - która to uwspólni + tworzenie connection
 			if (conn != null && !conn.isClosed()) {
 				conn.close();
 			}
