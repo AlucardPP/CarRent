@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pl.myproject.dao.EmployeeDAO;
+import pl.myproject.model.Employee;
+
 /**
  * Servlet implementation class EmployeeServlet
  */
@@ -27,7 +30,7 @@ public class EmployeeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -35,7 +38,43 @@ public class EmployeeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		EmployeeDAO dao = new EmployeeDAO();
+		Employee employee = null;
+		boolean result = false;
+		request.setAttribute("employeelist", dao.read());
+		if(request.getParameter("save") != null){
+			employee = getData(request);
+			result = dao.create(employee);
+		}
+		else if(request.getParameter("delete") != null){
+			String idEmployee = request.getParameter("employeeID");
+			int id = Integer.parseInt(idEmployee);
+			result = dao.delete(id);
+		}
+		if (employee != null || result) {
+			request.setAttribute("employeelist", dao.read());
+			request.getRequestDispatcher("employee.jsp").forward(request, response);
+		}
+		
+	}
+	private Employee getData(HttpServletRequest request){
+		String name = request.getParameter("name");
+		String surname = request.getParameter("surname");
+		String born = request.getParameter("born");
+		String idCardNumber = request.getParameter("idcardnumber");
+		String street = request.getParameter("street");
+		String houseNumber = request.getParameter("housenumber");
+		String city = request.getParameter("city");
+		String country = request.getParameter("country");
+		String gender = request.getParameter("gender");
+		String telephone = request.getParameter("telephone");
+		String education = request.getParameter("education");
+		String salary = request.getParameter("salary");
+		String role = request.getParameter("role");
+		String email = request.getParameter("email");
+		Employee employee = new Employee(name,surname,born,idCardNumber, street, houseNumber,city,country,gender,telephone,education,salary,role,email);
+		return employee;
 	}
 
 }

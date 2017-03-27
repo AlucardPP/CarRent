@@ -136,8 +136,8 @@
 
 										<div class="form-group">
 											<label for="born">Born:</label> <input type="text"
-												class="form-control" id="born" placeholder="Born"
-												name="born">
+												class="form-control" id="born" placeholder="Pick a date"
+												name="born"/>
 										</div>
 
 									</div>
@@ -273,14 +273,58 @@
 			</div>
 		</div>
         <!-- /.row -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>SURNAME</th>
+      <th>TELEPHONE</th>
+      <th>CREATED</th>
+      <th>EDITED</th>
+      <th>DOCUMENT</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+  <c:forEach items="${employeelist }" var="list">
+    <tr>
 
+     <td><c:out value="${list.idEmployee}"/></td>
+     <td><c:out value="${list.name }"/></td>
+     <td><c:out value="${list.surname }"/></td>
+     <td><c:out value="${list.telephone }"/></td>
+     <td><c:out value="${list.createDate }" /></td>
+     <td><c:out value="${list.edited }"/></td>
+     <td><input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /></td>
+     <td>
+     
+			<form name="frm" action="EmployeeServlet" method="post">
+     	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}" aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }"    >
+ Edit
+  
+</button>
+ 
+     
+			<input type="hidden" name="employeeID" value="${list.idEmployee }" />	
+<input class="btn btn-md btn-primary" type="submit" value="Delete" name="delete" />
+    	  
+     </form>	 
+     </td>  
+    </tr>
+</c:forEach>
+  </tbody>
+  
+</table>
+</form>
     </div>
-    </form>
-    </div>
+    
+    
     <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
     <script
 			  src="https://code.jquery.com/jquery-3.2.1.min.js"
 			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -288,6 +332,17 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
+     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>   
+  $( function() {
+    $( "#born" ).datepicker({
+    	dateFormat: "dd.mm.yy",
+    	changeYear: true,
+    	changeMonth: true,
+    	yearRange: '1900:'+(new Date).getFullYear()
+    });   
+  } );
+ 
+  </script>
 </body>
 </html>

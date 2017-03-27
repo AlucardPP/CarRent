@@ -57,20 +57,19 @@ public class CustomerServlet extends HttpServlet {
 			int idC = Integer.parseInt(client);
 			customer = updateData(request);
 			result = dao.update(customer, idC);
-			request.setAttribute("clientlist", dao.read());
+			
 
 		} else if (request.getParameter("delete") != null) {
 			String clientID = request.getParameter("clientID");
 			int ID = Integer.parseInt(clientID);
 			result = dao.delete(ID);
-			request.setAttribute("clientlist", dao.read());
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			
 
 		} else if (request.getParameter("edit") != null) {
 
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
-		if (customer != null && result) {
+		if (customer != null || result) {
 			request.setAttribute("clientlist", dao.read());
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}

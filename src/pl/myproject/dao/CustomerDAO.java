@@ -26,7 +26,7 @@ public class CustomerDAO {
 		ResultSet keys = null;
 		boolean result = false;
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+			
 			java.util.Date myDate = new java.util.Date();
 
 			conn = ConnectionProvider.getConnection();
@@ -87,8 +87,9 @@ public class CustomerDAO {
 				resultCustomer.setCountry(res.getString("country"));
 				resultCustomer.setGender(res.getString("gender"));
 				resultCustomer.setTelephone(res.getString("telephone"));
-				resultCustomer.setCreateDate(res.getString("created"));
-				resultCustomer.setEdited(res.getString("edited"));
+				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+				resultCustomer.setCreateDate(format.format(res.getDate("created")));
+				resultCustomer.setEdited(format.format(res.getDate("edited")));
 				clientList.add(resultCustomer);
 
 			}
@@ -106,7 +107,7 @@ public class CustomerDAO {
 		PreparedStatement prepstmt = null;
 		boolean result = false;
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+			
 			java.util.Date myDate = new java.util.Date();
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(UPDATE);
