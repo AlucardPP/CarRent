@@ -33,6 +33,8 @@ public class CustomerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		// Ÿle wy³¹cz to do zewnêtrznej metody i doGet i doPost niech j¹ wo³aj¹ 
+		//ogólnie nie jest to dobre by dzia³a³o zarówno dla posta i geta - ot chocia¿ny bezpieczeñstwo
 		doPost(request, response);
 	}
 

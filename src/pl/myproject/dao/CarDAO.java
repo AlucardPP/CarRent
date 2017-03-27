@@ -9,20 +9,24 @@ import java.util.List;
 
 import pl.myproject.model.Car;
 import pl.myproject.util.ConnectionProvider;
-
+//format kodu! A¿ chce siê p³akaæ 
 public class CarDAO {
 	private final static String CREATE = "INSERT INTO car( brand, model, plate, produced, firstregistration, engine, value, rentperhour, distance, available ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private final static String READ = "SELECT * FROM car;";
 	private final static String UPDATE = "UPDATE car SET brand = ?, model = ?, plate = ?, produced = ?, firstregistration = ?, engine = ?, value = ?, rentperhour = ?, distance = ?, available = ? WHERE idcar = ?;";
 	private final static String DELETE = "DELETE FROM car WHERE idcar = ?;";
-	
-	public boolean create(Car car){
+
+	public boolean create(Car car) {
+		//connection jest autoclosable - zastosuj try catch z javy 1.7 ;)
 		Connection conn = null;
 		PreparedStatement prepstmt = null;
 		boolean result = false;
-		try{
+		try {
+			//wnêtrze try do zewnêtrznej metody plizz 
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(CREATE);
+			//http://www.javaworld.com/article/2077706/core-java/named-parameters-for-preparedstatement.html
+			//named parameter statements jest czytelniejsze :D
 			prepstmt.setString(1, car.getBrand());
 			prepstmt.setString(2, car.getModel());
 			prepstmt.setString(3, car.getPlate());
@@ -34,27 +38,29 @@ public class CarDAO {
 			prepstmt.setString(9, car.getDistance());
 			prepstmt.setString(10, car.getAvailable());
 			int rowAffected = prepstmt.executeUpdate();
-			if(rowAffected > 0){
-				result=true;
+			if (rowAffected > 0) {
+				result = true;
 			}
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseResource(conn, prepstmt, null);
 		}
 		return result;
 	}
-	public List<Car> read(){
+
+	public List<Car> read() {
 		Connection conn = null;
 		PreparedStatement prepstmt = null;
 		ResultSet res = null;
 		Car resultCar = null;
 		List<Car> carList = new ArrayList<Car>();
-		try{
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(READ);
-			res = prepstmt.executeQuery();
-			while (res.next()){
+		try {
+			//wnêtrze try do zewnêtrznej metody plizz 
+			conn = ConnectionProvider.getConnection();//
+			prepstmt = conn.prepareStatement(READ);   // te 3 linijki to kolejna wspólna metoda dla wielu wywo³añ
+			res = prepstmt.executeQuery();            //
+			while (res.next()) {
 				resultCar = new Car();
 				resultCar.setIdCar(res.getInt("idcar"));
 				resultCar.setBrand(res.getString("brand"));
@@ -69,18 +75,20 @@ public class CarDAO {
 				resultCar.setAvailable(res.getString("available"));
 				carList.add(resultCar);
 			}
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseResource(conn, prepstmt, res);
 		}
 		return carList;
 	}
-	public boolean update(Car car, int id){
+
+	public boolean update(Car car, int id) {
 		Connection conn = null;
 		PreparedStatement prepstmt = null;
 		boolean result = false;
-		try{
+		try {
+			//wnêtrze try do zewnêtrznej metody plizz 
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(UPDATE);
 			prepstmt.setString(1, car.getBrand());
@@ -95,36 +103,38 @@ public class CarDAO {
 			prepstmt.setString(10, car.getAvailable());
 			prepstmt.setInt(11, id);
 			int rowAffected = prepstmt.executeUpdate();
-			if(rowAffected > 0){
+			if (rowAffected > 0) {
 				result = true;
 			}
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseResource(conn, prepstmt, null);
 		}
 		return result;
 	}
-	public boolean delete(int id){
+
+	public boolean delete(int id) {
 		Connection conn = null;
 		PreparedStatement prepstmt = null;
 		boolean result = false;
-		try{
+		try {
+			//wnêtrze try do zewnêtrznej metody plizz 
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(DELETE);
 			prepstmt.setInt(1, id);
 			int rowAffected = prepstmt.executeUpdate();
-			if(rowAffected > 0){
+			if (rowAffected > 0) {
 				result = true;
 			}
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseResource(conn, prepstmt, null);
 		}
 		return result;
 	}
-	
+
 	private void releaseResource(Connection conn, PreparedStatement prepstmt, ResultSet res) {
 		try {
 			if (conn != null && !conn.isClosed()) {

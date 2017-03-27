@@ -15,6 +15,8 @@ public class ConnectionProvider {
 		return getDSInstance().getConnection();
 	}
 	
+	//Jak w drzewku JNDI nie znajdzie DS to powinno zainicjowaæ rêcznie JDBC :)
+	//Ale to tak na wszelki wypadek i nie obowi¹zkowe
 	private static DataSource getDSInstance(){
 		if(dataSource == null){
 			try{

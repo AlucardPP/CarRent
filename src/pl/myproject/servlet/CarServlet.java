@@ -21,13 +21,15 @@ public class CarServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public CarServlet() {
-        super();
+    	// g³upie wo³anie - nie ma po co i tak zawo³a konstruktor nadrzêdny defaultowy ;)
+    	super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+    //porozbijaæ na mniejsze metody
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		CarDAO dao = new CarDAO();

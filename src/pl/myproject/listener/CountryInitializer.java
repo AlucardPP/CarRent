@@ -17,6 +17,8 @@ import pl.myproject.util.CountryCode;
  */
 @WebListener
 public class CountryInitializer implements ServletContextListener {
+	
+	//powinno byæ private!
 	CustomerDAO customerDao=new CustomerDAO();
 	EmployeeDAO employeDao = new EmployeeDAO();
 	CarDAO carDao = new CarDAO();
