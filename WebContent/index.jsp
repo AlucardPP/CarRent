@@ -29,7 +29,7 @@
     <![endif]-->
 </head>
 <body>
-
+<div class="container">
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -398,7 +398,7 @@
 											class="form-control" name="upgender">
 											<c:choose>
 											<c:when test="${client.gender eq 'male' }">
-											<option value="male">Male</option>
+											<option selected value="male">Male</option>
 											</c:when>
 											<c:otherwise>
 											<option value="female">Female</option>

@@ -6,6 +6,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import pl.myproject.dao.CarDAO;
 import pl.myproject.dao.CustomerDAO;
 import pl.myproject.dao.EmployeeDAO;
 import pl.myproject.util.CountryCode;
@@ -18,6 +19,7 @@ import pl.myproject.util.CountryCode;
 public class CountryInitializer implements ServletContextListener {
 	CustomerDAO customerDao=new CustomerDAO();
 	EmployeeDAO employeDao = new EmployeeDAO();
+	CarDAO carDao = new CarDAO();
 
     /**
      * Default constructor. 
@@ -41,6 +43,7 @@ public class CountryInitializer implements ServletContextListener {
     	    sce.getServletContext().setAttribute("countries", countries);
     	    sce.getServletContext().setAttribute("clientlist", customerDao.read());
     	    sce.getServletContext().setAttribute("employeelist", employeDao.read());
+    	    sce.getServletContext().setAttribute("carlist", carDao.read());
     }
 	
 }

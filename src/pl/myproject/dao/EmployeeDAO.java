@@ -124,7 +124,7 @@ public class EmployeeDAO {
 			prepstmt.setString(14, employee.getEmail());
 			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 			prepstmt.setDate(15, sqlDate);
-			prepstmt.setLong(16, id);
+			prepstmt.setInt(16, id);
 			int rowAffected = prepstmt.executeUpdate();
 			if (rowAffected > 0) {
 				result = true;
@@ -145,7 +145,7 @@ public class EmployeeDAO {
 		try {
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(DELETE);
-			prepstmt.setLong(1, id);
+			prepstmt.setInt(1, id);
 			int rowAffected = prepstmt.executeUpdate();
 			if (rowAffected > 0) {
 				result = true;

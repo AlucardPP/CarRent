@@ -47,7 +47,7 @@ public class CustomerServlet extends HttpServlet {
 		CustomerDAO dao = new CustomerDAO();
 		Customer customer = null;
 		boolean result = false;
-		request.setAttribute("clientlist", dao.read());
+	
 		if (request.getParameter("save") != null) {
 			customer = getData(request);
 			result = dao.create(customer);
@@ -63,12 +63,8 @@ public class CustomerServlet extends HttpServlet {
 			String clientID = request.getParameter("clientID");
 			int ID = Integer.parseInt(clientID);
 			result = dao.delete(ID);
-			
-
-		} else if (request.getParameter("edit") != null) {
-
-			request.getRequestDispatcher("index.jsp").forward(request, response);
-		}
+		
+		} 
 		if (customer != null || result) {
 			request.setAttribute("clientlist", dao.read());
 			request.getRequestDispatcher("index.jsp").forward(request, response);

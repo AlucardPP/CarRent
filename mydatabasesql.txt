@@ -37,3 +37,19 @@ CREATE TABLE `car_rent`.`employee` (
   `created` DATE NOT NULL,
   `edited` DATE NOT NULL,
   PRIMARY KEY (`idemployee`));
+
+
+CREATE TABLE `car_rent`.`car` (
+  `idcar` INT NOT NULL AUTO_INCREMENT,
+  `brand` VARCHAR(45) NOT NULL,
+  `model` VARCHAR(45) NOT NULL,
+  `plate` VARCHAR(45) NOT NULL,
+  `produced` VARCHAR(45) NOT NULL,
+  `firstregistration` VARCHAR(45) NOT NULL,
+  `engine` VARCHAR(45) NOT NULL,
+  `value` VARCHAR(45) NOT NULL,
+  `rentperhour` VARCHAR(45) NOT NULL,
+  `distance` VARCHAR(45) NOT NULL,
+  `available` VARCHAR(45) NOT NULL,
+  `file` MEDIUMBLOB NULL,
+  PRIMARY KEY (`idcar`));

@@ -42,7 +42,6 @@ public class EmployeeServlet extends HttpServlet {
 		EmployeeDAO dao = new EmployeeDAO();
 		Employee employee = null;
 		boolean result = false;
-		request.setAttribute("employeelist", dao.read());
 		if(request.getParameter("save") != null){
 			employee = getData(request);
 			result = dao.create(employee);
@@ -51,6 +50,12 @@ public class EmployeeServlet extends HttpServlet {
 			String idEmployee = request.getParameter("employeeID");
 			int id = Integer.parseInt(idEmployee);
 			result = dao.delete(id);
+		}
+		else if(request.getParameter("update") != null){
+			String idEmployee = request.getParameter("IDemployee");
+			int id = Integer.parseInt(idEmployee);
+			employee=getUpdateData(request);
+			result = dao.update(employee, id);
 		}
 		if (employee != null || result) {
 			request.setAttribute("employeelist", dao.read());
@@ -73,6 +78,24 @@ public class EmployeeServlet extends HttpServlet {
 		String salary = request.getParameter("salary");
 		String role = request.getParameter("role");
 		String email = request.getParameter("email");
+		Employee employee = new Employee(name,surname,born,idCardNumber, street, houseNumber,city,country,gender,telephone,education,salary,role,email);
+		return employee;
+	}
+	private Employee getUpdateData(HttpServletRequest request){
+		String name = request.getParameter("upname");
+		String surname = request.getParameter("upsurname");
+		String born = request.getParameter("upborn");
+		String idCardNumber = request.getParameter("upidcardnumber");
+		String street = request.getParameter("upstreet");
+		String houseNumber = request.getParameter("uphousenumber");
+		String city = request.getParameter("upcity");
+		String country = request.getParameter("upcountry");
+		String gender = request.getParameter("upgender");
+		String telephone = request.getParameter("uptelephone");
+		String education = request.getParameter("upeducation");
+		String salary = request.getParameter("upsalary");
+		String role = request.getParameter("uprole");
+		String email = request.getParameter("upemail");
 		Employee employee = new Employee(name,surname,born,idCardNumber, street, houseNumber,city,country,gender,telephone,education,salary,role,email);
 		return employee;
 	}
