@@ -11,6 +11,7 @@ import java.util.List;
 
 import pl.myproject.model.Employee;
 import pl.myproject.util.ConnectionProvider;
+
 //Format!
 public class EmployeeDAO {
 	private final static String CREATE = "INSERT INTO employee ( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, education, salary, role, email, created, edited) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ";
@@ -21,10 +22,10 @@ public class EmployeeDAO {
 	public boolean create(Employee employee) {
 		Connection conn = null;
 		PreparedStatement prepstmt = null;
-		
+
 		boolean result = false;
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			java.util.Date myDate = new java.util.Date();
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(CREATE);
@@ -45,10 +46,10 @@ public class EmployeeDAO {
 			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 			prepstmt.setDate(15, sqlDate);
 			prepstmt.setDate(16, sqlDate);
-			
+
 			int rowsAffected = prepstmt.executeUpdate();
-			if (rowsAffected > 0 ) {
-				
+			if (rowsAffected > 0) {
+
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -67,7 +68,7 @@ public class EmployeeDAO {
 		Employee resultEmployee = null;
 		List<Employee> emp = new ArrayList<Employee>();
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(READ);
 			res = prepstmt.executeQuery();
@@ -107,7 +108,7 @@ public class EmployeeDAO {
 		PreparedStatement prepstmt = null;
 		boolean result = false;
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			java.util.Date myDate = new java.util.Date();
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(UPDATE);
@@ -146,7 +147,7 @@ public class EmployeeDAO {
 		PreparedStatement prepstmt = null;
 		boolean result = false;
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(DELETE);
 			prepstmt.setInt(1, id);
@@ -164,7 +165,8 @@ public class EmployeeDAO {
 
 	private void releaseResource(Connection conn, PreparedStatement prepstmt, ResultSet res) {
 		try {
-			//to siê powtarza 3 razy w 3 ró¿nych klasach - mo¿e jakaœ klasa nadrzêdna GenericDAO - która to uwspólni + tworzenie connection
+			// to siê powtarza 3 razy w 3 ró¿nych klasach - mo¿e jakaœ klasa
+			// nadrzêdna GenericDAO - która to uwspólni + tworzenie connection
 			if (conn != null && !conn.isClosed()) {
 				conn.close();
 			}

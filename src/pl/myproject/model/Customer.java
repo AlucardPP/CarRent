@@ -1,7 +1,5 @@
 package pl.myproject.model;
 
-
-
 public class Customer {
 
 	private int idCustomer;
@@ -17,10 +15,6 @@ public class Customer {
 	private String telephone;
 	private String createDate;
 	private String edited;
-	
-	
-	
-
 
 	public String getEdited() {
 		return edited;
@@ -129,10 +123,9 @@ public class Customer {
 	public Customer() {
 	}
 
-	public Customer( String name, String surname, String born, String idCardNumber, String street,
-			String houseNumber, String city, String country, String gender, String telephone) {
+	public Customer(String name, String surname, String born, String idCardNumber, String street, String houseNumber,
+			String city, String country, String gender, String telephone) {
 
-		
 		this.name = name;
 		this.surname = surname;
 		this.born = born;
@@ -143,13 +136,14 @@ public class Customer {
 		this.country = country;
 		this.gender = gender;
 		this.telephone = telephone;
-	
-		
-	}
-	public Customer( int idCustomer, String name, String surname, String born, String idCardNumber, String street,
-			String houseNumber, String city, String country, String gender, String telephone, String created, String edited) {
 
-		this.idCustomer=idCustomer;
+	}
+
+	public Customer(int idCustomer, String name, String surname, String born, String idCardNumber, String street,
+			String houseNumber, String city, String country, String gender, String telephone, String created,
+			String edited) {
+
+		this.idCustomer = idCustomer;
 		this.name = name;
 		this.surname = surname;
 		this.born = born;
@@ -160,10 +154,9 @@ public class Customer {
 		this.country = country;
 		this.gender = gender;
 		this.telephone = telephone;
-		this.createDate=created;
-		this.edited=edited;
-		
+		this.createDate = created;
+		this.edited = edited;
+
 	}
-	
 
 }

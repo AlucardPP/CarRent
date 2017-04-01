@@ -33,8 +33,9 @@ public class CustomerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// Ÿle wy³¹cz to do zewnêtrznej metody i doGet i doPost niech j¹ wo³aj¹ 
-		//ogólnie nie jest to dobre by dzia³a³o zarówno dla posta i geta - ot chocia¿ny bezpieczeñstwo
+		// Ÿle wy³¹cz to do zewnêtrznej metody i doGet i doPost niech j¹ wo³aj¹
+		// ogólnie nie jest to dobre by dzia³a³o zarówno dla posta i geta - ot
+		// chocia¿ny bezpieczeñstwo
 		doPost(request, response);
 	}
 
@@ -49,7 +50,7 @@ public class CustomerServlet extends HttpServlet {
 		CustomerDAO dao = new CustomerDAO();
 		Customer customer = null;
 		boolean result = false;
-	
+
 		if (request.getParameter("save") != null) {
 			customer = getData(request);
 			result = dao.create(customer);
@@ -59,14 +60,13 @@ public class CustomerServlet extends HttpServlet {
 			int idC = Integer.parseInt(client);
 			customer = updateData(request);
 			result = dao.update(customer, idC);
-			
 
 		} else if (request.getParameter("delete") != null) {
 			String clientID = request.getParameter("clientID");
 			int ID = Integer.parseInt(clientID);
 			result = dao.delete(ID);
-		
-		} 
+
+		}
 		if (customer != null || result) {
 			request.setAttribute("clientlist", dao.read());
 			request.getRequestDispatcher("index.jsp").forward(request, response);

@@ -10,21 +10,20 @@ import javax.sql.DataSource;
 
 public class ConnectionProvider {
 	private static DataSource dataSource;
-	
-	public static Connection getConnection() throws SQLException{
+
+	public static Connection getConnection() throws SQLException {
 		return getDSInstance().getConnection();
 	}
-	
-	//Jak w drzewku JNDI nie znajdzie DS to powinno zainicjowaæ rêcznie JDBC :)
-	//Ale to tak na wszelki wypadek i nie obowi¹zkowe
-	private static DataSource getDSInstance(){
-		if(dataSource == null){
-			try{
+
+	// Jak w drzewku JNDI nie znajdzie DS to powinno zainicjowaæ rêcznie JDBC :)
+	// Ale to tak na wszelki wypadek i nie obowi¹zkowe
+	private static DataSource getDSInstance() {
+		if (dataSource == null) {
+			try {
 				Context initContext = new InitialContext();
 				Context envContext = (Context) initContext.lookup("java:comp/env");
 				dataSource = (DataSource) envContext.lookup("jdbc/car_rent");
-			}
-			catch(NamingException e){
+			} catch (NamingException e) {
 				e.printStackTrace();
 			}
 		}

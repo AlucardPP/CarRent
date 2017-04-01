@@ -100,8 +100,9 @@ public class Car {
 	public void setAvailable(String available) {
 		this.available = available;
 	}
-	
-	public Car(){}
+
+	public Car() {
+	}
 
 	public Car(String brand, String model, String plate, String produced, String firstRegistration, String engine,
 			String value, String rentPerHour, String distance, String available) {
@@ -116,9 +117,9 @@ public class Car {
 		this.distance = distance;
 		this.available = available;
 	}
-	
-	public Car(int idCar, String brand, String model, String plate, String produced, String firstRegistration, String engine,
-			String value, String rentPerHour, String distance, String available) {
+
+	public Car(int idCar, String brand, String model, String plate, String produced, String firstRegistration,
+			String engine, String value, String rentPerHour, String distance, String available) {
 		this.idCar = idCar;
 		this.brand = brand;
 		this.model = model;

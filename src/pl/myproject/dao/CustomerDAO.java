@@ -22,12 +22,13 @@ public class CustomerDAO {
 
 	public boolean create(Customer customer) {
 		Connection conn = null;
+		
 		PreparedStatement prepstmt = null;
 		ResultSet keys = null;
 		boolean result = false;
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
-			//dlaczego takie dziwne ?
+			// wnêtrze try do zewnêtrznej metody plizz
+			// dlaczego takie dziwne ?
 			java.util.Date myDate = new java.util.Date();
 
 			conn = ConnectionProvider.getConnection();
@@ -70,7 +71,7 @@ public class CustomerDAO {
 		List<Customer> clientList = new ArrayList<Customer>();
 
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(READ);
 			res = prepstmt.executeQuery();
@@ -108,7 +109,7 @@ public class CustomerDAO {
 		PreparedStatement prepstmt = null;
 		boolean result = false;
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			java.util.Date myDate = new java.util.Date();
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(UPDATE);
@@ -142,7 +143,7 @@ public class CustomerDAO {
 		PreparedStatement prepstmt = null;
 		boolean result = false;
 		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
+			// wnêtrze try do zewnêtrznej metody plizz
 			conn = ConnectionProvider.getConnection();
 			prepstmt = conn.prepareStatement(DELETE);
 			prepstmt.setInt(1, id);

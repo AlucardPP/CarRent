@@ -164,38 +164,42 @@ public class Employee {
 		this.born = born;
 		this.idCardNumber = idCardNumber;
 		this.street = street;
-		this.houseNumber=houseNumber;
-		this.city=city;
-		this.country=country;
-		this.gender=gender;
-		this.telephone=telephone;
-		this.createDate=createDate;
-		this.edited=edited;
-		this.education=education;
-		this.salary=salary;
-		this.role=role;
-		this.email=email;
+		this.houseNumber = houseNumber;
+		this.city = city;
+		this.country = country;
+		this.gender = gender;
+		this.telephone = telephone;
+		this.createDate = createDate;
+		this.edited = edited;
+		this.education = education;
+		this.salary = salary;
+		this.role = role;
+		this.email = email;
 
 	}
-	public Employee( String name, String surname, String born, String idCardNumber, String street,
-			String houseNumber, String city, String country, String gender, String telephone, String education, String salary, String role, String email) {
-	
+
+	public Employee(String name, String surname, String born, String idCardNumber, String street, String houseNumber,
+			String city, String country, String gender, String telephone, String education, String salary, String role,
+			String email) {
+
 		this.name = name;
 		this.surname = surname;
 		this.born = born;
 		this.idCardNumber = idCardNumber;
 		this.street = street;
-		this.houseNumber=houseNumber;
-		this.city=city;
-		this.country=country;
-		this.gender=gender;
-		this.telephone=telephone;
-		this.education=education;
-		this.salary=salary;
-		this.role=role;
-		this.email=email;
+		this.houseNumber = houseNumber;
+		this.city = city;
+		this.country = country;
+		this.gender = gender;
+		this.telephone = telephone;
+		this.education = education;
+		this.salary = salary;
+		this.role = role;
+		this.email = email;
 
 	}
-	public Employee(){}
+
+	public Employee() {
+	}
 
 }

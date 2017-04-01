@@ -1,154 +1,112 @@
 package pl.myproject.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.myproject.model.Car;
-import pl.myproject.util.ConnectionProvider;
+
+import pl.myproject.util.NamedParameterStatement;
+
 //format kodu! A¿ chce siê p³akaæ 
 public class CarDAO {
-	private final static String CREATE = "INSERT INTO car( brand, model, plate, produced, firstregistration, engine, value, rentperhour, distance, available ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private final static String CREATE = "INSERT INTO car( brand, model, plate, produced, firstregistration, engine, value, rentperhour, distance, available ) VALUES (:brand, :model, :plate, :produced, :firstregistration, :engine, :value, :rentperhour, :distance, :available);";
 	private final static String READ = "SELECT * FROM car;";
-	private final static String UPDATE = "UPDATE car SET brand = ?, model = ?, plate = ?, produced = ?, firstregistration = ?, engine = ?, value = ?, rentperhour = ?, distance = ?, available = ? WHERE idcar = ?;";
-	private final static String DELETE = "DELETE FROM car WHERE idcar = ?;";
+	private final static String UPDATE = "UPDATE car SET brand = :brand, model = :model, plate = :plate, produced = :produced, firstregistration = :firstregistration, engine = :engine, value = :value, rentperhour = :rentperhour, distance = :distance, available = :available WHERE idcar = :idcar;";
+	private final static String DELETE = "DELETE FROM car WHERE idcar = :idcar;";
 
-	public boolean create(Car car) {
-		//connection jest autoclosable - zastosuj try catch z javy 1.7 ;)
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
+	public boolean create(Car car, Connection conn) throws SQLException {
+		NamedParameterStatement named = createData(CREATE, car, conn);
 		boolean result = false;
-		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(CREATE);
-			//http://www.javaworld.com/article/2077706/core-java/named-parameters-for-preparedstatement.html
-			//named parameter statements jest czytelniejsze :D
-			prepstmt.setString(1, car.getBrand());
-			prepstmt.setString(2, car.getModel());
-			prepstmt.setString(3, car.getPlate());
-			prepstmt.setString(4, car.getProduced());
-			prepstmt.setString(5, car.getFirstRegistration());
-			prepstmt.setString(6, car.getEngineSize());
-			prepstmt.setString(7, car.getValue());
-			prepstmt.setString(8, car.getRentPerHour());
-			prepstmt.setString(9, car.getDistance());
-			prepstmt.setString(10, car.getAvailable());
-			int rowAffected = prepstmt.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, null);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0) {
+			result = true;
 		}
 		return result;
 	}
 
-	public List<Car> read() {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
-		ResultSet res = null;
-		Car resultCar = null;
+	public List<Car> read(Connection conn) throws SQLException {
 		List<Car> carList = new ArrayList<Car>();
-		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
-			conn = ConnectionProvider.getConnection();//
-			prepstmt = conn.prepareStatement(READ);   // te 3 linijki to kolejna wspólna metoda dla wielu wywo³añ
-			res = prepstmt.executeQuery();            //
-			while (res.next()) {
-				resultCar = new Car();
-				resultCar.setIdCar(res.getInt("idcar"));
-				resultCar.setBrand(res.getString("brand"));
-				resultCar.setModel(res.getString("model"));
-				resultCar.setPlate(res.getString("plate"));
-				resultCar.setProduced(res.getString("produced"));
-				resultCar.setFirstRegistration(res.getString("firstregistration"));
-				resultCar.setEngineSize(res.getString("engine"));
-				resultCar.setValue(res.getString("value"));
-				resultCar.setRentPerHour(res.getString("rentperhour"));
-				resultCar.setDistance(res.getString("distance"));
-				resultCar.setAvailable(res.getString("available"));
-				carList.add(resultCar);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, res);
+		NamedParameterStatement named = new NamedParameterStatement(conn, READ);
+		ResultSet res = named.executeQuery(); //
+		while (res.next()) {
+			carList.add(readData(res));
 		}
 		return carList;
 	}
 
-	public boolean update(Car car, int id) {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
+	public boolean update(Car car, int id, Connection conn) throws SQLException {
+
+		NamedParameterStatement named = updateData(UPDATE, car, conn, id);
 		boolean result = false;
-		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(UPDATE);
-			prepstmt.setString(1, car.getBrand());
-			prepstmt.setString(2, car.getModel());
-			prepstmt.setString(3, car.getPlate());
-			prepstmt.setString(4, car.getProduced());
-			prepstmt.setString(5, car.getFirstRegistration());
-			prepstmt.setString(6, car.getEngineSize());
-			prepstmt.setString(7, car.getValue());
-			prepstmt.setString(8, car.getRentPerHour());
-			prepstmt.setString(9, car.getDistance());
-			prepstmt.setString(10, car.getAvailable());
-			prepstmt.setInt(11, id);
-			int rowAffected = prepstmt.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, null);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0) {
+			result = true;
 		}
 		return result;
 	}
 
-	public boolean delete(int id) {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
+	public boolean delete(int id, Connection conn) throws SQLException {
+
 		boolean result = false;
-		try {
-			//wnêtrze try do zewnêtrznej metody plizz 
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(DELETE);
-			prepstmt.setInt(1, id);
-			int rowAffected = prepstmt.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, null);
+		NamedParameterStatement named = new NamedParameterStatement(conn, DELETE);
+		named.setInt("idcar", id);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0) {
+			result = true;
 		}
+
 		return result;
 	}
 
-	private void releaseResource(Connection conn, PreparedStatement prepstmt, ResultSet res) {
-		try {
-			if (conn != null && !conn.isClosed()) {
-				conn.close();
-			}
-			if (prepstmt != null && !prepstmt.isClosed()) {
-				prepstmt.close();
-			}
-			if (res != null && !res.isClosed()) {
-				res.close();
-			}
+	private NamedParameterStatement createData(String querry, Car car, Connection conn) throws SQLException {
+		NamedParameterStatement named = new NamedParameterStatement(conn, querry);
+		named.setString("brand", car.getBrand());
+		named.setString("model", car.getModel());
+		named.setString("plate", car.getPlate());
+		named.setString("produced", car.getProduced());
+		named.setString("firstregistration", car.getFirstRegistration());
+		named.setString("engine", car.getEngineSize());
+		named.setString("value", car.getValue());
+		named.setString("rentperhour", car.getRentPerHour());
+		named.setString("distance", car.getDistance());
+		named.setString("available", car.getAvailable());
+		return named;
+	}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	private Car readData(ResultSet res) throws SQLException {
+
+		Car resultCar = new Car();
+		resultCar.setIdCar(res.getInt("idcar"));
+		resultCar.setBrand(res.getString("brand"));
+		resultCar.setModel(res.getString("model"));
+		resultCar.setPlate(res.getString("plate"));
+		resultCar.setProduced(res.getString("produced"));
+		resultCar.setFirstRegistration(res.getString("firstregistration"));
+		resultCar.setEngineSize(res.getString("engine"));
+		resultCar.setValue(res.getString("value"));
+		resultCar.setRentPerHour(res.getString("rentperhour"));
+		resultCar.setDistance(res.getString("distance"));
+		resultCar.setAvailable(res.getString("available"));
+		return resultCar;
+	}
+
+	private NamedParameterStatement updateData(String querry, Car car, Connection conn, int id) throws SQLException {
+		NamedParameterStatement named = new NamedParameterStatement(conn, querry);
+		named.setString("brand", car.getBrand());
+		named.setString("model", car.getModel());
+		named.setString("plate", car.getPlate());
+		named.setString("produced", car.getProduced());
+		named.setString("firstregistration", car.getFirstRegistration());
+		named.setString("engine", car.getEngineSize());
+		named.setString("value", car.getValue());
+		named.setString("rentperhour", car.getRentPerHour());
+		named.setString("distance", car.getDistance());
+		named.setString("available", car.getAvailable());
+		named.setInt("idcar", id);
+		return named;
 	}
 }
