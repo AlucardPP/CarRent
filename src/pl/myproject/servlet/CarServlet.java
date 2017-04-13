@@ -1,15 +1,18 @@
 package pl.myproject.servlet;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
-
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import pl.myproject.dao.CarDAO;
 import pl.myproject.model.Car;
@@ -19,6 +22,9 @@ import pl.myproject.util.ConnectionProvider;
  * Servlet implementation class CarServlet
  */
 @WebServlet("/CarServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+				maxFileSize = 1024 * 1024 * 10,		 // 10MB
+				maxRequestSize = 1024 * 1024 * 50) 	 // 50MB
 public class CarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,18 +49,20 @@ public class CarServlet extends HttpServlet {
 		CarDAO dao = new CarDAO();
 		Car car = null;
 		boolean result = false;
-		try (Connection conn = ConnectionProvider.getConnection();) {
-			checkOption(request, response, result, car, dao, conn);
+		try (Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement prepstmt=null;
+				InputStream inputStream = null;) {
+			checkOption(request, response, result, car, dao, conn, prepstmt, getFile(request));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void checkOption(HttpServletRequest request, HttpServletResponse response, boolean result, Car car,
-			CarDAO dao, Connection conn) throws SQLException, IOException, ServletException {
+			CarDAO dao, Connection conn, PreparedStatement prepstmt, InputStream inputStream) throws SQLException, IOException, ServletException {
 		if (request.getParameter("save") != null) {
-			car = getData(request);
-			result = dao.create(car, conn);
+			car = getData(request, inputStream);
+			result = dao.create(car, conn, request);
 		} else if (request.getParameter("delete") != null) {
 			String idCar = request.getParameter("carID");
 			int id = Integer.parseInt(idCar);
@@ -71,7 +79,7 @@ public class CarServlet extends HttpServlet {
 		}
 	}
 
-	private Car getData(HttpServletRequest request) {
+	private Car getData(HttpServletRequest request, InputStream inputStream) throws IOException, ServletException {
 		String brand = request.getParameter("brand");
 		String model = request.getParameter("model");
 		String plate = request.getParameter("plate");
@@ -82,8 +90,16 @@ public class CarServlet extends HttpServlet {
 		String rentPerHour = request.getParameter("rentperhour");
 		String distance = request.getParameter("distance");
 		String available = request.getParameter("available");
+		Part filePart = request.getPart("files");
+		String file = filePart.getName();
+		if(filePart != null){
+			System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+			inputStream = filePart.getInputStream();
+		}
 		Car car = new Car(brand, model, plate, produced, firstRegistration, engineSize, value, rentPerHour, distance,
-				available);
+				available,file);
 		return car;
 	}
 
@@ -101,6 +117,14 @@ public class CarServlet extends HttpServlet {
 		Car car = new Car(brand, model, plate, produced, firstRegistration, engineSize, value, rentPerHour, distance,
 				available);
 		return car;
+	}
+	private InputStream getFile(HttpServletRequest request) throws IOException, ServletException {
+		InputStream inputStream = null;
+		Part filePart = request.getPart("files");
+		if (filePart != null){
+			inputStream = filePart.getInputStream();
+		}
+		return inputStream;
 	}
 
 }
