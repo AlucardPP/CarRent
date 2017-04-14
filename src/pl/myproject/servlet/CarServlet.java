@@ -1,9 +1,10 @@
 package pl.myproject.servlet;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+
 
 import pl.myproject.dao.CarDAO;
 import pl.myproject.model.Car;
@@ -27,6 +30,7 @@ import pl.myproject.util.ConnectionProvider;
 				maxRequestSize = 1024 * 1024 * 50) 	 // 50MB
 public class CarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final String SAVE_DIR = "uploadFiles";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -50,19 +54,21 @@ public class CarServlet extends HttpServlet {
 		Car car = null;
 		boolean result = false;
 		try (Connection conn = ConnectionProvider.getConnection();
-				PreparedStatement prepstmt=null;
-				InputStream inputStream = null;) {
-			checkOption(request, response, result, car, dao, conn, prepstmt, getFile(request));
+				) {
+			checkOption(request, response, result, car, dao, conn);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (IOException e){
 			e.printStackTrace();
 		}
 	}
 
 	private void checkOption(HttpServletRequest request, HttpServletResponse response, boolean result, Car car,
-			CarDAO dao, Connection conn, PreparedStatement prepstmt, InputStream inputStream) throws SQLException, IOException, ServletException {
+			CarDAO dao, Connection conn) throws SQLException, IOException, ServletException {
 		if (request.getParameter("save") != null) {
-			car = getData(request, inputStream);
-			result = dao.create(car, conn, request);
+			car = getData(request);
+			saveFile(request);
+			result = dao.create(car, conn);
 		} else if (request.getParameter("delete") != null) {
 			String idCar = request.getParameter("carID");
 			int id = Integer.parseInt(idCar);
@@ -79,7 +85,7 @@ public class CarServlet extends HttpServlet {
 		}
 	}
 
-	private Car getData(HttpServletRequest request, InputStream inputStream) throws IOException, ServletException {
+	private Car getData(HttpServletRequest request) throws IOException, ServletException {
 		String brand = request.getParameter("brand");
 		String model = request.getParameter("model");
 		String plate = request.getParameter("plate");
@@ -90,14 +96,10 @@ public class CarServlet extends HttpServlet {
 		String rentPerHour = request.getParameter("rentperhour");
 		String distance = request.getParameter("distance");
 		String available = request.getParameter("available");
-		Part filePart = request.getPart("files");
-		String file = filePart.getName();
-		if(filePart != null){
-			System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
-			inputStream = filePart.getInputStream();
-		}
+		Part part = request.getPart("files");
+		String file = extractFileName(part);
+		System.out.println(file);
+		
 		Car car = new Car(brand, model, plate, produced, firstRegistration, engineSize, value, rentPerHour, distance,
 				available,file);
 		return car;
@@ -118,13 +120,31 @@ public class CarServlet extends HttpServlet {
 				available);
 		return car;
 	}
-	private InputStream getFile(HttpServletRequest request) throws IOException, ServletException {
-		InputStream inputStream = null;
-		Part filePart = request.getPart("files");
-		if (filePart != null){
-			inputStream = filePart.getInputStream();
+
+	private void saveFile(HttpServletRequest request) throws IOException, ServletException{
+		String appPath = request.getServletContext().getRealPath("");
+		String savePath = appPath + File.separator + SAVE_DIR;
+		File fileSaveDir = new File(savePath);
+		if(!fileSaveDir.exists()){
+			fileSaveDir.mkdir();
 		}
-		return inputStream;
+		for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            fileName = new File(fileName).getName();
+           // part.write(savePath + File.separator + fileName);
+        }
 	}
+
+	 private String extractFileName(Part part) {
+	 String contentDisp = part.getHeader("content-disposition");
+	 String[] items = contentDisp.split(";");
+	 for (String s : items) {
+	 if (s.trim().startsWith("filename")) {
+	 return s.substring(s.indexOf("=") + 2, s.length() - 1);
+	 }
+	 }
+	 return "";
+	 }
+	
 
 }
