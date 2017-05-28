@@ -112,11 +112,13 @@ body {
 											</div>
 											<div class="col-md-2">
 												<div class="form-group">
-													
-														<input type="file" name="files" multiple="true" />
-													
+
+													<input type="file" name="files" multiple="true" />
+
 												</div>
 											</div>
+											
+
 										</div>
 									</div>
 									<br>
@@ -260,12 +262,13 @@ body {
 						<td><c:out value="${list.model }" /></td>
 						<td><c:out value="${list.rentPerHour }" /></td>
 						<td><c:out value="${list.available }" /></td>
-
+						<form name="frm" action="CarServlet" method="post" enctype="multipart/form-data">
 						<td><input class="btn btn-md btn-primary" type="submit"
-							value="Download" name="download" /></td>
+							value="Download" name="download" /><input type="hidden" name="carPlate" value="${list.plate }" />
+							</td>
 						<td>
 
-							<form name="frm" action="CarServlet" method="post">
+							
 								<button class="btn btn-primary" type="button"
 									data-toggle="collapse" data-target="#${ list.idCar}"
 									aria-expanded="false" aria-controls="id" name="edit"
@@ -316,7 +319,7 @@ body {
 							<div class="col-md-2">
 								<div class="form-group">
 
-									<input type="file" name="files" multiple="true" />
+									<input type="file" name="upfiles" multiple="true" />
 
 								</div>
 							</div>

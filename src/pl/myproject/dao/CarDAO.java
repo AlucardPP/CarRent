@@ -22,6 +22,7 @@ public class CarDAO {
 	private final static String READ = "SELECT * FROM car;";
 	private final static String UPDATE = "UPDATE car SET brand = :brand, model = :model, plate = :plate, produced = :produced, firstregistration = :firstregistration, engine = :engine, value = :value, rentperhour = :rentperhour, distance = :distance, available = :available WHERE idcar = :idcar;";
 	private final static String DELETE = "DELETE FROM car WHERE idcar = :idcar;";
+
 	
 
 	public boolean create(Car car, Connection conn)
@@ -68,6 +69,7 @@ public class CarDAO {
 
 		return result;
 	}
+
 
 	private NamedParameterStatement createData(String querry, Car car, Connection conn)
 			throws SQLException {

@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebListener;
 import pl.myproject.dao.CarDAO;
 import pl.myproject.dao.CustomerDAO;
 import pl.myproject.dao.EmployeeDAO;
+import pl.myproject.dao.RentedDAO;
 import pl.myproject.util.ConnectionProvider;
 import pl.myproject.util.CountryCode;
 
@@ -24,6 +25,7 @@ public class CountryInitializer implements ServletContextListener {
 	private CustomerDAO customerDao = new CustomerDAO();
 	private EmployeeDAO employeDao = new EmployeeDAO();
 	private CarDAO carDao = new CarDAO();
+	private RentedDAO rentedDao = new RentedDAO();
 
 	/**
 	 * Default constructor.
@@ -45,11 +47,13 @@ public class CountryInitializer implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		Map<String, String> countries = CountryCode.getCode();
 		sce.getServletContext().setAttribute("countries", countries);
-		try(Connection conn = ConnectionProvider.getConnection();){
-		sce.getServletContext().setAttribute("clientlist", customerDao.read());
-		sce.getServletContext().setAttribute("employeelist", employeDao.read());
-		sce.getServletContext().setAttribute("carlist", carDao.read(conn));
-		}catch(SQLException e){
+		sce.getServletContext().setAttribute("success", "default");
+		try (Connection conn = ConnectionProvider.getConnection();) {
+			sce.getServletContext().setAttribute("clientlist", customerDao.read());
+			sce.getServletContext().setAttribute("employeelist", employeDao.read());
+			sce.getServletContext().setAttribute("carlist", carDao.read(conn));
+			sce.getServletContext().setAttribute("rentedlist", rentedDao.read(conn));
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

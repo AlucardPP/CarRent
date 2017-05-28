@@ -1,5 +1,7 @@
 package pl.myproject.model;
 
+
+
 public class Car {
 	private int idCar;
 	private String brand;
@@ -12,6 +14,15 @@ public class Car {
 	private String rentPerHour;
 	private String distance;
 	private String available;
+	private String file;
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
 
 	public int getIdCar() {
 		return idCar;
@@ -105,6 +116,21 @@ public class Car {
 	}
 
 	public Car(String brand, String model, String plate, String produced, String firstRegistration, String engine,
+			String value, String rentPerHour, String distance, String available, String file) {
+		this.brand = brand;
+		this.model = model;
+		this.plate = plate;
+		this.produced = produced;
+		this.firstRegistration = firstRegistration;
+		this.engineSize = engine;
+		this.value = value;
+		this.rentPerHour = rentPerHour;
+		this.distance = distance;
+		this.available = available;
+		this.file = file;
+	}
+
+	public Car(String brand, String model, String plate, String produced, String firstRegistration, String engine,
 			String value, String rentPerHour, String distance, String available) {
 		this.brand = brand;
 		this.model = model;
@@ -116,6 +142,7 @@ public class Car {
 		this.rentPerHour = rentPerHour;
 		this.distance = distance;
 		this.available = available;
+		
 	}
 
 	public Car(int idCar, String brand, String model, String plate, String produced, String firstRegistration,
