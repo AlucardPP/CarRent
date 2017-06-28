@@ -1,6 +1,5 @@
 package pl.myproject.listener;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -12,7 +11,7 @@ import pl.myproject.dao.CarDAO;
 import pl.myproject.dao.CustomerDAO;
 import pl.myproject.dao.EmployeeDAO;
 import pl.myproject.dao.RentedDAO;
-import pl.myproject.util.ConnectionProvider;
+
 import pl.myproject.util.CountryCode;
 
 /**
@@ -48,11 +47,11 @@ public class CountryInitializer implements ServletContextListener {
 		Map<String, String> countries = CountryCode.getCode();
 		sce.getServletContext().setAttribute("countries", countries);
 		sce.getServletContext().setAttribute("success", "default");
-		try (Connection conn = ConnectionProvider.getConnection();) {
+		try {
 			sce.getServletContext().setAttribute("clientlist", customerDao.read());
 			sce.getServletContext().setAttribute("employeelist", employeDao.read());
-			sce.getServletContext().setAttribute("carlist", carDao.read(conn));
-			sce.getServletContext().setAttribute("rentedlist", rentedDao.read(conn));
+			sce.getServletContext().setAttribute("carlist", carDao.read());
+			sce.getServletContext().setAttribute("rentedlist", rentedDao.read());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

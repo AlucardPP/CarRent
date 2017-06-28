@@ -9,6 +9,9 @@ public class Rented {
 	private String tillDate;
 	private String days;
 	private String price;
+	private int payed;
+	private int rented;
+	private int carId;
 
 	public int getIdRented() {
 		return idRented;
@@ -74,10 +77,35 @@ public class Rented {
 		this.price = price;
 	}
 
+	public int getPayed() {
+		return payed;
+	}
+
+	public void setPayed(int payed) {
+		this.payed = payed;
+	}
+
+	public int getRented() {
+		return rented;
+	}
+
+	public void setRented(int rented) {
+		this.rented = rented;
+	}
+
+	public int getCarId() {
+		return carId;
+	}
+
+	public void setCarId(int carId) {
+		this.carId = carId;
+	}
+
 	public Rented() {
 	}
 
-	public Rented(String employee, String client, String cars, String from, String till, String days, String price) {
+	public Rented(String employee, String client, String cars, String from, String till, String days, String price,
+			int isPayed, int isRented, int carId) {
 		this.employee = employee;
 		this.client = client;
 		this.cars = cars;
@@ -85,10 +113,13 @@ public class Rented {
 		this.tillDate = till;
 		this.days = days;
 		this.price = price;
+		this.payed = isPayed;
+		this.rented = isRented;
+		this.carId = carId;
 	}
 
 	public Rented(int idRented, String employee, String client, String cars, String from, String till, String days,
-			String price) {
+			String price, int isPayed, int isRented, int carId) {
 		this.idRented = idRented;
 		this.employee = employee;
 		this.client = client;
@@ -97,6 +128,9 @@ public class Rented {
 		this.tillDate = till;
 		this.days = days;
 		this.price = price;
+		this.payed = isPayed;
+		this.rented = isRented;
+		this.carId = carId;
 	}
 
 }

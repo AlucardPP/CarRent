@@ -53,3 +53,15 @@ CREATE TABLE `car_rent`.`car` (
   `available` VARCHAR(45) NOT NULL,
   `file` MEDIUMBLOB NULL,
   PRIMARY KEY (`idcar`));
+
+
+CREATE TABLE `car_rent`.`rented` (
+  `idrented` INT NOT NULL AUTO_INCREMENT,
+  `employee` VARCHAR(255) NOT NULL,
+  `client` VARCHAR(255) NOT NULL,
+  `cars` VARCHAR(255) NOT NULL,
+  `from` VARCHAR(45) NOT NULL,
+  `till` VARCHAR(45) NOT NULL,
+  `days` INT NOT NULL,
+  `price` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idrented`));

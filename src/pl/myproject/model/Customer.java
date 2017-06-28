@@ -15,6 +15,7 @@ public class Customer {
 	private String telephone;
 	private String createDate;
 	private String edited;
+	private String file;
 
 	public String getEdited() {
 		return edited;
@@ -120,7 +121,51 @@ public class Customer {
 		this.telephone = telephone;
 	}
 
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
 	public Customer() {
+	}
+
+	public Customer(String name, String surname, String born, String idCardNumber, String street, String houseNumber,
+			String city, String country, String gender, String telephone, String file) {
+
+		this.name = name;
+		this.surname = surname;
+		this.born = born;
+		this.idCardNumber = idCardNumber;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.city = city;
+		this.country = country;
+		this.gender = gender;
+		this.telephone = telephone;
+		this.file = file;
+
+	}
+
+	public Customer(Customer customer) {
+
+		this.idCustomer = customer.idCustomer;
+		this.name = customer.name;
+		this.surname = customer.surname;
+		this.born = customer.born;
+		this.idCardNumber = customer.idCardNumber;
+		this.street = customer.street;
+		this.houseNumber = customer.houseNumber;
+		this.city = customer.city;
+		this.country = customer.country;
+		this.gender = customer.gender;
+		this.telephone = customer.telephone;
+		this.createDate = customer.createDate;
+		this.edited = customer.edited;
+		this.file = customer.file;
+
 	}
 
 	public Customer(String name, String surname, String born, String idCardNumber, String street, String houseNumber,
@@ -136,26 +181,6 @@ public class Customer {
 		this.country = country;
 		this.gender = gender;
 		this.telephone = telephone;
-
-	}
-
-	public Customer(int idCustomer, String name, String surname, String born, String idCardNumber, String street,
-			String houseNumber, String city, String country, String gender, String telephone, String created,
-			String edited) {
-
-		this.idCustomer = idCustomer;
-		this.name = name;
-		this.surname = surname;
-		this.born = born;
-		this.idCardNumber = idCardNumber;
-		this.street = street;
-		this.houseNumber = houseNumber;
-		this.city = city;
-		this.country = country;
-		this.gender = gender;
-		this.telephone = telephone;
-		this.createDate = created;
-		this.edited = edited;
 
 	}
 

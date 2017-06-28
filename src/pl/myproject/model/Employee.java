@@ -18,6 +18,7 @@ public class Employee {
 	private String salary;
 	private String role;
 	private String email;
+	private String files;
 
 	public int getIdEmployee() {
 		return idEmployee;
@@ -155,26 +156,33 @@ public class Employee {
 		this.email = email;
 	}
 
-	public Employee(int id, String name, String surname, String born, String idCardNumber, String street,
-			String houseNumber, String city, String country, String gender, String telephone, String createDate,
-			String edited, String education, String salary, String role, String email) {
-		this.idEmployee = id;
-		this.name = name;
-		this.surname = surname;
-		this.born = born;
-		this.idCardNumber = idCardNumber;
-		this.street = street;
-		this.houseNumber = houseNumber;
-		this.city = city;
-		this.country = country;
-		this.gender = gender;
-		this.telephone = telephone;
-		this.createDate = createDate;
-		this.edited = edited;
-		this.education = education;
-		this.salary = salary;
-		this.role = role;
-		this.email = email;
+	public String getFiles() {
+		return files;
+	}
+
+	public void setFiles(String files) {
+		this.files = files;
+	}
+
+	public Employee(Employee employee) {
+		this.idEmployee = employee.idEmployee;
+		this.name = employee.name;
+		this.surname = employee.surname;
+		this.born = employee.born;
+		this.idCardNumber = employee.idCardNumber;
+		this.street = employee.street;
+		this.houseNumber = employee.houseNumber;
+		this.city = employee.city;
+		this.country = employee.country;
+		this.gender = employee.gender;
+		this.telephone = employee.telephone;
+		this.createDate = employee.createDate;
+		this.edited = employee.edited;
+		this.education = employee.education;
+		this.salary = employee.salary;
+		this.role = employee.role;
+		this.email = employee.email;
+		this.files = employee.files;
 
 	}
 
@@ -196,6 +204,28 @@ public class Employee {
 		this.salary = salary;
 		this.role = role;
 		this.email = email;
+
+	}
+
+	public Employee(String name, String surname, String born, String idCardNumber, String street, String houseNumber,
+			String city, String country, String gender, String telephone, String education, String salary, String role,
+			String email, String files) {
+
+		this.name = name;
+		this.surname = surname;
+		this.born = born;
+		this.idCardNumber = idCardNumber;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.city = city;
+		this.country = country;
+		this.gender = gender;
+		this.telephone = telephone;
+		this.education = education;
+		this.salary = salary;
+		this.role = role;
+		this.email = email;
+		this.files = files;
 
 	}
 

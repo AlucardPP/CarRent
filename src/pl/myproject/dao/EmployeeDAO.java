@@ -1,7 +1,5 @@
 package pl.myproject.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,175 +8,139 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.myproject.model.Employee;
+
 import pl.myproject.util.ConnectionProvider;
+import pl.myproject.util.NamedParameterStatement;
 
-//Format!
 public class EmployeeDAO {
-	private final static String CREATE = "INSERT INTO employee ( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, education, salary, role, email, created, edited) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ";
+	private final static String CREATE = "INSERT INTO employee ( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, education, salary, role, email, created, edited) VALUES ( :name, :surname, :born, :idcardnumber, :street, :housenumber, :city, :country, :gender, :telephone, :education, :salary, :role, :email, ?, ?); ";
 	private final static String READ = "SELECT * FROM employee;";
-	private final static String UPDATE = "UPDATE employee SET name = ?, surname = ?, born =?, idcardnumber=?, street = ?, housenumber = ?, city = ?, country = ?, gender = ?, telephone = ?, education = ?, salary = ?, role = ?, email = ?,  edited = ? WHERE idemployee = ?;";
-	private final static String DELETE = "DELETE FROM employee WHERE idemployee = ?;";
+	private final static String READ_BY_ID = "SELECT * FROM employee WHERE idemployee = :idemployee;";
+	private final static String UPDATE = "UPDATE employee SET name = :name, surname = :surname, born = :born, idcardnumber= :idcardnumber, street = :street, housenumber = :housenumber, city = :city, country = :country, gender = :gender, telephone = :telephone, education = :education, salary = :salary, role = :role, email = :email,  edited = ? WHERE idemployee = :idemployee;";
+	private final static String DELETE = "DELETE FROM employee WHERE idemployee = :idemployee;";
 
-	public boolean create(Employee employee) {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
-
+	public boolean create(Employee employee) throws SQLException {
 		boolean result = false;
-		try {
-			// wnêtrze try do zewnêtrznej metody plizz
-			java.util.Date myDate = new java.util.Date();
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(CREATE);
-			prepstmt.setString(1, employee.getName());
-			prepstmt.setString(2, employee.getSurname());
-			prepstmt.setString(3, employee.getBorn());
-			prepstmt.setString(4, employee.getIdCardNumber());
-			prepstmt.setString(5, employee.getStreet());
-			prepstmt.setString(6, employee.getHouseNumber());
-			prepstmt.setString(7, employee.getCity());
-			prepstmt.setString(8, employee.getCountry());
-			prepstmt.setString(9, employee.getGender());
-			prepstmt.setString(10, employee.getTelephone());
-			prepstmt.setString(11, employee.getEducation());
-			prepstmt.setString(12, employee.getSalary());
-			prepstmt.setString(13, employee.getRole());
-			prepstmt.setString(14, employee.getEmail());
-			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-			prepstmt.setDate(15, sqlDate);
-			prepstmt.setDate(16, sqlDate);
-
-			int rowsAffected = prepstmt.executeUpdate();
-			if (rowsAffected > 0) {
-
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, null);
+		NamedParameterStatement named = createData(employee);
+		int rowsAffected = named.executeUpdate();
+		if (rowsAffected > 0) {
+			result = true;
 		}
 		return result;
-
 	}
 
-	public List<Employee> read() {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
-		ResultSet res = null;
-		Employee resultEmployee = null;
+	public List<Employee> read() throws SQLException {
 		List<Employee> emp = new ArrayList<Employee>();
-		try {
-			// wnêtrze try do zewnêtrznej metody plizz
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(READ);
-			res = prepstmt.executeQuery();
-			while (res.next()) {
-				resultEmployee = new Employee();
-				resultEmployee.setIdEmployee(res.getInt("idemployee"));
-				resultEmployee.setName(res.getString("name"));
-				resultEmployee.setSurname(res.getString("surname"));
-				resultEmployee.setBorn(res.getString("born"));
-				resultEmployee.setIdCardNumber(res.getString("idcardnumber"));
-				resultEmployee.setStreet(res.getString("street"));
-				resultEmployee.setHouseNumber(res.getString("housenumber"));
-				resultEmployee.setCity(res.getString("city"));
-				resultEmployee.setCountry(res.getString("country"));
-				resultEmployee.setGender(res.getString("gender"));
-				resultEmployee.setTelephone(res.getString("telephone"));
-				resultEmployee.setEducation(res.getString("education"));
-				resultEmployee.setSalary(res.getString("salary"));
-				resultEmployee.setRole(res.getString("role"));
-				resultEmployee.setEmail(res.getString("email"));
-				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-				resultEmployee.setCreateDate(format.format(res.getDate("created")));
-				resultEmployee.setEdited(format.format(res.getDate("edited")));
-				emp.add(resultEmployee);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, res);
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), READ);
+		ResultSet res = named.executeQuery();
+		while (res.next()) {
+			emp.add(readEmployee(res));
 		}
 		return emp;
 
 	}
 
-	public boolean update(Employee employee, int id) {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
-		boolean result = false;
-		try {
-			// wnêtrze try do zewnêtrznej metody plizz
-			java.util.Date myDate = new java.util.Date();
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(UPDATE);
-			prepstmt.setString(1, employee.getName());
-			prepstmt.setString(2, employee.getSurname());
-			prepstmt.setString(3, employee.getBorn());
-			prepstmt.setString(4, employee.getIdCardNumber());
-			prepstmt.setString(5, employee.getStreet());
-			prepstmt.setString(6, employee.getHouseNumber());
-			prepstmt.setString(7, employee.getCity());
-			prepstmt.setString(8, employee.getCountry());
-			prepstmt.setString(9, employee.getGender());
-			prepstmt.setString(10, employee.getTelephone());
-			prepstmt.setString(11, employee.getEducation());
-			prepstmt.setString(12, employee.getSalary());
-			prepstmt.setString(13, employee.getRole());
-			prepstmt.setString(14, employee.getEmail());
-			java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-			prepstmt.setDate(15, sqlDate);
-			prepstmt.setInt(16, id);
-			int rowAffected = prepstmt.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
+	public Employee readById(int id) throws SQLException {
+		Employee employee = new Employee();
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), READ_BY_ID);
+		named.setInt("idemployee", id);
+		ResultSet res = named.executeQuery();
+		while (res.next()) {
+			employee = readEmployee(res);
+		}
+		return employee;
+	}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, null);
+	public boolean update(Employee employee, int id) throws SQLException {
+		boolean result = false;
+		NamedParameterStatement named = updateData(employee, id);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0) {
+			result = true;
+		}
+
+		return result;
+	}
+
+	public boolean delete(int id) throws SQLException {
+		boolean result = false;
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), DELETE);
+		named.setInt("idemployee", id);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0) {
+			result = true;
 		}
 		return result;
 	}
 
-	public boolean delete(int id) {
-		Connection conn = null;
-		PreparedStatement prepstmt = null;
-		boolean result = false;
-		try {
-			// wnêtrze try do zewnêtrznej metody plizz
-			conn = ConnectionProvider.getConnection();
-			prepstmt = conn.prepareStatement(DELETE);
-			prepstmt.setInt(1, id);
-			int rowAffected = prepstmt.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			releaseResource(conn, prepstmt, null);
-		}
-		return result;
+	private NamedParameterStatement createData(Employee employee) throws SQLException {
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), CREATE);
+		named.setString("name", employee.getName());
+		named.setString("surname", employee.getSurname());
+		named.setString("born", employee.getBorn());
+		named.setString("idcardnumber", employee.getIdCardNumber());
+		named.setString("street", employee.getStreet());
+		named.setString("housenumber", employee.getHouseNumber());
+		named.setString("city", employee.getCity());
+		named.setString("country", employee.getCountry());
+		named.setString("gender", employee.getGender());
+		named.setString("telephone", employee.getTelephone());
+		named.setString("education", employee.getEducation());
+		named.setString("salary", employee.getSalary());
+		named.setString("role", employee.getRole());
+		named.setString("email", employee.getEmail());
+		java.util.Date myDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+		named.getStatement().setDate(15, sqlDate);
+		named.getStatement().setDate(16, sqlDate);
+		return named;
+
 	}
 
-	private void releaseResource(Connection conn, PreparedStatement prepstmt, ResultSet res) {
-		try {
-			// to siê powtarza 3 razy w 3 ró¿nych klasach - mo¿e jakaœ klasa
-			// nadrzêdna GenericDAO - która to uwspólni + tworzenie connection
-			if (conn != null && !conn.isClosed()) {
-				conn.close();
-			}
-			if (prepstmt != null && !prepstmt.isClosed()) {
-				prepstmt.close();
-			}
-			if (res != null && !res.isClosed()) {
-				res.close();
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	private Employee readEmployee(ResultSet res) throws SQLException {
+		Employee resultEmployee = new Employee();
+		resultEmployee.setIdEmployee(res.getInt("idemployee"));
+		resultEmployee.setName(res.getString("name"));
+		resultEmployee.setSurname(res.getString("surname"));
+		resultEmployee.setBorn(res.getString("born"));
+		resultEmployee.setIdCardNumber(res.getString("idcardnumber"));
+		resultEmployee.setStreet(res.getString("street"));
+		resultEmployee.setHouseNumber(res.getString("housenumber"));
+		resultEmployee.setCity(res.getString("city"));
+		resultEmployee.setCountry(res.getString("country"));
+		resultEmployee.setGender(res.getString("gender"));
+		resultEmployee.setTelephone(res.getString("telephone"));
+		resultEmployee.setEducation(res.getString("education"));
+		resultEmployee.setSalary(res.getString("salary"));
+		resultEmployee.setRole(res.getString("role"));
+		resultEmployee.setEmail(res.getString("email"));
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		resultEmployee.setCreateDate(format.format(res.getDate("created")));
+		resultEmployee.setEdited(format.format(res.getDate("edited")));
+		return resultEmployee;
 	}
+
+	private NamedParameterStatement updateData(Employee employee, int id) throws SQLException {
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), UPDATE);
+		named.setString("name", employee.getName());
+		named.setString("surname", employee.getSurname());
+		named.setString("born", employee.getBorn());
+		named.setString("idcardnumber", employee.getIdCardNumber());
+		named.setString("street", employee.getStreet());
+		named.setString("housenumber", employee.getHouseNumber());
+		named.setString("city", employee.getCity());
+		named.setString("country", employee.getCountry());
+		named.setString("gender", employee.getGender());
+		named.setString("telephone", employee.getTelephone());
+		named.setString("education", employee.getEducation());
+		named.setString("salary", employee.getSalary());
+		named.setString("role", employee.getRole());
+		named.setString("email", employee.getEmail());
+		java.util.Date myDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+		named.getStatement().setDate(15, sqlDate);
+		named.setInt("idemployee", id);
+		return named;
+	}
+
 }

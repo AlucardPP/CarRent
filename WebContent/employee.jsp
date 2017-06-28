@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,8 +16,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 body {
 	padding-top: 70px;
@@ -42,23 +40,48 @@ body {
 	<div class="container">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
 
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href="index.jsp">Client</a></li>
-				<li><a href="car.jsp">Car</a></li>
-				<li><a href="rented.jsp">Rented Cars</a></li>
-				<li class="active"><a href="employee.jsp">Employee</a></li>
-			</ul>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+			<c:choose>
+				<c:when test="${not empty sessionScope.user }">
+					<ul class="nav navbar-nav">
+						<li><a href="index.jsp">Client</a></li>
+						<li><a href="car.jsp">Car</a></li>
+						<li><a href="rented.jsp">Rented Cars</a></li>
+						<li class="active"><a href="employee.jsp">Employee</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
+								class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
+							<ul class="dropdown-menu">
+								<li><a href="password.jsp">Change Password</a></li>
+								<form class="form-signin" action="LogOutServlet" method="post">
+									<li><input type="submit" class="btn btn-block" value="Log Out"></li>
+								</form>
+							</ul></li>
+
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<ul class="nav navbar-nav">
+						<li><a href="login.jsp">Client</a></li>
+						<li><a href="login.jsp">Car</a></li>
+						<li><a href="login.jsp">Rented Cars</a></li>
+						<li><a href="login.jsp">Employee</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
+
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
@@ -73,8 +96,7 @@ body {
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapseOne"> +ADD EMPLOYEE </a>
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +ADD EMPLOYEE </a>
 							</h4>
 						</div>
 
@@ -85,25 +107,22 @@ body {
 										<div class="col-md-3">
 
 											<div class="form-group">
-												<label for="employeeName">Employee Name:</label> <input
-													type="text" class="form-control" id="employeeName"
-													placeholder="Employee Name" name="name">
+												<label for="employeeName">Employee Name:</label> <input type="text" class="form-control" id="employeeName"
+													placeholder="Employee Name" name="name" required>
 											</div>
 
 										</div>
 										<div class="col-md-3">
 
 											<div class="form-group">
-												<label for="employeeSurname">Employee Surname:</label> <input
-													type="text" class="form-control" id="employeeSurname"
-													placeholder="Employee Surname" name="surname">
+												<label for="employeeSurname">Employee Surname:</label> <input type="text" class="form-control"
+													id="employeeSurname" placeholder="Employee Surname" name="surname" required>
 											</div>
 
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="education">Education:</label> <select
-													class="form-control" name="education">
+												<label for="education">Education:</label> <select class="form-control" name="education">
 													<option value="basic">Basic</option>
 													<option value="high school">High School</option>
 													<option value="bachelor">Bachelor</option>
@@ -115,8 +134,7 @@ body {
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
-												<label for="exampleInputFile">File input</label> <input
-													type="file" id="exampleInputFile" name="file">
+												<label for="exampleInputFile">File input</label> <input type="file" id="exampleInputFile" name="file">
 											</div>
 										</div>
 									</div>
@@ -126,26 +144,23 @@ body {
 											<div class="col-md-3">
 
 												<div class="form-group">
-													<label for="born">Born:</label> <input type="text"
-														class="form-control" id="born" placeholder="Pick a date"
-														name="born" />
+													<label for="born">Born:</label> <input type="text" class="form-control" id="born" placeholder="Pick a date"
+														name="born" required />
 												</div>
 
 											</div>
 											<div class="col-md-3">
 
 												<div class="form-group">
-													<label for="idCardNumber">ID Card Number:</label> <input
-														type="text" class="form-control" id="idCardNumber"
-														placeholder="ID Card Number" name="idcardnumber">
+													<label for="idCardNumber">ID Card Number:</label> <input type="text" class="form-control" id="idCardNumber"
+														placeholder="ID Card Number" name="idcardnumber" required>
 												</div>
 
 											</div>
 											<div class="col-md-3">
 												<div class="form-group">
-													<label for="salary">Salary:</label> <input type="text"
-														class="form-control" id="salary" placeholder="Salary"
-														name="salary">
+													<label for="salary">Salary:</label> <input type="text" class="form-control" id="salary"
+														placeholder="Salary" name="salary" required>
 												</div>
 											</div>
 											<div class="col-md-2"></div>
@@ -157,28 +172,31 @@ body {
 											<div class="col-md-3">
 
 												<div class="form-group">
-													<label for="street">Street:</label> <input type="text"
-														class="form-control" id="street" placeholder="Street"
-														name="street">
+													<label for="street">Street:</label> <input type="text" class="form-control" id="street"
+														placeholder="Street" name="street" required>
 												</div>
 
 											</div>
 											<div class="col-md-3">
 
 												<div class="form-group">
-													<label for="house">House Number:</label> <input type="text"
-														class="form-control" id="house" placeholder="House Number"
-														name="housenumber">
+													<label for="house">House Number:</label> <input type="text" class="form-control" id="house"
+														placeholder="House Number" name="housenumber" required>
 												</div>
 
 											</div>
 											<div class="col-md-3">
 												<div class="form-group">
-													<label for="role">Role:</label> <select
-														class="form-control" name="role">
-														<option value="admin">Admin</option>
-														<option value="regular">Regular</option>
-														<option value="mannager">Mannager</option>
+													<label for="role">Role:</label> <select class="form-control" name="role">
+
+														<c:if test="${user.role == 'manager' }">
+															<option value="regular">regular</option>
+														</c:if>
+														<c:if test="${user.role == 'admin' }">
+
+															<option value="regular">regular</option>
+															<option value="mannager">manager</option>
+														</c:if>
 													</select>
 												</div>
 											</div>
@@ -191,16 +209,14 @@ body {
 											<div class="col-md-3">
 
 												<div class="form-group">
-													<label for="city">City:</label> <input type="text"
-														class="form-control" id="city" placeholder="City"
-														name="city">
+													<label for="city">City:</label> <input type="text" class="form-control" id="city" placeholder="City"
+														name="city" required>
 												</div>
 
 											</div>
 											<div class="col-md-3">
 
-												<label for="country">Country code:</label> <select
-													class="form-control" name="country">
+												<label for="country">Country code:</label> <select class="form-control" name="country">
 													<c:forEach items="${countries }" var="country">
 														<option value="${country.key }">${country.value }</option>
 													</c:forEach>
@@ -210,9 +226,8 @@ body {
 											</div>
 											<div class="col-md-3">
 												<div class="form-group">
-													<label for="email">Email:</label> <input type="text"
-														class="form-control" id="email" placeholder="Email"
-														name="email">
+													<label for="email">Email:</label> <input type="text" class="form-control" id="email" placeholder="Email"
+														name="email" required>
 												</div>
 											</div>
 											<div class="col-md-2"></div>
@@ -222,8 +237,7 @@ body {
 									<div class="bs-docs-grid">
 										<div class="row show-grid">
 											<div class="col-md-3">
-												<label for="gender">Gender:</label> <select
-													class="form-control" name="gender">
+												<label for="gender">Gender:</label> <select class="form-control" name="gender">
 													<option value="male">Male</option>
 													<option value="female">Female</option>
 
@@ -232,9 +246,8 @@ body {
 											<div class="col-md-3">
 
 												<div class="form-group">
-													<label for="telephone">Telephone:</label> <input
-														type="text" class="form-control" id="Telephone"
-														placeholder="Telephone" name="telephone">
+													<label for="telephone">Telephone:</label> <input type="text" class="form-control" id="Telephone"
+														placeholder="Telephone" name="telephone" required>
 												</div>
 
 											</div>
@@ -247,14 +260,12 @@ body {
 										<div class="row show-grid">
 											<div class="col-md-9"></div>
 											<div class="col-md-1">
-												<button class="btn btn-md btn-primary" type="reset"
-													name="cancel" data-toggle="collapse"
+												<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
 													data-target="#collapseOne">Cancel</button>
 
 											</div>
 											<div class="col-md-1">
-												<input class="btn btn-md btn-primary" type="submit"
-													value="Save" name="save" />
+												<input class="btn btn-md btn-primary" type="submit" value="Save" name="save" />
 											</div>
 										</div>
 									</div>
@@ -289,21 +300,18 @@ body {
 								<td><c:out value="${list.telephone }" /></td>
 								<td><c:out value="${list.createDate }" /></td>
 								<td><c:out value="${list.edited }" /></td>
-								<td><input class="btn btn-md btn-primary" type="submit"
-									value="Download" name="download" /></td>
+								<td>
+									<form name="frm" action="EmployeeServlet" method="post">
+										<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
+											name="id" value="${list.idEmployee }" />
+								</td>
 								<td>
 
-									<form name="frm" action="EmployeeServlet" method="post">
-										<button class="btn btn-primary" type="button"
-											data-toggle="collapse" data-target="#${ list.idEmployee}"
-											aria-expanded="false" aria-controls="id" name="edit"
-											value="${list.idEmployee }">Edit</button>
 
-
-										<input type="hidden" name="employeeID"
-											value="${list.idEmployee }" /> <input
-											class="btn btn-md btn-primary" type="submit" value="Delete"
-											name="delete" />
+									<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}"
+										aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }">Edit</button> <input
+									type="hidden" name="employeeID" value="${list.idEmployee }" /> <input class="btn btn-md btn-primary"
+									type="submit" value="Delete" name="delete" />
 
 									</form>
 								</td>
@@ -321,25 +329,22 @@ body {
 
 										<div class="form-group">
 											<form action="EmployeeServlet" method="post">
-												<label for="employeeName">Employee Name:</label> <input
-													type="text" class="form-control" id="upemployeeName"
-													value="${employee.name }" name="upname">
+												<label for="employeeName">Employee Name:</label> <input type="text" class="form-control" id="upemployeeName"
+													value="${employee.name }" name="upname" required>
 										</div>
 
 									</div>
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="employeeSurname">Employee Surname:</label> <input
-												type="text" class="form-control" id="upemployeeSurname"
-												value="${employee.surname }" name="upsurname">
+											<label for="employeeSurname">Employee Surname:</label> <input type="text" class="form-control"
+												id="upemployeeSurname" value="${employee.surname }" name="upsurname" required>
 										</div>
 
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label for="upeducation">Education:</label> <select
-												class="form-control" name="upeducation">
+											<label for="upeducation">Education:</label> <select class="form-control" name="upeducation">
 												<c:choose>
 													<c:when test="${employee.education  == 'basic'}">
 														<option selected value="basic">Basic</option>
@@ -374,8 +379,7 @@ body {
 												</c:choose>
 												<c:choose>
 													<c:when test="${employee.education  == 'master degree'}">
-														<option selected value="master degree">Master
-															degree</option>
+														<option selected value="master degree">Master degree</option>
 													</c:when>
 													<c:otherwise>
 														<option value="master degree">Master degree</option>
@@ -409,26 +413,23 @@ body {
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="upborn">Born:</label> <input type="text"
-												class="form-control" id="upborn" value="${employee.born }"
-												name="upborn" />
+											<label for="upborn">Born:</label> <input type="text" class="form-control" id="upborn"
+												value="${employee.born }" name="upborn" required />
 										</div>
 
 									</div>
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="idCardNumber">ID Card Number:</label> <input
-												type="text" class="form-control" id="upidCardNumber"
-												value="${employee.idCardNumber }" name="upidcardnumber">
+											<label for="idCardNumber">ID Card Number:</label> <input type="text" class="form-control" id="upidCardNumber"
+												value="${employee.idCardNumber }" name="upidcardnumber" required>
 										</div>
 
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label for="salary">Salary:</label> <input type="text"
-												class="form-control" id="upsalary"
-												value="${employee.salary }" name="upsalary">
+											<label for="salary">Salary:</label> <input type="text" class="form-control" id="upsalary"
+												value="${employee.salary }" name="upsalary" required>
 										</div>
 									</div>
 									<div class="col-md-2"></div>
@@ -440,47 +441,44 @@ body {
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="street">Street:</label> <input type="text"
-												class="form-control" id="upstreet"
-												value="${employee.street }" name="upstreet">
+											<label for="street">Street:</label> <input type="text" class="form-control" id="upstreet"
+												value="${employee.street }" name="upstreet" required>
 										</div>
 
 									</div>
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="house">House Number:</label> <input type="text"
-												class="form-control" id="uphouse"
-												value="${employee.houseNumber }" name="uphousenumber">
+											<label for="house">House Number:</label> <input type="text" class="form-control" id="uphouse"
+												value="${employee.houseNumber }" name="uphousenumber" required>
 										</div>
 
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label for="uprole">Role:</label> <select
-												class="form-control" name="uprole">
+											<label for="uprole">Role:</label> <select class="form-control" name="uprole">
 												<c:choose>
 													<c:when test="${employee.role  == 'admin'}">
-														<option selected value="admin">Admin</option>
+														<option selected value="admin">admin</option>
 													</c:when>
 													<c:otherwise>
-														<option value="admin">Admin</option>
+														<option value="admin">admin</option>
 													</c:otherwise>
 												</c:choose>
 												<c:choose>
 													<c:when test="${employee.role  == 'regular'}">
-														<option selected value="regular">Regular</option>
+														<option selected value="regular">regular</option>
 													</c:when>
 													<c:otherwise>
-														<option value="regular">Regular</option>
+														<option value="regular">regular</option>
 													</c:otherwise>
 												</c:choose>
 												<c:choose>
 													<c:when test="${employee.role  == 'manager'}">
-														<option selected value="manager">Manager</option>
+														<option selected value="manager">manager</option>
 													</c:when>
 													<c:otherwise>
-														<option value="manager">Manager</option>
+														<option value="manager">manager</option>
 													</c:otherwise>
 												</c:choose>
 											</select>
@@ -495,16 +493,14 @@ body {
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="city">City:</label> <input type="text"
-												class="form-control" id="upcity" value="${employee.city }"
-												name="upcity">
+											<label for="city">City:</label> <input type="text" class="form-control" id="upcity" value="${employee.city }"
+												name="upcity" required>
 										</div>
 
 									</div>
 									<div class="col-md-3">
 
-										<label for="country">Country code:</label> <select
-											class="form-control" name="upcountry">
+										<label for="country">Country code:</label> <select class="form-control" name="upcountry">
 											<c:forEach items="${countries }" var="country">
 												<c:if test="${employee.country eq country.key }">
 													<option value="${country.key }">${country.value }</option>
@@ -519,9 +515,8 @@ body {
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<label for="upemail">Email:</label> <input type="text"
-												class="form-control" id="upemail" value="${employee.email }"
-												name="upemail">
+											<label for="upemail">Email:</label> <input type="text" class="form-control" id="upemail"
+												value="${employee.email }" name="upemail" required>
 										</div>
 									</div>
 									<div class="col-md-2"></div>
@@ -531,8 +526,7 @@ body {
 							<div class="bs-docs-grid">
 								<div class="row show-grid">
 									<div class="col-md-3">
-										<label for="gender">Gender:</label> <select
-											class="form-control" name="upgender">
+										<label for="gender">Gender:</label> <select class="form-control" name="upgender">
 											<c:choose>
 												<c:when test="${employee.gender eq 'male' }">
 													<option selected value="male">Male</option>
@@ -548,9 +542,8 @@ body {
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<label for="uptelephone">Telephone:</label> <input
-												type="text" class="form-control" id="uptelephone"
-												value="${employee.telephone }" name="uptelephone">
+											<label for="uptelephone">Telephone:</label> <input type="text" class="form-control" id="uptelephone"
+												value="${employee.telephone }" name="uptelephone" required>
 										</div>
 
 									</div>
@@ -563,16 +556,13 @@ body {
 								<div class="row show-grid">
 									<div class="col-md-9"></div>
 									<div class="col-md-1">
-										<button class="btn btn-md btn-primary" type="reset"
-											name="cancel" data-toggle="collapse"
+										<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
 											data-target="#${employee.idEmployee }">Cancel</button>
 
 									</div>
 									<div class="col-md-1">
-										<input type="hidden" name="IDemployee"
-											value="${employee.idEmployee }" /> <input
-											class="btn btn-md btn-primary" type="submit" value="Update"
-											name="update" />
+										<input type="hidden" name="IDemployee" value="${employee.idEmployee }" /> <input
+											class="btn btn-md btn-primary" type="submit" value="Update" name="update" />
 									</div>
 
 								</div>
@@ -590,8 +580,7 @@ body {
 	<!-- jQuery Version 1.11.1 -->
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-		crossorigin="anonymous"></script>
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>

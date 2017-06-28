@@ -1,22 +1,31 @@
 package pl.myproject.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import pl.myproject.dao.CustomerDAO;
 import pl.myproject.model.Customer;
+import pl.myproject.util.FileOperations;
 
 /**
  * Servlet implementation class CustomerServlet
  */
 @WebServlet("/CustomerServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+		maxFileSize = 1024 * 1024 * 10, // 10MB
+		maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class CustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final String SAVE_DIR = "C:/CustomerFiles";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -30,14 +39,6 @@ public class CustomerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// Ÿle wy³¹cz to do zewnêtrznej metody i doGet i doPost niech j¹ wo³aj¹
-		// ogólnie nie jest to dobre by dzia³a³o zarówno dla posta i geta - ot
-		// chocia¿ny bezpieczeñstwo
-		doPost(request, response);
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -50,9 +51,19 @@ public class CustomerServlet extends HttpServlet {
 		CustomerDAO dao = new CustomerDAO();
 		Customer customer = null;
 		boolean result = false;
+		try {
+			checkingOptions(customer, dao, result, request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-		if (request.getParameter("save") != null) {
+	}
+
+	private void checkingOptions(Customer customer, CustomerDAO dao, boolean result, HttpServletRequest request,
+			HttpServletResponse response) throws SQLException, ServletException, IOException {
+		if (request.getParameter("save") != null || ServletFileUpload.isMultipartContent(request)) {
 			customer = getData(request);
+			uploadFile(customer, request);
 			result = dao.create(customer);
 
 		} else if (request.getParameter("update") != null) {
@@ -66,6 +77,12 @@ public class CustomerServlet extends HttpServlet {
 			int ID = Integer.parseInt(clientID);
 			result = dao.delete(ID);
 
+		} else if (request.getParameter("download") != null) {
+			String clientID = request.getParameter("id");
+			int id = Integer.parseInt(clientID);
+			customer = dao.showCustomer(id);
+			downloadFile(response, customer);
+
 		}
 		if (customer != null || result) {
 			request.setAttribute("clientlist", dao.read());
@@ -73,7 +90,21 @@ public class CustomerServlet extends HttpServlet {
 		}
 	}
 
-	private Customer getData(HttpServletRequest request) {
+	private void uploadFile(Customer customer, HttpServletRequest request) throws ServletException, IOException {
+		String name = customer.getSurname();
+		String born = customer.getBorn();
+		String fileDir = name + "_" + born;
+		FileOperations.saveFile(request, SAVE_DIR, fileDir);
+	}
+
+	private void downloadFile(HttpServletResponse response, Customer customer) throws ServletException, IOException {
+		String name = customer.getSurname();
+		String born = customer.getBorn();
+		String fileDir = name + "_" + born;
+		FileOperations.downloadFile(response, SAVE_DIR, fileDir);
+	}
+
+	private Customer getData(HttpServletRequest request) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		String born = request.getParameter("born");
@@ -84,8 +115,9 @@ public class CustomerServlet extends HttpServlet {
 		String country = request.getParameter("country");
 		String gender = request.getParameter("gender");
 		String telephone = request.getParameter("telephone");
+		String files = FileOperations.listFiles(request).toString();
 		Customer customer = new Customer(name, surname, born, idCardNumber, street, houseNumber, city, country, gender,
-				telephone);
+				telephone, files);
 		return customer;
 	}
 
