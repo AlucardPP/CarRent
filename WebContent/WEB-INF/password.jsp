@@ -34,9 +34,9 @@ body {
 				<c:choose>
 					<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
 						<ul class="nav navbar-nav">
-							<li><a href="index.jsp">Client</a></li>
-							<li><a href="car.jsp">Car</a></li>
-							<li><a href="rented.jsp">Rented Cars</a></li>
+							<li><a href="CustomerServlet">Client</a></li>
+							<li><a href="CarServlet">Car</a></li>
+							<li><a href="RentedServlet">Rented Cars</a></li>
 
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
@@ -54,10 +54,10 @@ body {
 					</c:when>
 					<c:when test="${not empty sessionScope.user && user.role == 'admin' }">
 						<ul class="nav navbar-nav">
-							<li><a href="index.jsp">Client</a></li>
-							<li><a href="car.jsp">Car</a></li>
-							<li><a href="rented.jsp">Rented Cars</a></li>
-							<li><a href="employee.jsp">Employee</a></li>
+							<li><a href="CustomerServlet">Client</a></li>
+							<li><a href="CarServlet">Car</a></li>
+							<li><a href="RentedServlet">Rented Cars</a></li>
+							<li><a href="EmployeeServlet">Employee</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
@@ -74,10 +74,10 @@ body {
 					</c:when>
 					<c:when test="${not empty sessionScope.user && user.role == 'manager' }">
 						<ul class="nav navbar-nav">
-							<li><a href="index.jsp">Client</a></li>
-							<li><a href="car.jsp">Car</a></li>
-							<li><a href="rented.jsp">Rented Cars</a></li>
-							<li><a href="employee.jsp">Employee</a></li>
+							<li><a href="CustomerServlet">Client</a></li>
+							<li><a href="CarServlet">Car</a></li>
+							<li><a href="RentedServlet">Rented Cars</a></li>
+							<li><a href="EmployeeServlet">Employee</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
@@ -94,13 +94,13 @@ body {
 					</c:when>
 					<c:otherwise>
 						<ul class="nav navbar-nav">
-							<li><a href="login.jsp">Client</a></li>
-							<li><a href="login.jsp">Car</a></li>
-							<li><a href="login.jsp">Rented Cars</a></li>
-							<li><a href="login.jsp">Employee</a></li>
+							<li><a href="LoginServlet">Client</a></li>
+							<li><a href="LoginServlet">Car</a></li>
+							<li><a href="LoginServlet">Rented Cars</a></li>
+							<li><a href="LoginServlet">Employee</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+							<li><a href="LoginServlet"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 						</ul>
 					</c:otherwise>
 				</c:choose>
