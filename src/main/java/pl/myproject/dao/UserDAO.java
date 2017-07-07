@@ -18,92 +18,70 @@ public class UserDAO {
 	private final static String DELETE = "DELETE FROM user WHERE user_id = :user_id;";
 	private final static String UPDATE_USER = "UPDATE user SET email = :email, username = :username, user_role = :user_role WHERE user_id = :user_id";
 
-	public boolean create(String email) {
+	public boolean create(String email) throws SQLException {
 		boolean result = false;
-		try {
-			NamedParameterStatement named = createData(CREATE, email);
-
-			int rowAffected = named.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NamedParameterStatement named = createData(CREATE, email);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0)
+			result = true;
 
 		return result;
 	}
 
-	public User readUserByEmail(String email) {
+	public User readUserByEmail(String email) throws SQLException {
 		User user = new User();
-		try {
-			NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
-					READ_USER_BY_EMAIL);
-			named.setString("email", email);
-			ResultSet res = named.executeQuery();
-			while (res.next()) {
-				user.setUser_id(res.getInt("user_id"));
-				user.setEmail(res.getString("email"));
-				user.setPassword(res.getString("password"));
-				user.setRole(res.getString("user_role"));
-				user.setUsername(res.getString("username"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
+				READ_USER_BY_EMAIL);
+		named.setString("email", email);
+		ResultSet res = named.executeQuery();
+		while (res.next())
+			readUser(user, res);
 		return user;
 	}
 
-	public User readUserById(int id) {
+	public User readUserById(int id) throws SQLException {
 		User user = new User();
-		try {
-			NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
-					READ_USER_BY_ID);
-			named.setInt("user_id", id);
-			ResultSet res = named.executeQuery();
-			while (res.next()) {
-				user.setUser_id(res.getInt("user_id"));
-				user.setEmail(res.getString("email"));
-				user.setPassword(res.getString("password"));
-				user.setRole(res.getString("user_role"));
-				user.setUsername(res.getString("username"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
+				READ_USER_BY_ID);
+		named.setInt("user_id", id);
+		ResultSet res = named.executeQuery();
+		while (res.next())
+			readUser(user, res);
 		return user;
 	}
 
-	public boolean update(int id, String username, String email, String role) {
+	public boolean update(int id, String username, String email, String role) throws SQLException {
 		boolean result = false;
-		try {
-			NamedParameterStatement named = updateData(username, id, email, role);
-			int rowAffected = named.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
+		NamedParameterStatement named = updateData(username, id, email, role);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0)
+			result = true;
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return result;
 
 	}
 
-	public boolean updatePassword(int id, String password) {
+	public boolean delete(int id) throws SQLException {
 		boolean result = false;
-		try {
-			NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
-					UPDATE_PASSWORD);
-			named.setString("password", password);
-			named.setInt("user_id", id);
-			int rowAffected = named.executeUpdate();
-			if (rowAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), DELETE);
+		named.setInt("user_id", id);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0)
+			result = true;
+		return result;
+
+	}
+
+	public boolean updatePassword(int id, String password) throws SQLException {
+		boolean result = false;
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
+				UPDATE_PASSWORD);
+		named.setString("password", password);
+		named.setInt("user_id", id);
+		int rowAffected = named.executeUpdate();
+		if (rowAffected > 0)
+			result = true;
+
 		return result;
 	}
 
@@ -163,6 +141,17 @@ public class UserDAO {
 		employee.setCreateDate(format.format(res.getDate("created")));
 		employee.setEdited(format.format(res.getDate("edited")));
 		return employee;
+	}
+
+	private User readUser(User user, ResultSet res) throws SQLException {
+
+		user.setUser_id(res.getInt("user_id"));
+		user.setEmail(res.getString("email"));
+		user.setPassword(res.getString("password"));
+		user.setRole(res.getString("user_role"));
+		user.setUsername(res.getString("username"));
+		return user;
+
 	}
 
 }

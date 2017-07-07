@@ -1,7 +1,6 @@
 package pl.myproject.servlet;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -16,24 +15,12 @@ import pl.myproject.model.Car;
 import pl.myproject.model.Rented;
 
 /**
- * Servlet implementation class RentedServlet
+ * Servlet implementation class RentCarServlet
  */
-@WebServlet("/RentedServlet")
-public class RentedServlet extends HttpServlet {
+@WebServlet("/RentCar")
+public class RentCarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public RentedServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -42,16 +29,11 @@ public class RentedServlet extends HttpServlet {
 		Rented rented = null;
 		Car car = null;
 		boolean result = false;
-
 		try {
-
 			checkOption(request, response, dao, car, rented, result);
-
 		} catch (SQLException | NumberFormatException | ParseException e) {
-
 			e.printStackTrace();
 		}
-
 	}
 
 	private void checkOption(HttpServletRequest request, HttpServletResponse response, RentedDAO dao, Car car,
@@ -61,44 +43,26 @@ public class RentedServlet extends HttpServlet {
 			String from = request.getParameter("from");
 			String till = request.getParameter("till");
 			String carID = request.getParameter("cars");
-
 			int id = Integer.parseInt(carID);
-			car = (Car) dao.readCarTable(id);
-			rented = getData(request, dao, car);
-			dao.updateCar(car, id, "no");
-			String pricePerHour = car.getRentPerHour();
-			double perHour = Double.valueOf(pricePerHour);
-			result = dao.create(rented, perHour, from, till, id);
-
-		} else if (request.getParameter("cancel") != null) {
-			String idRented = request.getParameter("PayedID");
-			int id = Integer.parseInt(idRented);
-			String idcar = request.getParameter("Car_ID");
-			int carid = Integer.parseInt(idcar);
-			dao.updateCar(car, carid, "yes");
-			result = dao.delete(id);
-		} else if (request.getParameter("Payed") != null) {
-			String idRented = request.getParameter("PayedID");
-			int id = Integer.parseInt(idRented);
-			int paid = isPaid(request.getParameter("Payed"));
-			int isRented = 1;
-
-			result = dao.udateRented(rented, id, paid, isRented);
-
-		} else if (request.getParameter("rented") != null) {
-			String idRented = request.getParameter("RentedID");
-			int id = Integer.parseInt(idRented);
-			int paid = 0;
-			int isRented = isPaid(request.getParameter("rented"));
-
-			result = dao.udateRented(rented, id, paid, isRented);
+			result = rentAndUpdateCar(request, id, car, dao, rented, result, from, till);
 
 		}
-
 		if (rented != null || result == true) {
 			request.setAttribute("rentedlist", dao.read());
-			request.getRequestDispatcher("rented.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/rented.jsp").forward(request, response);
 		}
+	}
+
+	private boolean rentAndUpdateCar(HttpServletRequest request, int id, Car car, RentedDAO dao, Rented rented,
+			boolean result, String from, String till) throws SQLException, ParseException {
+
+		car = (Car) dao.readCarTable(id);
+		rented = getData(request, dao, car);
+		dao.updateCar(car, id, "no");
+		String pricePerHour = car.getRentPerHour();
+		double perHour = Double.valueOf(pricePerHour);
+		result = dao.create(rented, perHour, from, till, id);
+		return result;
 	}
 
 	private Rented getData(HttpServletRequest request, RentedDAO dao, Car car) throws ParseException {

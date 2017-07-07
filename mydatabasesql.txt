@@ -3,18 +3,17 @@ CREATE TABLE `car_rent`.`client` (
   `idcustomer` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
-  `born` DATE NOT NULL,
+  `born` VARCHAR(45) NOT NULL,
   `idcardnumber` VARCHAR(45) NOT NULL,
   `street` VARCHAR(45) NOT NULL,
   `housenumber` VARCHAR(45) NOT NULL,
   `city` VARCHAR(45) NOT NULL,
   `country` VARCHAR(45) NOT NULL,
   `gender` VARCHAR(45) NOT NULL,
-  `telephone` VARCHAR(45) NOT NULL,`file` MEDIUMBLOB NOT NULL,
+  `telephone` VARCHAR(45) NOT NULL,`files` VARCHAR(200) NOT NULL,
   `created` DATE NOT NULL,
   `edited` DATE NOT NULL,
   PRIMARY KEY (`idcustomer`));
-
 
 
 CREATE TABLE `car_rent`.`employee` (
@@ -33,10 +32,10 @@ CREATE TABLE `car_rent`.`employee` (
   `salary` VARCHAR(45) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `file` MEDIUMBLOB NOT NULL,
+  `file` VARCHAR(200) NOT NULL,
   `created` DATE NOT NULL,
   `edited` DATE NOT NULL,
-  PRIMARY KEY (`idemployee`));
+  PRIMARY KEY (`idemployee`)), ADD UNIQUE INDEX `email_UNIQUE` (`email` ASC);
 
 
 CREATE TABLE `car_rent`.`car` (
@@ -51,7 +50,7 @@ CREATE TABLE `car_rent`.`car` (
   `rentperhour` VARCHAR(45) NOT NULL,
   `distance` VARCHAR(45) NOT NULL,
   `available` VARCHAR(45) NOT NULL,
-  `file` MEDIUMBLOB NULL,
+  `file` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`idcar`));
 
 
@@ -60,8 +59,24 @@ CREATE TABLE `car_rent`.`rented` (
   `employee` VARCHAR(255) NOT NULL,
   `client` VARCHAR(255) NOT NULL,
   `cars` VARCHAR(255) NOT NULL,
-  `from` VARCHAR(45) NOT NULL,
-  `till` VARCHAR(45) NOT NULL,
+  `fromday` VARCHAR(45) NOT NULL,
+  `tillday` VARCHAR(45) NOT NULL,
   `days` INT NOT NULL,
   `price` VARCHAR(45) NOT NULL,
+`paid` TINYINT(1) NOT NULL DEFAULT 0,`isrented` TINYINT(1) NOT NULL DEFAULT 0,`carid` INT(11) NOT NULL,
   PRIMARY KEY (`idrented`));
+
+CREATE TABLE `car_rent`.`user` ( `user_id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(60) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `user_role` VARCHAR(45) NOT NULL, `username` VARCHAR(60) NOT NULL, PRIMARY KEY (`user_id`)) ADD UNIQUE INDEX `email_UNIQUE` (`email` ASC), ADD UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC)
+;
+
+INSERT INTO `car_rent`.`employee` (`name`, `surname`, `born`, `idcardnumber`, `street`, `housenumber`, `city`, `country`, `gender`, `telephone`, `education`, `salary`, `role`, `email`, `file`, `created`, `edited`) VALUES ('Pawe³', 'Domañski', '20.04.1985', 'hjdfk987', 'Powstañców', '43/26', 'Wroc³aw', 'PL', 'male', '678345687', 'master degree', '150000', 'admin', 'admin@o2.pl', 'none', '2017-07-07', '2017-07-07');
+
+INSERT INTO `car_rent`.`user` (`user_id`, `email`, `password`, `user_role`, `username`) VALUES ('8', 'admin@o2.pl', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Pawe³ Domañski');
+
+
+
+
+

@@ -12,18 +12,13 @@ import pl.myproject.util.NamedParameterStatement;
 public class Validate {
 	private final static String READ_EMPLOYE = " SELECT * FROM user WHERE email = :email AND password = :password ; ";
 
-	public static boolean checkUser(String email, String password) {
+	public static boolean checkUser(String email, String password) throws SQLException {
 		boolean validate = false;
-		try {
-			NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(),
-					READ_EMPLOYE);
-			named.setString("email", email);
-			named.setString("password", password);
-			ResultSet res = named.executeQuery();
-			validate = res.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), READ_EMPLOYE);
+		named.setString("email", email);
+		named.setString("password", password);
+		ResultSet res = named.executeQuery();
+		validate = res.next();
 		return validate;
 	}
 

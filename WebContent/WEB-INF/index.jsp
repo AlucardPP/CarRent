@@ -20,6 +20,11 @@ body {
 	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -120,7 +125,7 @@ body {
 			<!--/.nav-collapse -->
 		</div>
 		</nav>
-		<form action="CustomerServlet" method="post">
+		<form action="add" method="post" enctype="multipart/form-data">
 			<div class="menu">
 				<div class="panel-group" id="accordion">
 					<div class="panel panel-default">
@@ -277,52 +282,55 @@ body {
 					</div>
 				</div>
 			</div>
-			<table class="table table-bordered">
-				<thead>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>SURNAME</th>
+					<th>TELEPHONE</th>
+					<th>CREATED</th>
+					<th>EDITED</th>
+					<th>DOCUMENT</th>
+					<th>ACTION</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:forEach items="${clientlist }" var="list">
 					<tr>
-						<th>ID</th>
-						<th>NAME</th>
-						<th>SURNAME</th>
-						<th>TELEPHONE</th>
-						<th>CREATED</th>
-						<th>EDITED</th>
-						<th>DOCUMENT</th>
-						<th>ACTION</th>
-					</tr>
-				</thead>
 
-				<tbody>
-					<c:forEach items="${clientlist }" var="list">
-						<tr>
+						<td><c:out value="${list.idCustomer}" /></td>
+						<td><c:out value="${list.name }" /></td>
+						<td><c:out value="${list.surname }" /></td>
+						<td><c:out value="${list.telephone }" /></td>
+						<td><c:out value="${list.createDate }" /></td>
+						<td><c:out value="${list.edited }" /></td>
+						<td>
+							<form name="frm" action="downloadCustomerFile" method="post" enctype="multipart/form-data">
+								<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /> <input type="hidden"
+									name="id" value="${list.idCustomer }" />
+							</form>
+						</td>
+						<td>
 
-							<td><c:out value="${list.idCustomer}" /></td>
-							<td><c:out value="${list.name }" /></td>
-							<td><c:out value="${list.surname }" /></td>
-							<td><c:out value="${list.telephone }" /></td>
-							<td><c:out value="${list.createDate }" /></td>
-							<td><c:out value="${list.edited }" /></td>
-							<td>
-								<form name="frm" action="CustomerServlet" method="post">
-									<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /> <input type="hidden"
-										name="id" value="${list.idCustomer }" />
-							</td>
-							<td>
-
-
+							<form name="frm" action="delete" method="post" enctype="multipart/form-data">
 								<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCustomer}"
-									aria-expanded="false" aria-controls="id" name="edit" value="${list.idCustomer }">Edit</button> <input
-								type="hidden" name="clientID" value="${list.idCustomer }" /> <input class="btn btn-md btn-primary"
-								type="submit" value="Delete" name="delete" />
+									aria-expanded="false" aria-controls="id" name="edit" value="${list.idCustomer }">Edit</button>
 
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
+								<input type="hidden" name="clientID" value="${list.idCustomer }" /> <input class="btn btn-md btn-primary"
+									type="submit" value="Delete" name="delete" />
+							</form>
 
-			</table>
-			<c:forEach items="${clientlist }" var="client">
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 
+		</table>
+		<c:forEach items="${clientlist }" var="client">
+			<form action="update" method="post" enctype="multipart/form-data">
 				<div class="collapse" id="${client.idCustomer }">
 
 
@@ -334,9 +342,9 @@ body {
 							<div class="row show-grid">
 								<div class="col-md-3">
 									<div class="form-group">
-										<form action="CustomerServlet" method="post">
-											<label for="clientName">Client Name:</label> <input type="text" class="form-control" id="upclientName"
-												name="upname" value="${client.name }" required>
+
+										<label for="clientName">Client Name:</label> <input type="text" class="form-control" id="upclientName"
+											name="upname" value="${client.name }" required>
 									</div>
 
 								</div>
@@ -477,39 +485,34 @@ body {
 
 									<input type="hidden" name="idClient123" value="${client.idCustomer }" /> <input class="btn btn-md btn-primary"
 										type="submit" value="Update" name="update" />
-		</form>
-	</div>
+
+								</div>
 
 
-	</div>
-	</div>
-	</div>
-	</div>
-
-	</c:forEach>
-	</form>
-
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</c:forEach>
 
 
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<!-- <script
+
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<!-- <script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$("#born").datepicker({
-				dateFormat : "dd.mm.yy",
-				changeYear : true,
-				changeMonth : true,
-				yearRange : '1900:' + (new Date).getFullYear()
-			});
-		});
-	</script>
 
+		<script>
+			$(function() {
+				$("#born").datepicker({
+					dateFormat : "dd.mm.yy",
+					changeYear : true,
+					changeMonth : true,
+					yearRange : '1900:' + (new Date).getFullYear()
+				});
+			});
+		</script>
 </body>
 </html>

@@ -22,7 +22,12 @@ body {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -123,7 +128,7 @@ body {
 
 	<!-- Page Content -->
 	<div class="container">
-		<form action="RentedServlet" method="post">
+		<form action="RentCar" method="post">
 			<div class="row">
 				<div class="menu">
 					<div class="panel-group" id="accordion">
@@ -269,13 +274,16 @@ body {
 
 
 									<c:when test="${rented.payed == '1' }">
-										<form action="RentedServlet" method="post">
+										<form action="Pay" method="post">
 
 											<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" /> <input
-												type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input
-												class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled" name="cancel" />
-
-											<input type="hidden" name="Car_ID" value="${rented.carId }" />
+												type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input type="hidden"
+												name="Car_ID" value="${rented.carId }" />
+										</form>
+										<form action="CancelRent" method="post">
+											<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
+												name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
+												name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
 										</form>
 									</c:when>
 
@@ -318,12 +326,7 @@ body {
 
 	<!-- jQuery Version 1.11.1 -->
 
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		/*	$(document).ready(
 				function(){

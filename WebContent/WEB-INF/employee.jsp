@@ -23,13 +23,13 @@ body {
 	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 </head>
 
@@ -61,6 +61,7 @@ body {
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
 								class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
 							<ul class="dropdown-menu">
+
 								<li><a href="PasswordServlet">Change Password</a></li>
 								<form class="form-signin" action="LogOutServlet" method="post">
 									<li><input type="submit" class="btn btn-block" value="Log Out"></li>
@@ -90,7 +91,7 @@ body {
 	<!-- Page Content -->
 	<div class="container">
 
-		<form action="EmployeeServlet" method="post">
+		<form action="AddEmployee" method="post" enctype="multipart/form-data">
 			<div class="menu">
 				<div class="panel-group" id="accordion">
 					<div class="panel panel-default">
@@ -301,17 +302,17 @@ body {
 								<td><c:out value="${list.createDate }" /></td>
 								<td><c:out value="${list.edited }" /></td>
 								<td>
-									<form name="frm" action="EmployeeServlet" method="post">
+									<form name="frm" action="DownloadE,plyeeFile" method="post" enctype="multipart/form-data">
 										<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
 											name="id" value="${list.idEmployee }" />
 								</td>
 								<td>
-
-
-									<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}"
-										aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }">Edit</button> <input
-									type="hidden" name="employeeID" value="${list.idEmployee }" /> <input class="btn btn-md btn-primary"
-									type="submit" value="Delete" name="delete" />
+									</form>
+									<form name="frm" action="DeleteEmployee" method="post" enctype="multipart/form-data">
+										<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}"
+											aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }">Edit</button>
+										<input type="hidden" name="employeeID" value="${list.idEmployee }" /> <input class="btn btn-md btn-primary"
+											type="submit" value="Delete" name="delete" />
 
 									</form>
 								</td>
@@ -328,7 +329,7 @@ body {
 									<div class="col-md-3">
 
 										<div class="form-group">
-											<form action="EmployeeServlet" method="post">
+											<form action="UpdateEmployee" method="post" enctype="multipart/form-data">
 												<label for="employeeName">Employee Name:</label> <input type="text" class="form-control" id="upemployeeName"
 													value="${employee.name }" name="upname" required>
 										</div>

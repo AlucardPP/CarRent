@@ -23,11 +23,15 @@ public class FileOperations {
 		// String appPath = request.getServletContext().getRealPath("");
 		String savePath = servletDir + File.separator + dir;// appPath +
 															// File.separator +
-															// SAVE_DIR;
+		File saveFolder = new File(servletDir);
 		File fileSaveDir = new File(savePath);
+		if(!saveFolder.exists()){
+			saveFolder.mkdirs();
+		}
 		if (!fileSaveDir.exists()) {
 			fileSaveDir.mkdir();
 		}
+		
 		for (Part part : request.getParts()) {
 			if (part.getContentType() != null) {
 				String fileName = extractFileName(part);

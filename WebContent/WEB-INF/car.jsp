@@ -25,13 +25,14 @@ body {
 }
 </style>
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -131,7 +132,7 @@ body {
 
 	<!-- Page Content -->
 	<div class="container">
-		<form action="CarServlet" method="post" enctype="multipart/form-data">
+		<form action="AddCarServlet" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<div class="menu">
 					<div class="panel-group" id="accordion">
@@ -279,7 +280,9 @@ body {
 
 													</div>
 													<div class="col-md-1">
-														<input class="btn btn-md btn-primary" type="submit" value="Save" name="save" />
+														<form action="AddCarServlet" method="post" enctype="multipart/form-data">
+															<input class="btn btn-md btn-primary" type="submit" value="Save" name="save" />
+														</form>
 													</div>
 												</div>
 											</div>
@@ -315,16 +318,16 @@ body {
 						<td><c:out value="${list.model }" /></td>
 						<td><c:out value="${list.rentPerHour }" /></td>
 						<td><c:out value="${list.available }" /></td>
-						<form name="frm" action="CarServlet" method="post" enctype="multipart/form-data">
+						<form name="frm" action="download" method="post" enctype="multipart/form-data">
 							<td><input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input
 								type="hidden" name="carPlate" value="${list.plate }" /></td>
 							<td>
-
-
-								<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCar}"
-									aria-expanded="false" aria-controls="id" name="edit" value="${list.idCar }">Edit</button> <input type="hidden"
-								name="carID" value="${list.idCar }" /> <input class="btn btn-md btn-primary" type="submit" value="Delete"
-								name="delete" />
+						</form>
+						<form name="frm" action="DeleteCarServlet" method="post" enctype="multipart/form-data">
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCar}"
+								aria-expanded="false" aria-controls="id" name="edit" value="${list.idCar }">Edit</button>
+							<input type="hidden" name="carID" value="${list.idCar }" /> <input class="btn btn-md btn-primary" type="submit"
+								value="Delete" name="delete" />
 						</form>
 						</td>
 					</tr>
@@ -337,7 +340,7 @@ body {
 					<div class="bs-docs-grid">
 						<div class="row show-grid">
 							<div class="col-md-3">
-								<form action="CarServlet" method="post">
+								<form action="UpdateCarServlet" method="post" enctype="multipart/form-data">
 									<div class="form-group">
 										<label for="upbrand">Car Brand:</label> <input type="text" class="form-control" id="upbrand"
 											value="${car.brand }" name="upbrand" required>
@@ -484,14 +487,7 @@ body {
 	</div>
 	<!-- /.container -->
 
-	<!-- jQuery Version 3.2.1 -->
 
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
 	<script>
 		if (document.getElementById("visible").checked) {
 			document.getElementById('notvisible').disabled = true;

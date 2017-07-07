@@ -15,6 +15,10 @@ body {
 	padding-top: 70px;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.validate.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -116,7 +120,7 @@ body {
 					<input name="old_password" type="password" class="form-control" placeholder="Old Password" id="old" required
 						autofocus> <input name="new_password" type="password" class="form-control" placeholder="New Password"
 						id="newPassword" required> <input name="repeat_password" type="password" class="form-control"
-						placeholder="Repeat Password" id="repeat" equalTo= "#newPassword" required>
+						placeholder="Repeat Password" id="repeat" equalTo="#newPassword" required>
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 
@@ -134,10 +138,7 @@ body {
 
 
 
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.validate.js"></script>
+
 		<script>
 			$(document).ready(function() {
 				$("#changePassword").validate({
