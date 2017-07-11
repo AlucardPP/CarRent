@@ -10,7 +10,7 @@ CREATE TABLE `car_rent`.`client` (
   `city` VARCHAR(45) NOT NULL,
   `country` VARCHAR(45) NOT NULL,
   `gender` VARCHAR(45) NOT NULL,
-  `telephone` VARCHAR(45) NOT NULL,`files` VARCHAR(200) NOT NULL,
+  `telephone` VARCHAR(45) NOT NULL,`file` VARCHAR(200) NOT NULL,
   `created` DATE NOT NULL,
   `edited` DATE NOT NULL,
   PRIMARY KEY (`idcustomer`));
