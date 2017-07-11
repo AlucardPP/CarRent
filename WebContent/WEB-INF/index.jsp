@@ -25,12 +25,7 @@ body {
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 <body>
 	<div class="container">
@@ -50,8 +45,8 @@ body {
 				<c:choose>
 					<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
 						<ul class="nav navbar-nav">
-							<li><a href="CustomerServlet">Client</a></li>
-							<li class="active"><a href="CarServlet">Car</a></li>
+							<li class="active"class="active"><a href="CustomerServlet">Client</a></li>
+							<li ><a href="CarServlet">Car</a></li>
 							<li><a href="RentedServlet">Rented Cars</a></li>
 
 						</ul>

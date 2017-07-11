@@ -13,7 +13,7 @@ import pl.myproject.util.NamedParameterStatement;
 
 public class CustomerDAO {
 
-	private final static String CREATE = "INSERT INTO client( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, created, edited) VALUES (:name, :surname, :born, :idcardnumber, :street, :housenumber, :city, :country, :gender, :telephone, ?, ?);";
+	private final static String CREATE = "INSERT INTO client( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, file, created, edited) VALUES (:name, :surname, :born, :idcardnumber, :street, :housenumber, :city, :country, :gender, :telephone, :file, ?, ?);";
 	private final static String READ = "SELECT * FROM client";
 	private final static String READ_BY_ID = "SELECT * FROM client WHERE idcustomer = :idcustomer";
 	private final static String UPDATE = "UPDATE client SET name = :name, surname = :surname, born = :born, idcardnumber= :idcardnumber, street = :street, housenumber = :housenumber, city = :city, country = :country, gender = :gender, telephone = :telephone, edited = ? WHERE  idcustomer = :idcustomer";
@@ -85,10 +85,11 @@ public class CustomerDAO {
 		named.setString("country", customer.getCountry());
 		named.setString("gender", customer.getGender());
 		named.setString("telephone", customer.getTelephone());
+		named.setString("file", customer.getFile());
 		java.util.Date myDate = new java.util.Date();
 		java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-		named.getStatement().setDate(11, sqlDate);
 		named.getStatement().setDate(12, sqlDate);
+		named.getStatement().setDate(13, sqlDate);
 		return named;
 	}
 
@@ -105,6 +106,7 @@ public class CustomerDAO {
 		resultCustomer.setCountry(res.getString("country"));
 		resultCustomer.setGender(res.getString("gender"));
 		resultCustomer.setTelephone(res.getString("telephone"));
+		resultCustomer.setFile(res.getString("file"));
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		resultCustomer.setCreateDate(format.format(res.getDate("created")));
 		resultCustomer.setEdited(format.format(res.getDate("edited")));

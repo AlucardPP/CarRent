@@ -1,6 +1,7 @@
 package pl.myproject.servlet;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -38,14 +39,14 @@ public class AddEmployeeServlet extends HttpServlet {
 		boolean result = false;
 		try {
 			checkOptions(employee, dao, user, result, request, response);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void checkOptions(Employee employee, EmployeeDAO dao, UserDAO user, boolean result,
 			HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, SQLException, IOException {
+			throws ServletException, SQLException, IOException, NoSuchAlgorithmException {
 		if (request.getParameter("save") != null || ServletFileUpload.isMultipartContent(request)) {
 			employee = getData(request);
 			uploadFile(employee, request);

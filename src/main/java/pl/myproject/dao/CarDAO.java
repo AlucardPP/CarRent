@@ -93,6 +93,7 @@ public class CarDAO {
 		resultCar.setRentPerHour(res.getString("rentperhour"));
 		resultCar.setDistance(res.getString("distance"));
 		resultCar.setAvailable(res.getString("available"));
+		resultCar.setFile(res.getString("file"));
 		return resultCar;
 	}
 

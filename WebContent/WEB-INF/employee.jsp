@@ -2,20 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang = "en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
 
 <title>Employee</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom CSS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 body {
@@ -34,20 +30,14 @@ body {
 </head>
 
 <body>
-
+<div class="container">
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-
-		</div>
+	
 		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<div class="collapse navbar-collapse">
 
 			<c:choose>
 				<c:when test="${not empty sessionScope.user }">
@@ -97,11 +87,11 @@ body {
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +ADD EMPLOYEE </a>
+								<a data-toggle="collapse" data-parent="#accordion" href="#addEmployee"> +ADD EMPLOYEE </a>
 							</h4>
 						</div>
 
-						<div id="collapseOne" class="panel-collapse collapse">
+						<div id="addEmployee" class="panel-collapse collapse">
 							<div class="panel-body">
 								<div class="bs-docs-grid">
 									<div class="row show-grid">
@@ -261,8 +251,8 @@ body {
 										<div class="row show-grid">
 											<div class="col-md-9"></div>
 											<div class="col-md-1">
-												<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
-													data-target="#collapseOne">Cancel</button>
+												<button class="btn btn-md btn-primary"  type="reset" name="cancel" data-toggle="collapse"
+													data-target="#addEmployee">Cancel</button>
 
 											</div>
 											<div class="col-md-1">
@@ -272,306 +262,308 @@ body {
 									</div>
 								</div>
 							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- /.row -->
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>SURNAME</th>
+					<th>TELEPHONE</th>
+					<th>CREATED</th>
+					<th>EDITED</th>
+					<th>DOCUMENT</th>
+					<th>ACTION</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:forEach items="${employeelist }" var="list">
+					<tr>
+
+						<td><c:out value="${list.idEmployee}" /></td>
+						<td><c:out value="${list.name }" /></td>
+						<td><c:out value="${list.surname }" /></td>
+						<td><c:out value="${list.telephone }" /></td>
+						<td><c:out value="${list.createDate }" /></td>
+						<td><c:out value="${list.edited }" /></td>
+						<td>
+							<form name="frm" action="DownloadE,plyeeFile" method="post" enctype="multipart/form-data">
+								<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
+									name="id" value="${list.idEmployee }" />
+						</td>
+						<td>
+							</form>
+							<form name="frm" action="DeleteEmployee" method="post" enctype="multipart/form-data">
+								<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}"
+									aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }">Edit</button>
+								<input type="hidden" name="employeeID" value="${list.idEmployee }" /> <input class="btn btn-md btn-primary"
+									type="submit" value="Delete" name="delete" />
+
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+
+		</table>
+		<c:forEach items="${employeelist }" var="employee">
+			<div class="collapse" id="${employee.idEmployee }">
+				<div class="well">
+					<div class="bs-docs-grid">
+						<div class="row show-grid">
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<form action="UpdateEmployee" method="post" enctype="multipart/form-data">
+										<label for="employeeName">Employee Name:</label> <input type="text" class="form-control" id="upemployeeName"
+											value="${employee.name }" name="upname" required>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="employeeSurname">Employee Surname:</label> <input type="text" class="form-control"
+										id="upemployeeSurname" value="${employee.surname }" name="upsurname" required>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="upeducation">Education:</label> <select class="form-control" name="upeducation">
+										<c:choose>
+											<c:when test="${employee.education  == 'basic'}">
+												<option selected value="basic">Basic</option>
+											</c:when>
+											<c:otherwise>
+												<option value="basic">Basic</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.education  == 'high school'}">
+												<option selected value="high school">High School</option>
+											</c:when>
+											<c:otherwise>
+												<option value="high school">High School</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.education  == 'bachelor'}">
+												<option selected value="bachelor">Bachelor</option>
+											</c:when>
+											<c:otherwise>
+												<option value="bachelor">Bachelor</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.education  == 'engineer'}">
+												<option selected value="engineer">Engineer</option>
+											</c:when>
+											<c:otherwise>
+												<option value="engineer">Engineer</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.education  == 'master degree'}">
+												<option selected value="master degree">Master degree</option>
+											</c:when>
+											<c:otherwise>
+												<option value="master degree">Master degree</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.education  == 'none'}">
+												<option selected value="none">None</option>
+											</c:when>
+											<c:otherwise>
+												<option value="none">None</option>
+											</c:otherwise>
+										</c:choose>
+
+
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+
+									<input type="file" name="files" multiple="true" />
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="bs-docs-grid">
+						<div class="row show-grid">
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="upborn">Born:</label> <input type="text" class="form-control" id="upborn" value="${employee.born }"
+										name="upborn" required />
+								</div>
+
+							</div>
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="idCardNumber">ID Card Number:</label> <input type="text" class="form-control" id="upidCardNumber"
+										value="${employee.idCardNumber }" name="upidcardnumber" required>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="salary">Salary:</label> <input type="text" class="form-control" id="upsalary"
+										value="${employee.salary }" name="upsalary" required>
+								</div>
+							</div>
+							<div class="col-md-2"></div>
+						</div>
+					</div>
+					<br>
+					<div class="bs-docs-grid">
+						<div class="row show-grid">
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="street">Street:</label> <input type="text" class="form-control" id="upstreet"
+										value="${employee.street }" name="upstreet" required>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="house">House Number:</label> <input type="text" class="form-control" id="uphouse"
+										value="${employee.houseNumber }" name="uphousenumber" required>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="uprole">Role:</label> <select class="form-control" name="uprole">
+										<c:choose>
+											<c:when test="${employee.role  == 'admin'}">
+												<option selected value="admin">admin</option>
+											</c:when>
+											<c:otherwise>
+												<option value="admin">admin</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.role  == 'regular'}">
+												<option selected value="regular">regular</option>
+											</c:when>
+											<c:otherwise>
+												<option value="regular">regular</option>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${employee.role  == 'manager'}">
+												<option selected value="manager">manager</option>
+											</c:when>
+											<c:otherwise>
+												<option value="manager">manager</option>
+											</c:otherwise>
+										</c:choose>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2"></div>
+						</div>
+					</div>
+					<br>
+					<div class="bs-docs-grid">
+						<div class="row show-grid">
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="city">City:</label> <input type="text" class="form-control" id="upcity" value="${employee.city }"
+										name="upcity" required>
+								</div>
+
+							</div>
+							<div class="col-md-3">
+
+								<label for="country">Country code:</label> <select class="form-control" name="upcountry">
+									<c:forEach items="${countries }" var="country">
+										<c:if test="${employee.country eq country.key }">
+											<option value="${country.key }">${country.value }</option>
+										</c:if>
+									</c:forEach>
+									<c:forEach items="${countries }" var="country">
+										<option value="${country.key }">${country.value }</option>
+									</c:forEach>
+
+								</select>
+
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="upemail">Email:</label> <input type="text" class="form-control" id="upemail"
+										value="${employee.email }" name="upemail" required>
+								</div>
+							</div>
+							<div class="col-md-2"></div>
+						</div>
+					</div>
+					<br>
+					<div class="bs-docs-grid">
+						<div class="row show-grid">
+							<div class="col-md-3">
+								<label for="gender">Gender:</label> <select class="form-control" name="upgender">
+									<c:choose>
+										<c:when test="${employee.gender eq 'male' }">
+											<option selected value="male">Male</option>
+										</c:when>
+										<c:otherwise>
+											<option value="female">Female</option>
+										</c:otherwise>
+
+									</c:choose>
+
+								</select>
+							</div>
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label for="uptelephone">Telephone:</label> <input type="text" class="form-control" id="uptelephone"
+										value="${employee.telephone }" name="uptelephone" required>
+								</div>
+
+							</div>
+							<div class="col-md-3"></div>
+							<div class="col-md-2"></div>
+						</div>
+					</div>
+					<br>
+					<div class="bs-docs-grid">
+						<div class="row show-grid">
+							<div class="col-md-9"></div>
+							<div class="col-md-1">
+								<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
+									data-target="#${employee.idEmployee }">Cancel</button>
+
+							</div>
+							<div class="col-md-1">
+								<input type="hidden" name="IDemployee" value="${employee.idEmployee }" /> <input class="btn btn-md btn-primary"
+									type="submit" value="Update" name="update" />
+							</div>
 
 						</div>
 					</div>
 				</div>
-				<!-- /.row -->
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>NAME</th>
-							<th>SURNAME</th>
-							<th>TELEPHONE</th>
-							<th>CREATED</th>
-							<th>EDITED</th>
-							<th>DOCUMENT</th>
-							<th>ACTION</th>
-						</tr>
-					</thead>
+			</div>
 
-					<tbody>
-						<c:forEach items="${employeelist }" var="list">
-							<tr>
-
-								<td><c:out value="${list.idEmployee}" /></td>
-								<td><c:out value="${list.name }" /></td>
-								<td><c:out value="${list.surname }" /></td>
-								<td><c:out value="${list.telephone }" /></td>
-								<td><c:out value="${list.createDate }" /></td>
-								<td><c:out value="${list.edited }" /></td>
-								<td>
-									<form name="frm" action="DownloadE,plyeeFile" method="post" enctype="multipart/form-data">
-										<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
-											name="id" value="${list.idEmployee }" />
-								</td>
-								<td>
-									</form>
-									<form name="frm" action="DeleteEmployee" method="post" enctype="multipart/form-data">
-										<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}"
-											aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }">Edit</button>
-										<input type="hidden" name="employeeID" value="${list.idEmployee }" /> <input class="btn btn-md btn-primary"
-											type="submit" value="Delete" name="delete" />
-
-									</form>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-
-				</table>
-				<c:forEach items="${employeelist }" var="employee">
-					<div class="collapse" id="${employee.idEmployee }">
-						<div class="well">
-							<div class="bs-docs-grid">
-								<div class="row show-grid">
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<form action="UpdateEmployee" method="post" enctype="multipart/form-data">
-												<label for="employeeName">Employee Name:</label> <input type="text" class="form-control" id="upemployeeName"
-													value="${employee.name }" name="upname" required>
-										</div>
-
-									</div>
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="employeeSurname">Employee Surname:</label> <input type="text" class="form-control"
-												id="upemployeeSurname" value="${employee.surname }" name="upsurname" required>
-										</div>
-
-									</div>
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="upeducation">Education:</label> <select class="form-control" name="upeducation">
-												<c:choose>
-													<c:when test="${employee.education  == 'basic'}">
-														<option selected value="basic">Basic</option>
-													</c:when>
-													<c:otherwise>
-														<option value="basic">Basic</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.education  == 'high school'}">
-														<option selected value="high school">High School</option>
-													</c:when>
-													<c:otherwise>
-														<option value="high school">High School</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.education  == 'bachelor'}">
-														<option selected value="bachelor">Bachelor</option>
-													</c:when>
-													<c:otherwise>
-														<option value="bachelor">Bachelor</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.education  == 'engineer'}">
-														<option selected value="engineer">Engineer</option>
-													</c:when>
-													<c:otherwise>
-														<option value="engineer">Engineer</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.education  == 'master degree'}">
-														<option selected value="master degree">Master degree</option>
-													</c:when>
-													<c:otherwise>
-														<option value="master degree">Master degree</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.education  == 'none'}">
-														<option selected value="none">None</option>
-													</c:when>
-													<c:otherwise>
-														<option value="none">None</option>
-													</c:otherwise>
-												</c:choose>
-
-
-											</select>
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div class="form-group">
-
-											<input type="file" name="files" multiple="true" />
-
-										</div>
-									</div>
-								</div>
-							</div>
-							<br>
-							<div class="bs-docs-grid">
-								<div class="row show-grid">
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="upborn">Born:</label> <input type="text" class="form-control" id="upborn"
-												value="${employee.born }" name="upborn" required />
-										</div>
-
-									</div>
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="idCardNumber">ID Card Number:</label> <input type="text" class="form-control" id="upidCardNumber"
-												value="${employee.idCardNumber }" name="upidcardnumber" required>
-										</div>
-
-									</div>
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="salary">Salary:</label> <input type="text" class="form-control" id="upsalary"
-												value="${employee.salary }" name="upsalary" required>
-										</div>
-									</div>
-									<div class="col-md-2"></div>
-								</div>
-							</div>
-							<br>
-							<div class="bs-docs-grid">
-								<div class="row show-grid">
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="street">Street:</label> <input type="text" class="form-control" id="upstreet"
-												value="${employee.street }" name="upstreet" required>
-										</div>
-
-									</div>
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="house">House Number:</label> <input type="text" class="form-control" id="uphouse"
-												value="${employee.houseNumber }" name="uphousenumber" required>
-										</div>
-
-									</div>
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="uprole">Role:</label> <select class="form-control" name="uprole">
-												<c:choose>
-													<c:when test="${employee.role  == 'admin'}">
-														<option selected value="admin">admin</option>
-													</c:when>
-													<c:otherwise>
-														<option value="admin">admin</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.role  == 'regular'}">
-														<option selected value="regular">regular</option>
-													</c:when>
-													<c:otherwise>
-														<option value="regular">regular</option>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${employee.role  == 'manager'}">
-														<option selected value="manager">manager</option>
-													</c:when>
-													<c:otherwise>
-														<option value="manager">manager</option>
-													</c:otherwise>
-												</c:choose>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-2"></div>
-								</div>
-							</div>
-							<br>
-							<div class="bs-docs-grid">
-								<div class="row show-grid">
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="city">City:</label> <input type="text" class="form-control" id="upcity" value="${employee.city }"
-												name="upcity" required>
-										</div>
-
-									</div>
-									<div class="col-md-3">
-
-										<label for="country">Country code:</label> <select class="form-control" name="upcountry">
-											<c:forEach items="${countries }" var="country">
-												<c:if test="${employee.country eq country.key }">
-													<option value="${country.key }">${country.value }</option>
-												</c:if>
-											</c:forEach>
-											<c:forEach items="${countries }" var="country">
-												<option value="${country.key }">${country.value }</option>
-											</c:forEach>
-
-										</select>
-
-									</div>
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="upemail">Email:</label> <input type="text" class="form-control" id="upemail"
-												value="${employee.email }" name="upemail" required>
-										</div>
-									</div>
-									<div class="col-md-2"></div>
-								</div>
-							</div>
-							<br>
-							<div class="bs-docs-grid">
-								<div class="row show-grid">
-									<div class="col-md-3">
-										<label for="gender">Gender:</label> <select class="form-control" name="upgender">
-											<c:choose>
-												<c:when test="${employee.gender eq 'male' }">
-													<option selected value="male">Male</option>
-												</c:when>
-												<c:otherwise>
-													<option value="female">Female</option>
-												</c:otherwise>
-
-											</c:choose>
-
-										</select>
-									</div>
-									<div class="col-md-3">
-
-										<div class="form-group">
-											<label for="uptelephone">Telephone:</label> <input type="text" class="form-control" id="uptelephone"
-												value="${employee.telephone }" name="uptelephone" required>
-										</div>
-
-									</div>
-									<div class="col-md-3"></div>
-									<div class="col-md-2"></div>
-								</div>
-							</div>
-							<br>
-							<div class="bs-docs-grid">
-								<div class="row show-grid">
-									<div class="col-md-9"></div>
-									<div class="col-md-1">
-										<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
-											data-target="#${employee.idEmployee }">Cancel</button>
-
-									</div>
-									<div class="col-md-1">
-										<input type="hidden" name="IDemployee" value="${employee.idEmployee }" /> <input
-											class="btn btn-md btn-primary" type="submit" value="Update" name="update" />
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</c:forEach>
+		</c:forEach>
 		</form>
 	</div>
 
@@ -580,12 +572,7 @@ body {
 
 	<!-- jQuery Version 1.11.1 -->
 
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
 			$("#born").datepicker({

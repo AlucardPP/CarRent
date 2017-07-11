@@ -95,7 +95,7 @@ body {
 				<c:when test="${not empty sessionScope.user && user.role == 'manager' }">
 					<ul class="nav navbar-nav">
 						<li><a href="CustomerServlet">Client</a></li>
-						<li class="WEB-INF/active"><a href="CarServlet">Car</a></li>
+						<li class="active"><a href="CarServlet">Car</a></li>
 						<li><a href="RentedServlet">Rented Cars</a></li>
 						<li><a href="EmployeeServlet">Employee</a></li>
 					</ul>

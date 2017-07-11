@@ -1,5 +1,6 @@
 package pl.myproject.dao;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -11,14 +12,14 @@ import pl.myproject.util.NamedParameterStatement;
 
 public class UserDAO {
 	private final static String GET_EMPLOYEE = "SELECT * FROM employee WHERE email = :email;";
-	private final static String CREATE = "INSERT INTO user(user_id, email, password, user_role, username) VALUES (:user_id, :email, :password, :user_role. :username);";
+	private final static String CREATE = "INSERT INTO user(user_id, email, password, user_role, username) VALUES (:user_id, :email, :password, :user_role, :username);";
 	private final static String READ_USER_BY_EMAIL = "SELECT * FROM user WHERE email = :email;";
 	private final static String READ_USER_BY_ID = "SELECT * FROM user WHERE user_id = :user_id;";
 	private final static String UPDATE_PASSWORD = "UPDATE user SET password = :password WHERE user_id = :user_id ";
 	private final static String DELETE = "DELETE FROM user WHERE user_id = :user_id;";
 	private final static String UPDATE_USER = "UPDATE user SET email = :email, username = :username, user_role = :user_role WHERE user_id = :user_id";
 
-	public boolean create(String email) throws SQLException {
+	public boolean create(String email) throws SQLException, NoSuchAlgorithmException {
 		boolean result = false;
 		NamedParameterStatement named = createData(CREATE, email);
 		int rowAffected = named.executeUpdate();
@@ -106,12 +107,12 @@ public class UserDAO {
 
 	}
 
-	private NamedParameterStatement createData(String querry, String email) throws SQLException {
+	private NamedParameterStatement createData(String querry, String email) throws SQLException, NoSuchAlgorithmException {
 		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), querry);
 		Employee employee = getEmployee(email);
 		named.setInt("user_id", employee.getIdEmployee());
 		named.setString("email", email);
-		named.setString("password", "test");
+		named.setString("password", Validate.getMD5Hash("test"));
 		named.setString("user_role", employee.getRole());
 		String name = employee.getName();
 		String surname = employee.getSurname();

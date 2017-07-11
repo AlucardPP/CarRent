@@ -50,8 +50,8 @@ body {
 					<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
 						<ul class="nav navbar-nav">
 							<li><a href="CustomerServlet">Client</a></li>
-							<li class="active"><a href="CarServlet">Car</a></li>
-							<li><a href="RentedServlet">Rented Cars</a></li>
+							<li ><a href="CarServlet">Car</a></li>
+							<li class="active"><a href="RentedServlet">Rented Cars</a></li>
 
 						</ul>
 						<ul class="nav navbar-nav navbar-right">

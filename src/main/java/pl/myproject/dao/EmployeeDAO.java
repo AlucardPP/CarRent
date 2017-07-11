@@ -13,7 +13,7 @@ import pl.myproject.util.ConnectionProvider;
 import pl.myproject.util.NamedParameterStatement;
 
 public class EmployeeDAO {
-	private final static String CREATE = "INSERT INTO employee ( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, education, salary, role, email, created, edited) VALUES ( :name, :surname, :born, :idcardnumber, :street, :housenumber, :city, :country, :gender, :telephone, :education, :salary, :role, :email, ?, ?); ";
+	private final static String CREATE = "INSERT INTO employee ( name, surname, born, idcardnumber, street, housenumber, city, country, gender, telephone, education, salary, role, email, file, created, edited) VALUES ( :name, :surname, :born, :idcardnumber, :street, :housenumber, :city, :country, :gender, :telephone, :education, :salary, :role, :email, :file, ?, ?); ";
 	private final static String READ = "SELECT * FROM employee;";
 	private final static String READ_BY_ID = "SELECT * FROM employee WHERE idemployee = :idemployee;";
 	private final static String UPDATE = "UPDATE employee SET name = :name, surname = :surname, born = :born, idcardnumber= :idcardnumber, street = :street, housenumber = :housenumber, city = :city, country = :country, gender = :gender, telephone = :telephone, education = :education, salary = :salary, role = :role, email = :email,  edited = ? WHERE idemployee = :idemployee;";
@@ -89,10 +89,11 @@ public class EmployeeDAO {
 		named.setString("salary", employee.getSalary());
 		named.setString("role", employee.getRole());
 		named.setString("email", employee.getEmail());
+		named.setString("file", employee.getFiles());
 		java.util.Date myDate = new java.util.Date();
 		java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-		named.getStatement().setDate(15, sqlDate);
 		named.getStatement().setDate(16, sqlDate);
+		named.getStatement().setDate(17, sqlDate);
 		return named;
 
 	}
@@ -114,6 +115,7 @@ public class EmployeeDAO {
 		resultEmployee.setSalary(res.getString("salary"));
 		resultEmployee.setRole(res.getString("role"));
 		resultEmployee.setEmail(res.getString("email"));
+		resultEmployee.setFiles(res.getString("file"));
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		resultEmployee.setCreateDate(format.format(res.getDate("created")));
 		resultEmployee.setEdited(format.format(res.getDate("edited")));
