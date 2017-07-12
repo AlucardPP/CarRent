@@ -186,7 +186,7 @@ body {
 														<c:if test="${user.role == 'admin' }">
 
 															<option value="regular">regular</option>
-															<option value="mannager">manager</option>
+															<option value="manager">manager</option>
 														</c:if>
 													</select>
 												</div>
