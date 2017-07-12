@@ -72,9 +72,9 @@ CREATE TABLE `car_rent`.`user` ( `user_id` INT NOT NULL AUTO_INCREMENT,
   `user_role` VARCHAR(45) NOT NULL, `username` VARCHAR(60) NOT NULL, PRIMARY KEY (`user_id`), UNIQUE INDEX `email_UNIQUE` (`email` ASC), UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC))
 ;
 
-INSERT INTO `car_rent`.`employee` (`name`, `surname`, `born`, `idcardnumber`, `street`, `housenumber`, `city`, `country`, `gender`, `telephone`, `education`, `salary`, `role`, `email`, `file`, `created`, `edited`) VALUES ('Pawe³', 'Domañski', '20.04.1985', 'hjdfk987', 'Powstañców', '43/26', 'Wroc³aw', 'PL', 'male', '678345687', 'master degree', '150000', 'admin', 'admin@o2.pl', 'none', '2017-07-07', '2017-07-07');
+INSERT INTO `car_rent`.`employee` (`name`, `surname`, `born`, `idcardnumber`, `street`, `housenumber`, `city`, `country`, `gender`, `telephone`, `education`, `salary`, `role`, `email`, `file`, `created`, `edited`) VALUES ('Jan', 'Kowalski', '20.04.1985', 'hjdfk987', 'PowstaÃ±cÃ³w', '43/26', 'WrocÂ³aw', 'PL', 'male', '678345687', 'master degree', '150000', 'admin', 'admin@o2.pl', 'none', '2017-07-07', '2017-07-07');
 
-INSERT INTO `car_rent`.`user` (`user_id`, `email`, `password`, `user_role`, `username`) VALUES ('1', 'admin@o2.pl', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Pawe³ Domañski');
+INSERT INTO `car_rent`.`user` (`user_id`, `email`, `password`, `user_role`, `username`) VALUES ('1', 'admin@o2.pl', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Jan Kowalski');
 
 
 
