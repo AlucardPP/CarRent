@@ -8,7 +8,7 @@
 	maxIdle="30"
 	maxWaitMillis="10000"
 	username="root"
-	password="admin"
+	password="kbd061fdg"
 	driverClassName="com.mysql.jdbc.Driver"
 	url="jdbc:mysql://localhost:3306/car_rent" />
 

@@ -45,8 +45,8 @@ body {
 				<c:choose>
 					<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
 						<ul class="nav navbar-nav">
-							<li class="active"class="active"><a href="CustomerServlet">Client</a></li>
-							<li ><a href="CarServlet">Car</a></li>
+							<li class="active" class="active"><a href="CustomerServlet">Client</a></li>
+							<li><a href="CarServlet">Car</a></li>
 							<li><a href="RentedServlet">Rented Cars</a></li>
 
 						</ul>
@@ -302,23 +302,29 @@ body {
 						<td><c:out value="${list.telephone }" /></td>
 						<td><c:out value="${list.createDate }" /></td>
 						<td><c:out value="${list.edited }" /></td>
-						<td>
-							<form name="frm" action="downloadCustomerFile" method="post" enctype="multipart/form-data">
-								<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /> <input type="hidden"
-									name="id" value="${list.idCustomer }" />
-							</form>
-						</td>
-						<td>
+						<c:choose>
+							<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+							</c:when>
+							<c:otherwise>
+								<td>
+									<form name="frm" action="downloadCustomerFile" method="post" enctype="multipart/form-data">
+										<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /> <input type="hidden"
+											name="id" value="${list.idCustomer }" />
+									</form>
+								</td>
+								<td>
 
-							<form name="frm" action="delete" method="post" enctype="multipart/form-data">
-								<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCustomer}"
-									aria-expanded="false" aria-controls="id" name="edit" value="${list.idCustomer }">Edit</button>
+									<form name="frm" action="delete" method="post" enctype="multipart/form-data">
+										<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCustomer}"
+											aria-expanded="false" aria-controls="id" name="edit" value="${list.idCustomer }">Edit</button>
 
-								<input type="hidden" name="clientID" value="${list.idCustomer }" /> <input class="btn btn-md btn-primary"
-									type="submit" value="Delete" name="delete" />
-							</form>
+										<input type="hidden" name="clientID" value="${list.idCustomer }" /> <input class="btn btn-md btn-primary"
+											type="submit" value="Delete" name="delete" />
+									</form>
 
-						</td>
+								</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>

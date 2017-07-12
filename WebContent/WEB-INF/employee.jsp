@@ -294,7 +294,7 @@ body {
 						<td><c:out value="${list.createDate }" /></td>
 						<td><c:out value="${list.edited }" /></td>
 						<td>
-							<form name="frm" action="DownloadE,plyeeFile" method="post" enctype="multipart/form-data">
+							<form name="frm" action="DownloadEmployeeFile" method="post" enctype="multipart/form-data">
 								<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
 									name="id" value="${list.idEmployee }" />
 						</td>

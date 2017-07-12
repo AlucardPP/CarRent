@@ -50,7 +50,7 @@ body {
 					<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
 						<ul class="nav navbar-nav">
 							<li><a href="CustomerServlet">Client</a></li>
-							<li ><a href="CarServlet">Car</a></li>
+							<li><a href="CarServlet">Car</a></li>
 							<li class="active"><a href="RentedServlet">Rented Cars</a></li>
 
 						</ul>
@@ -269,48 +269,52 @@ body {
 							<td><c:out value="${rented.days }" /></td>
 							<td><c:out value="${rented.price }" /></td>
 
-
-							<td id="buttons${rented.idRented }"><c:choose>
-
-
-									<c:when test="${rented.payed == '1' }">
-										<form action="Pay" method="post">
-
-											<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" /> <input
-												type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input type="hidden"
-												name="Car_ID" value="${rented.carId }" />
-										</form>
-										<form action="CancelRent" method="post">
-											<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
-												name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
-												name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
-										</form>
-									</c:when>
-
-									<c:when test="${rented.payed == '0' && rented.rented == '1' }">
-										<form action="RentedServlet" method="post">
-
-											<input class="btn btn-md btn-primary" type="submit" value="Rented" id="rented${rented.idRented }"
-												name="rented" /> <input type="hidden" name="RentedID" value="${rented.idRented }" />
+							<c:choose>
+								<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+								</c:when>
+								<c:otherwise>
+									<td id="buttons${rented.idRented }"><c:choose>
 
 
+											<c:when test="${rented.payed == '1' }">
+												<form action="Pay" method="post">
+
+													<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" /> <input
+														type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input type="hidden"
+														name="Car_ID" value="${rented.carId }" />
+												</form>
+												<form action="CancelRent" method="post">
+													<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
+														name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
+														name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
+												</form>
+											</c:when>
+
+											<c:when test="${rented.payed == '0' && rented.rented == '1' }">
+												<form action="RentedServlet" method="post">
+
+													<input class="btn btn-md btn-primary" type="submit" value="Rented" id="rented${rented.idRented }"
+														name="rented" /> <input type="hidden" name="RentedID" value="${rented.idRented }" />
 
 
-										</form>
-									</c:when>
-
-									<c:when test="${rented.rented == '0' && rented.payed == '0' }">
 
 
-										<input class="btn btn-md btn-primary" type="submit" value="Returned" id="returned${rented.idRented }"
-											name="returned" />
-										<input class="btn btn-md btn-primary" type="submit" value="Destroyed" id="destroyed${rented.idRented }"
-											name="destroyed" />
+												</form>
+											</c:when>
 
-									</c:when>
+											<c:when test="${rented.rented == '0' && rented.payed == '0' }">
 
-								</c:choose></td>
 
+												<input class="btn btn-md btn-primary" type="submit" value="Returned" id="returned${rented.idRented }"
+													name="returned" />
+												<input class="btn btn-md btn-primary" type="submit" value="Destroyed" id="destroyed${rented.idRented }"
+													name="destroyed" />
+
+											</c:when>
+
+										</c:choose></td>
+								</c:otherwise>
+							</c:choose>
 
 						</tr>
 					</c:forEach>

@@ -318,18 +318,24 @@ body {
 						<td><c:out value="${list.model }" /></td>
 						<td><c:out value="${list.rentPerHour }" /></td>
 						<td><c:out value="${list.available }" /></td>
-						<form name="frm" action="download" method="post" enctype="multipart/form-data">
-							<td><input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input
-								type="hidden" name="carPlate" value="${list.plate }" /></td>
-							<td>
-						</form>
-						<form name="frm" action="DeleteCarServlet" method="post" enctype="multipart/form-data">
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCar}"
-								aria-expanded="false" aria-controls="id" name="edit" value="${list.idCar }">Edit</button>
-							<input type="hidden" name="carID" value="${list.idCar }" /> <input class="btn btn-md btn-primary" type="submit"
-								value="Delete" name="delete" />
-						</form>
-						</td>
+						<c:choose>
+							<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+							</c:when>
+							<c:otherwise>
+								<form name="frm" action="download" method="post" enctype="multipart/form-data">
+									<td><input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input
+										type="hidden" name="carPlate" value="${list.plate }" /></td>
+									<td>
+								</form>
+								<form name="frm" action="DeleteCarServlet" method="post" enctype="multipart/form-data">
+									<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCar}"
+										aria-expanded="false" aria-controls="id" name="edit" value="${list.idCar }">Edit</button>
+									<input type="hidden" name="carID" value="${list.idCar }" /> <input class="btn btn-md btn-primary"
+										type="submit" value="Delete" name="delete" />
+								</form>
+								</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>
