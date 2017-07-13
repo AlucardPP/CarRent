@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import pl.myproject.dao.CarDAO;
+import pl.myproject.dao.CustomerDAO;
+import pl.myproject.dao.EmployeeDAO;
 import pl.myproject.dao.RentedDAO;
 import pl.myproject.model.Car;
 import pl.myproject.model.Rented;
@@ -29,9 +32,15 @@ public class RentedServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		RentedDAO dao = new RentedDAO();
+		CarDAO carDao = new CarDAO();
+		CustomerDAO clientDao = new CustomerDAO();
+		EmployeeDAO employeeDao = new EmployeeDAO();
 		try {
 			if (session != null) {
 				request.setAttribute("rentedlist", dao.read());
+				request.setAttribute("carlist", carDao.read());
+				request.setAttribute("clientlist", clientDao.read());
+				request.setAttribute("employeelist", employeeDao.read());
 				request.getRequestDispatcher("WEB-INF/rented.jsp").forward(request, response);
 			} else {
 				request.getRequestDispatcher("login.jsp").forward(request, response);

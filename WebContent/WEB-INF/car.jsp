@@ -133,167 +133,167 @@ body {
 	<!-- Page Content -->
 	<div class="container">
 		<form action="AddCarServlet" method="post" enctype="multipart/form-data">
-			<div class="row">
-				<div class="menu">
-					<div class="panel-group" id="accordion">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +ADD CAR </a>
-								</h4>
-							</div>
-							<c:choose>
-								<c:when test="${not empty sessionScope.user && user.role =='admin' }">
-								</c:when>
-								<c:otherwise>
-									<div id="collapseOne" class="panel-collapse collapse">
-										<div class="panel-body">
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
 
-														<div class="form-group">
-															<label for="brand">Car Brand:</label> <input type="text" class="form-control" id="brand"
-																placeholder="Brand" name="brand" required>
-														</div>
+			<div class="menu">
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +ADD CAR </a>
+							</h4>
+						</div>
+						<c:choose>
+							<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+							</c:when>
+							<c:otherwise>
+								<div id="collapseOne" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="bs-docs-grid">
+											<div class="row show-grid">
+												<div class="col-md-3">
 
+													<div class="form-group">
+														<label for="brand">Car Brand:</label> <input type="text" class="form-control" id="brand"
+															placeholder="Brand" name="brand" required>
 													</div>
-													<div class="col-md-3">
-
-														<div class="form-group">
-															<label for="model">Car model:</label> <input type="text" class="form-control" id="model"
-																placeholder="Model" name="model" required>
-														</div>
-
-													</div>
-													<div class="col-md-3">
-														<div class="form-group">
-															<div class="form-group">
-																<label for="plate">Car plate:</label> <input type="text" class="form-control" id="plate"
-																	placeholder="Car Plate" name="plate" required>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-2">
-														<div class="form-group">
-
-															<input type="file" name="files" multiple="true" />
-
-														</div>
-													</div>
-
 
 												</div>
-											</div>
-											<br>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
+												<div class="col-md-3">
 
-														<div class="form-group">
-															<label for="produced">Produced:</label> <input type="text" class="form-control" id="produced"
-																placeholder="Produced year" name="produced" required />
-														</div>
-
+													<div class="form-group">
+														<label for="model">Car model:</label> <input type="text" class="form-control" id="model"
+															placeholder="Model" name="model" required>
 													</div>
-													<div class="col-md-3">
 
-														<div class="form-group">
-															<label for="firstRegistration">First Registration:</label> <input type="text" class="form-control"
-																id="firstRegistration" placeholder="First Registration Date" name="firstregistration" required>
-														</div>
-
-													</div>
-													<div class="col-md-3"></div>
-													<div class="col-md-2"></div>
 												</div>
-											</div>
-											<br>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
-
+												<div class="col-md-3">
+													<div class="form-group">
 														<div class="form-group">
-															<label for="engine">Engine Size:</label> <input type="text" class="form-control" id="engine"
-																placeholder="Engine Size" name="engine" required>
+															<label for="plate">Car plate:</label> <input type="text" class="form-control" id="plate"
+																placeholder="Car Plate" name="plate" required>
 														</div>
-
 													</div>
-													<div class="col-md-3">
-
-														<div class="form-group">
-															<label for="value">Value:</label> <input type="text" class="form-control" id="value" placeholder="Value"
-																name="value" required>
-														</div>
-
-													</div>
-													<div class="col-md-3"></div>
-													<div class="col-md-2"></div>
 												</div>
-											</div>
-											<br>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
+												<div class="col-md-2">
+													<div class="form-group">
 
-														<div class="form-group">
-															<label for="rentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
-																id="rentperhour" placeholder="Rent Price Per Hour" name="rentperhour" required>
-														</div>
+														<input type="file" name="files" multiple="true" />
 
 													</div>
-													<div class="col-md-3">
-
-														<div class="form-group">
-															<label for="distance">Distance mode:</label> <input type="text" class="form-control" id="distance"
-																placeholder="Distance mode" name="distance" required>
-														</div>
-
-													</div>
-													<div class="col-md-3"></div>
-													<div class="col-md-2"></div>
 												</div>
-											</div>
-											<br>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
-														<div class="checkbox">
-															<label> <input type="checkbox" id="visible" value="yes" name="available" />Available <input
-																type="hidden" id="notvisible" value="no" name="available" required />
 
-															</label>
-														</div>
+
+											</div>
+										</div>
+										<br>
+										<div class="bs-docs-grid">
+											<div class="row show-grid">
+												<div class="col-md-3">
+
+													<div class="form-group">
+														<label for="produced">Produced:</label> <input type="text" class="form-control" id="produced"
+															placeholder="Produced year" name="produced" required />
 													</div>
-													<div class="col-md-3"></div>
-													<div class="col-md-3"></div>
-													<div class="col-md-2"></div>
+
 												</div>
-											</div>
-											<br>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-9"></div>
-													<div class="col-md-1">
-														<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
-															data-target="#collapseOne">Cancel</button>
+												<div class="col-md-3">
 
+													<div class="form-group">
+														<label for="firstRegistration">First Registration:</label> <input type="text" class="form-control"
+															id="firstRegistration" placeholder="First Registration Date" name="firstregistration" required>
 													</div>
-													<div class="col-md-1">
-														<form action="AddCarServlet" method="post" enctype="multipart/form-data">
-															<input class="btn btn-md btn-primary" type="submit" value="Save" name="save" />
-														</form>
+
+												</div>
+												<div class="col-md-3"></div>
+												<div class="col-md-2"></div>
+											</div>
+										</div>
+										<br>
+										<div class="bs-docs-grid">
+											<div class="row show-grid">
+												<div class="col-md-3">
+
+													<div class="form-group">
+														<label for="engine">Engine Size:</label> <input type="text" class="form-control" id="engine"
+															placeholder="Engine Size" name="engine" required>
 													</div>
+
+												</div>
+												<div class="col-md-3">
+
+													<div class="form-group">
+														<label for="value">Value:</label> <input type="text" class="form-control" id="value" placeholder="Value"
+															name="value" required>
+													</div>
+
+												</div>
+												<div class="col-md-3"></div>
+												<div class="col-md-2"></div>
+											</div>
+										</div>
+										<br>
+										<div class="bs-docs-grid">
+											<div class="row show-grid">
+												<div class="col-md-3">
+
+													<div class="form-group">
+														<label for="rentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
+															id="rentperhour" placeholder="Rent Price Per Hour" name="rentperhour" required>
+													</div>
+
+												</div>
+												<div class="col-md-3">
+
+													<div class="form-group">
+														<label for="distance">Distance mode:</label> <input type="text" class="form-control" id="distance"
+															placeholder="Distance mode" name="distance" required>
+													</div>
+
+												</div>
+												<div class="col-md-3"></div>
+												<div class="col-md-2"></div>
+											</div>
+										</div>
+										<br>
+										<div class="bs-docs-grid">
+											<div class="row show-grid">
+												<div class="col-md-3">
+													<div class="checkbox">
+														<label> <input type="checkbox" id="visible" value="yes" name="available" />Available <input
+															type="hidden" id="notvisible" value="no" name="available" required />
+
+														</label>
+													</div>
+												</div>
+												<div class="col-md-3"></div>
+												<div class="col-md-3"></div>
+												<div class="col-md-2"></div>
+											</div>
+										</div>
+										<br>
+										<div class="bs-docs-grid">
+											<div class="row show-grid">
+												<div class="col-md-9"></div>
+												<div class="col-md-1">
+													<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
+														data-target="#collapseOne">Cancel</button>
+
+												</div>
+												<div class="col-md-1">
+													<form action="AddCarServlet" method="post" enctype="multipart/form-data">
+														<input class="btn btn-md btn-primary" type="submit" value="Save" name="save" />
+													</form>
 												</div>
 											</div>
 										</div>
 									</div>
-								</c:otherwise>
-							</c:choose>
-						</div>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
+
 		</form>
 		<!-- /.row -->
 		<table class="table table-bordered">

@@ -31,300 +31,301 @@ body {
 </head>
 
 <body>
-
-	<!-- Navigation -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-				<c:choose>
-					<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
-						<ul class="nav navbar-nav">
-							<li><a href="CustomerServlet">Client</a></li>
-							<li><a href="CarServlet">Car</a></li>
-							<li class="active"><a href="RentedServlet">Rented Cars</a></li>
-
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
-									class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
-								<ul class="dropdown-menu">
-
-									<li><a href="password.jsp">Change Password</a></li>
-									<form class="form-signin" action="LogOutServlet" method="post">
-										<li><input type="submit" class="btn btn-block" value="Log Out"></li>
-									</form>
-								</ul></li>
-
-						</ul>
-					</c:when>
-					<c:when test="${not empty sessionScope.user && user.role == 'admin' }">
-						<ul class="nav navbar-nav">
-							<li><a href="CustomerServlet">Client</a></li>
-							<li><a href="CarServlet">Car</a></li>
-							<li class="active"><a href="RentedServlet">Rented Cars</a></li>
-							<li><a href="EmployeeServlet">Employee</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
-									class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
-								<ul class="dropdown-menu">
-
-									<li><a href="PasswordServlet">Change Password</a></li>
-									<form class="form-signin" action="LogOutServlet" method="post">
-										<li><input type="submit" class="btn btn-block" value="Log Out"></li>
-									</form>
-								</ul></li>
-
-						</ul>
-					</c:when>
-					<c:when test="${not empty sessionScope.user && user.role == 'manager' }">
-						<ul class="nav navbar-nav">
-							<li><a href="CustomerServlet">Client</a></li>
-							<li><a href="CarServlet">Car</a></li>
-							<li class="active"><a href="RentedServlet">Rented Cars</a></li>
-							<li><a href="EmployeeServlet">Employee</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
-									class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
-								<ul class="dropdown-menu">
-
-									<li><a href="PasswordServlet">Change Password</a></li>
-									<form class="form-signin" action="LogOutServlet" method="post">
-										<li><input type="submit" class="btn btn-block" value="Log Out"></li>
-									</form>
-								</ul></li>
-
-						</ul>
-					</c:when>
-					<c:otherwise>
-						<ul class="nav navbar-nav">
-							<li><a href="LoginServlet">Client</a></li>
-							<li><a href="LoginServlet">Car</a></li>
-							<li><a href="LoginServlet">Rented Cars</a></li>
-							<li><a href="LoginServlet">Employee</a></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="LoginServlet"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-						</ul>
-					</c:otherwise>
-				</c:choose>
-
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
-
-	<!-- Page Content -->
 	<div class="container">
-		<form action="RentCar" method="post">
-			<div class="row">
-				<div class="menu">
-					<div class="panel-group" id="accordion">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +RENTED </a>
-								</h4>
-							</div>
-							<c:choose>
-								<c:when test="${not empty sessionScope.user && user.role =='admin' }">
-								</c:when>
-								<c:otherwise>
-									<div id="collapseOne" class="panel-collapse collapse">
-										<div class="panel-body">
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
 
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-														<div class="form-group">
+					<c:choose>
+						<c:when test="${not empty sessionScope.user && user.role == 'regular' }">
+							<ul class="nav navbar-nav">
+								<li><a href="CustomerServlet">Client</a></li>
+								<li><a href="CarServlet">Car</a></li>
+								<li class="active"><a href="RentedServlet">Rented Cars</a></li>
 
-															<label for="employee">Employee:</label> <select class="form-control" id="employee" name="employee">
-																<c:forEach items="${employeelist }" var="employee">
-																	<option value="${employee.name } ${employee.surname}">${employee.name }${employee.surname}</option>
-																</c:forEach>
-															</select>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
+										class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
+									<ul class="dropdown-menu">
+
+										<li><a href="password.jsp">Change Password</a></li>
+										<form class="form-signin" action="LogOutServlet" method="post">
+											<li><input type="submit" class="btn btn-block" value="Log Out"></li>
+										</form>
+									</ul></li>
+
+							</ul>
+						</c:when>
+						<c:when test="${not empty sessionScope.user && user.role == 'admin' }">
+							<ul class="nav navbar-nav">
+								<li><a href="CustomerServlet">Client</a></li>
+								<li><a href="CarServlet">Car</a></li>
+								<li class="active"><a href="RentedServlet">Rented Cars</a></li>
+								<li><a href="EmployeeServlet">Employee</a></li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
+										class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
+									<ul class="dropdown-menu">
+
+										<li><a href="PasswordServlet">Change Password</a></li>
+										<form class="form-signin" action="LogOutServlet" method="post">
+											<li><input type="submit" class="btn btn-block" value="Log Out"></li>
+										</form>
+									</ul></li>
+
+							</ul>
+						</c:when>
+						<c:when test="${not empty sessionScope.user && user.role == 'manager' }">
+							<ul class="nav navbar-nav">
+								<li><a href="CustomerServlet">Client</a></li>
+								<li><a href="CarServlet">Car</a></li>
+								<li class="active"><a href="RentedServlet">Rented Cars</a></li>
+								<li><a href="EmployeeServlet">Employee</a></li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
+										class="glyphicon glyphicon-user"></span> ${user.username } <span class="caret"></span> </a>
+									<ul class="dropdown-menu">
+
+										<li><a href="PasswordServlet">Change Password</a></li>
+										<form class="form-signin" action="LogOutServlet" method="post">
+											<li><input type="submit" class="btn btn-block" value="Log Out"></li>
+										</form>
+									</ul></li>
+
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<ul class="nav navbar-nav">
+								<li><a href="LoginServlet">Client</a></li>
+								<li><a href="LoginServlet">Car</a></li>
+								<li><a href="LoginServlet">Rented Cars</a></li>
+								<li><a href="LoginServlet">Employee</a></li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li><a href="LoginServlet"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+							</ul>
+						</c:otherwise>
+					</c:choose>
+
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
+
+		<!-- Page Content -->
+		<div class="container">
+			<form action="RentCar" method="post">
+				
+					<div class="menu">
+						<div class="panel-group" id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +RENTED </a>
+									</h4>
+								</div>
+								<c:choose>
+									<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+									</c:when>
+									<c:otherwise>
+										<div id="collapseOne" class="panel-collapse collapse">
+											<div class="panel-body">
+
+												<div class="bs-docs-grid">
+													<div class="row show-grid">
+														<div class="col-md-3">
+
+															<div class="form-group">
+
+																<label for="employee">Employee:</label> <select class="form-control" id="employee" name="employee">
+																	<c:forEach items="${employeelist }" var="employee">
+																		<option value="${employee.name } ${employee.surname}">${employee.name }${employee.surname}</option>
+																	</c:forEach>
+																</select>
+
+															</div>
 
 														</div>
+														<div class="col-md-3">
 
-													</div>
-													<div class="col-md-3">
+															<div class="form-group">
+																<label for="fromDate">From:</label> <input type="text" class="form-control" id="from"
+																	placeholder="From:" name="from" required>
+															</div>
 
-														<div class="form-group">
-															<label for="fromDate">From:</label> <input type="text" class="form-control" id="from" placeholder="From:"
-																name="from" required>
 														</div>
-
 													</div>
 												</div>
-											</div>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-3">
+												<div class="bs-docs-grid">
+													<div class="row show-grid">
+														<div class="col-md-3">
 
-														<div class="form-group">
-															<label for="client">Client:</label> <select class="form-control" id="client" name="client">
-																<c:forEach items="${clientlist }" var="client">
-																	<option value="${client.name } ${client.surname}">${client.name }${client.surname }</option>
-																</c:forEach>
-															</select>
+															<div class="form-group">
+																<label for="client">Client:</label> <select class="form-control" id="client" name="client">
+																	<c:forEach items="${clientlist }" var="client">
+																		<option value="${client.name } ${client.surname}">${client.name }${client.surname }</option>
+																	</c:forEach>
+																</select>
+
+															</div>
 
 														</div>
+														<div class="col-md-3">
 
-													</div>
-													<div class="col-md-3">
+															<div class="form-group">
+																<label for="tillDate">Till:</label> <input type="text" class="form-control" id="till"
+																	placeholder="Till:" name="till" required>
+															</div>
 
-														<div class="form-group">
-															<label for="tillDate">Till:</label> <input type="text" class="form-control" id="till" placeholder="Till:"
-																name="till" required>
 														</div>
-
-													</div>
-													<div class="col-md-3"></div>
-													<div class="col-md-1">
-														<input class="btn btn-md btn-primary" type="submit" value="Rent" name="rent" />
+														<div class="col-md-3"></div>
+														<div class="col-md-1">
+															<input class="btn btn-md btn-primary" type="submit" value="Rent" name="rent" />
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="bs-docs-grid">
-												<div class="row show-grid">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="car">Car:</label>
+												<div class="bs-docs-grid">
+													<div class="row show-grid">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="car">Car:</label>
 
-															<!--  <input type="hidden" value="${car.rentPerHour }"
+																<!--  <input type="hidden" value="${car.rentPerHour }"
 														name="pricePerHour" />		 -->
 
 
-															<select multiple class="form-control" id="car" name="cars">
+																<select multiple class="form-control" id="car" name="cars">
+																	<c:forEach items="${carlist }" var="car">
+
+																		<c:if test="${car.available eq 'yes' }">
+
+																			<option value="${car.idCar}">${car.brand }/${car.model}/${car.engineSize}</option>
+
+																		</c:if>
+																	</c:forEach>
+																</select>
 																<c:forEach items="${carlist }" var="car">
-
-																	<c:if test="${car.available eq 'yes' }">
-
-																		<option value="${car.idCar}">${car.brand }/${car.model}/${car.engineSize}</option>
-
+																	<c:if test="${ param.cars == car.idCar }">
+																		<input type="hidden" value="${car.rentPerHour }" name="pricePerHour" />
 																	</c:if>
 																</c:forEach>
-															</select>
-															<c:forEach items="${carlist }" var="car">
-																<c:if test="${ param.cars == car.idCar }">
-																	<input type="hidden" value="${car.rentPerHour }" name="pricePerHour" />
-																</c:if>
-															</c:forEach>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
 
+											</div>
 										</div>
-									</div>
-								</c:otherwise>
-							</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				
 
 
-			<!-- /.row -->
-			<table class="table table-bordered" id="thetable">
+				<!-- /.row -->
+				<table class="table table-bordered" id="thetable">
 
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>EMPLOYEE</th>
-						<th>CLIENT</th>
-						<th>CARS</th>
-						<th>FROM</th>
-						<th>TILL</th>
-						<th>DAYS</th>
-						<th>PRICE</th>
-						<th>ACTIONS</th>
-					</tr>
-				</thead>
-				<tbody>
-
-					<c:forEach items="${rentedlist }" var="rented">
-
-
+					<thead>
 						<tr>
-							<td id="id${rented.idRented }"><c:out value="${rented.idRented }" /></td>
-							<td><c:out value="${rented.employee }" /></td>
-							<td><c:out value="${rented.client }" /></td>
-							<td><c:out value="${rented.cars }" /></td>
-							<td><c:out value="${rented.fromDate }" /></td>
-							<td><c:out value="${rented.tillDate }" /></td>
-							<td><c:out value="${rented.days }" /></td>
-							<td><c:out value="${rented.price }" /></td>
-
-							<c:choose>
-								<c:when test="${not empty sessionScope.user && user.role =='admin' }">
-								</c:when>
-								<c:otherwise>
-									<td id="buttons${rented.idRented }"><c:choose>
-
-
-											<c:when test="${rented.payed == '1' }">
-												<form action="Pay" method="post">
-
-													<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" /> <input
-														type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input type="hidden"
-														name="Car_ID" value="${rented.carId }" />
-												</form>
-												<form action="CancelRent" method="post">
-													<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
-														name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
-														name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
-												</form>
-											</c:when>
-
-											<c:when test="${rented.payed == '0' && rented.rented == '1' }">
-												<form action="RentedServlet" method="post">
-
-													<input class="btn btn-md btn-primary" type="submit" value="Rented" id="rented${rented.idRented }"
-														name="rented" /> <input type="hidden" name="RentedID" value="${rented.idRented }" />
-
-
-
-
-												</form>
-											</c:when>
-
-											<c:when test="${rented.rented == '0' && rented.payed == '0' }">
-
-
-												<input class="btn btn-md btn-primary" type="submit" value="Returned" id="returned${rented.idRented }"
-													name="returned" />
-												<input class="btn btn-md btn-primary" type="submit" value="Destroyed" id="destroyed${rented.idRented }"
-													name="destroyed" />
-
-											</c:when>
-
-										</c:choose></td>
-								</c:otherwise>
-							</c:choose>
-
+							<th>ID</th>
+							<th>EMPLOYEE</th>
+							<th>CLIENT</th>
+							<th>CARS</th>
+							<th>FROM</th>
+							<th>TILL</th>
+							<th>DAYS</th>
+							<th>PRICE</th>
+							<th>ACTIONS</th>
 						</tr>
-					</c:forEach>
+					</thead>
+					<tbody>
+
+						<c:forEach items="${rentedlist }" var="rented">
+
+
+							<tr>
+								<td id="id${rented.idRented }"><c:out value="${rented.idRented }" /></td>
+								<td><c:out value="${rented.employee }" /></td>
+								<td><c:out value="${rented.client }" /></td>
+								<td><c:out value="${rented.cars }" /></td>
+								<td><c:out value="${rented.fromDate }" /></td>
+								<td><c:out value="${rented.tillDate }" /></td>
+								<td><c:out value="${rented.days }" /></td>
+								<td><c:out value="${rented.price }" /></td>
+
+								<c:choose>
+									<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+									</c:when>
+									<c:otherwise>
+										<td id="buttons${rented.idRented }"><c:choose>
+
+
+												<c:when test="${rented.payed == '1' }">
+													<form action="Pay" method="post">
+
+														<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" />
+														<input type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input
+															type="hidden" name="Car_ID" value="${rented.carId }" />
+													</form>
+													<form action="CancelRent" method="post">
+														<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
+															name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
+															name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
+													</form>
+												</c:when>
+
+												<c:when test="${rented.payed == '0' && rented.rented == '1' }">
+													<form action="RentedServlet" method="post">
+
+														<input class="btn btn-md btn-primary" type="submit" value="Rented" id="rented${rented.idRented }"
+															name="rented" /> <input type="hidden" name="RentedID" value="${rented.idRented }" />
 
 
 
 
-				</tbody>
-			</table>
-		</form>
+													</form>
+												</c:when>
+
+												<c:when test="${rented.rented == '0' && rented.payed == '0' }">
+
+
+													<input class="btn btn-md btn-primary" type="submit" value="Returned" id="returned${rented.idRented }"
+														name="returned" />
+													<input class="btn btn-md btn-primary" type="submit" value="Destroyed" id="destroyed${rented.idRented }"
+														name="destroyed" />
+
+												</c:when>
+
+											</c:choose></td>
+									</c:otherwise>
+								</c:choose>
+
+							</tr>
+						</c:forEach>
+
+
+
+
+					</tbody>
+				</table>
+			</form>
+		</div>
 	</div>
 	<!-- /.container -->
 
