@@ -1,27 +1,27 @@
 package pl.myproject.dao;
 
-import java.io.IOException;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
+
 
 import pl.myproject.model.Car;
 import pl.myproject.util.ConnectionProvider;
 import pl.myproject.util.NamedParameterStatement;
 
 public class CarDAO {
-	private final static String CREATE = "INSERT INTO car(brand, model, plate, produced, firstregistration, engine, value, rentperhour, distance, available, file ) VALUES (:brand, :model, :plate, :produced, :firstregistration, :engine, :value, :rentperhour, :distance, :available, :file);";
+	private final static String CREATE = "INSERT INTO car ( brand, model, plate, produced, firstregistration, engine, value, rentperhour, distance, available, file ) VALUES (:brand, :model, :plate, :produced, :firstregistration, :engine, :value, :rentperhour, :distance, :available, :file );";
 	private final static String READ = "SELECT * FROM car;";
 	private final static String UPDATE = "UPDATE car SET brand = :brand, model = :model, plate = :plate, produced = :produced, firstregistration = :firstregistration, engine = :engine, value = :value, rentperhour = :rentperhour, distance = :distance, available = :available WHERE idcar = :idcar;";
 	private final static String DELETE = "DELETE FROM car WHERE idcar = :idcar;";
 
-	public boolean create(Car car) throws SQLException, IOException, ServletException {
+	public boolean create(Car car) throws SQLException {
 		boolean result = false;
-		NamedParameterStatement prepstmt = createData(CREATE, car);
+		NamedParameterStatement prepstmt = createData(car);
 		int affected = prepstmt.executeUpdate();
 		if (affected > 0) {
 			result = true;
@@ -63,8 +63,8 @@ public class CarDAO {
 		return result;
 	}
 
-	private NamedParameterStatement createData(String querry, Car car) throws SQLException {
-		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), querry);
+	private NamedParameterStatement createData(Car car) throws SQLException {
+		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), CREATE);
 		named.setString("brand", car.getBrand());
 		named.setString("model", car.getModel());
 		named.setString("plate", car.getPlate());
@@ -76,6 +76,7 @@ public class CarDAO {
 		named.setString("distance", car.getDistance());
 		named.setString("available", car.getAvailable());
 		named.setString("file", car.getFile());
+		
 		return named;
 	}
 

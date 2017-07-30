@@ -201,7 +201,7 @@ body {
 													<div class="form-group">
 														<label for="firstRegistration">First Registration:</label> <input type="text" class="form-control"
 															id="firstRegistration" placeholder="First Registration Date" name="firstregistration" required>
-															<span id="errmsg1"></span>
+															
 													</div>
 
 												</div>
@@ -397,6 +397,7 @@ body {
 									<div class="form-group">
 										<label for="upfirstRegistration">First Registration:</label> <input type="text" class="form-control"
 											id="upfirstRegistration" value="${car.firstRegistration }" name="upfirstregistration" required>
+											
 									</div>
 
 								</div>
@@ -433,8 +434,9 @@ body {
 								<div class="col-md-3">
 
 									<div class="form-group">
-										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="number" class="form-control"
+										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
 											id="uprentperhour" value="${car.rentPerHour }" name="uprentperhour" required>
+											
 											
 									</div>
 
@@ -512,16 +514,25 @@ body {
 		               return false;
 		    }
 		  });
-		 $("#firstRegistration").keypress(function (e) {
-		     //if the letter is not digit then display error and don't type anything
-		     if (e.which != 8 && e.which != 0 && e.which != 190 && (e.which < 48 || e.which > 57  )) {
-		        //display error message
-		        $("#errmsg1").html("Digits Only").show().fadeOut("slow");
-		               return false;
-		    }
-		  });
-	});
 
+		
+	});
+	$(function() {
+		$("#produced").datepicker({
+			dateFormat : "dd.mm.yy",
+			changeYear : true,
+			changeMonth : true,
+			yearRange : '1900:' + (new Date).getFullYear()
+		});
+	});
+	$(function() {
+		$("#firstRegistration").datepicker({
+			dateFormat : "dd.mm.yy",
+			changeYear : true,
+			changeMonth : true,
+			yearRange : '1900:' + (new Date).getFullYear()
+		});
+	});
 
 
 	
