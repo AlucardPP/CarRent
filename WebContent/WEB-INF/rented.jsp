@@ -274,7 +274,7 @@ body {
 							</c:if>
 
 
-							<td><c:if test="${rented.payed == '1' && rented.rented == '0' && rented.status == 'none'  }">
+							<td><c:if test="${rented.payed == '1' && rented.rented == '1' && rented.status == 'none'  }">
 									<form action="Pay" method="post">
 
 										<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" /> <input
