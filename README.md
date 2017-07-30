@@ -4,7 +4,7 @@ Utworzony administrator systemu "Jan Kowalski" ma login: "admin@o2.pl", hasło: 
 Dla nowo utworzonych pracowników domyślne hasło brzmi: "test"
 
 DOSTĘP:
-MAmy 3 role dla użytkownika:
+Mamy 3 role dla użytkownika:
 
 -Regular
 
