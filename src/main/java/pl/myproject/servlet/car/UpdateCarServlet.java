@@ -43,6 +43,10 @@ public class UpdateCarServlet extends HttpServlet {
 			car = getDataToUpdate(request);
 			result = dao.update(car, id);
 		}
+		if (car != null || result) {
+			request.setAttribute("carlist", dao.read());
+			request.getRequestDispatcher("WEB-INF/car.jsp").forward(request, response);
+		}
 	}
 
 	private Car getDataToUpdate(HttpServletRequest request) {
