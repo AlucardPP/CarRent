@@ -49,9 +49,6 @@ public class AddCarServlet extends HttpServlet {
 		if (request.getParameter("save") != null || ServletFileUpload.isMultipartContent(request)) {
 			car = getData(request);
 			String saveDir = request.getParameter("plate");
-			String produced = car.getProduced();
-			String engine = car.getEngineSize();
-			System.out.println("produced: "+produced+" engine: "+engine);
 			FileOperations.saveFile(request, SAVE_DIR, saveDir);
 			result = dao.create(car);
 			
