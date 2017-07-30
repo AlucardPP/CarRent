@@ -1,4 +1,4 @@
-CREATE SCHEMA `car_rent` ;
+﻿CREATE SCHEMA `car_rent` ;
 CREATE TABLE `car_rent`.`client` (
   `idcustomer` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE `car_rent`.`rented` (
   `tillday` VARCHAR(45) NOT NULL,
   `days` INT NOT NULL,
   `price` VARCHAR(45) NOT NULL,
-`paid` TINYINT(1) NOT NULL DEFAULT 0,`isrented` TINYINT(1) NOT NULL DEFAULT 0,`carid` INT(11) NOT NULL,
+`paid` TINYINT(1) NOT NULL DEFAULT 0,`isrented` TINYINT(1) NOT NULL DEFAULT 0,`carid` INT(11) NOT NULL, `status` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idrented`));
 
 CREATE TABLE `car_rent`.`user` ( `user_id` INT NOT NULL AUTO_INCREMENT,

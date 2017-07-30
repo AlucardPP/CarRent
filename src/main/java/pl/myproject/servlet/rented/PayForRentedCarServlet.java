@@ -42,10 +42,11 @@ public class PayForRentedCarServlet extends HttpServlet {
 			throws IOException, ServletException, ParseException, NumberFormatException, SQLException {
 		if (request.getParameter("Payed") != null) {
 			String idRented = request.getParameter("PayedID");
+			String status = request.getParameter("Payed");
 			int id = Integer.parseInt(idRented);
 			int paid = isPaid(request.getParameter("Payed"));
 			int isRented = 1;
-			result = dao.udateRented(rented, id, paid, isRented);
+			result = dao.udateRented(rented, id, paid, isRented, status);
 
 		}
 		if (rented != null || result == true) {

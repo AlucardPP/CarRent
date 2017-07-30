@@ -85,8 +85,10 @@ public class RentCarServlet extends HttpServlet {
 		int isRented = isPaid(request.getParameter("Rented"));
 		String id = request.getParameter("cars");
 		int carId = Integer.parseInt(id);
+		String status = "none";
 
-		Rented rented = new Rented(employee, client, cars, fromDate, tillDate, days, price, paid, isRented, carId);
+		Rented rented = new Rented(employee, client, cars, fromDate, tillDate, days, price, paid, isRented, carId,
+				status);
 		return rented;
 	}
 

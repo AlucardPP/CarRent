@@ -343,149 +343,152 @@ body {
 		<c:forEach items="${carlist }" var="car">
 			<div class="collapse" id="${car.idCar }">
 				<div class="well">
-					<div class="bs-docs-grid">
-						<div class="row show-grid">
-							<div class="col-md-3">
-								<form action="UpdateCarServlet" method="post" enctype="multipart/form-data">
+					<form action="UpdateCarServlet" method="post" enctype="multipart/form-data">
+						<div class="bs-docs-grid">
+
+							<div class="row show-grid">
+
+								<div class="col-md-3">
+
 									<div class="form-group">
 										<label for="upbrand">Car Brand:</label> <input type="text" class="form-control" id="upbrand"
 											value="${car.brand }" name="upbrand" required>
 									</div>
-							</div>
-							<div class="col-md-3">
-
-								<div class="form-group">
-									<label for="upmodel">Car model:</label> <input type="text" class="form-control" id="upmodel"
-										value="${car.model }" name="upmodel" required>
 								</div>
+								<div class="col-md-3">
 
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
 									<div class="form-group">
-										<label for="upplate">Car plate:</label> <input type="text" class="form-control" id="upplate"
-											value="${car.plate }" name="upplate" required>
+										<label for="upmodel">Car model:</label> <input type="text" class="form-control" id="upmodel"
+											value="${car.model }" name="upmodel" required>
+									</div>
+
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<div class="form-group">
+											<label for="upplate">Car plate:</label> <input type="text" class="form-control" id="upplate"
+												value="${car.plate }" name="upplate" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+
+										<input type="file" name="upfiles" multiple="true" />
+
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<div class="form-group">
+						</div>
+						<br>
+						<div class="bs-docs-grid">
+							<div class="row show-grid">
+								<div class="col-md-3">
 
-									<input type="file" name="upfiles" multiple="true" />
+									<div class="form-group">
+										<label for="upproduced">Produced:</label> <input type="text" class="form-control" id="upproduced"
+											value="${car.produced }" name="upproduced" required />
+									</div>
 
 								</div>
+								<div class="col-md-3">
+
+									<div class="form-group">
+										<label for="upfirstRegistration">First Registration:</label> <input type="text" class="form-control"
+											id="upfirstRegistration" value="${car.firstRegistration }" name="upfirstregistration" required>
+									</div>
+
+								</div>
+								<div class="col-md-3"></div>
+								<div class="col-md-2"></div>
 							</div>
 						</div>
-					</div>
-					<br>
-					<div class="bs-docs-grid">
-						<div class="row show-grid">
-							<div class="col-md-3">
+						<br>
+						<div class="bs-docs-grid">
+							<div class="row show-grid">
+								<div class="col-md-3">
 
-								<div class="form-group">
-									<label for="upproduced">Produced:</label> <input type="text" class="form-control" id="upproduced"
-										value="${car.produced }" name="upproduced" required />
+									<div class="form-group">
+										<label for="upengine">Engine Size:</label> <input type="text" class="form-control" id="upengine"
+											value="${car.engineSize }" name="upengine" required>
+									</div>
+
 								</div>
+								<div class="col-md-3">
 
-							</div>
-							<div class="col-md-3">
+									<div class="form-group">
+										<label for="upvalue">Value:</label> <input type="text" class="form-control" id="upvalue" value="${car.value }"
+											name="upvalue" required>
+									</div>
 
-								<div class="form-group">
-									<label for="upfirstRegistration">First Registration:</label> <input type="text" class="form-control"
-										id="upfirstRegistration" value="${car.firstRegistration }" name="upfirstregistration" required>
 								</div>
-
+								<div class="col-md-3"></div>
+								<div class="col-md-2"></div>
 							</div>
-							<div class="col-md-3"></div>
-							<div class="col-md-2"></div>
 						</div>
-					</div>
-					<br>
-					<div class="bs-docs-grid">
-						<div class="row show-grid">
-							<div class="col-md-3">
+						<br>
+						<div class="bs-docs-grid">
+							<div class="row show-grid">
+								<div class="col-md-3">
 
-								<div class="form-group">
-									<label for="upengine">Engine Size:</label> <input type="text" class="form-control" id="upengine"
-										value="${car.engineSize }" name="upengine" required>
+									<div class="form-group">
+										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
+											id="uprentperhour" value="${car.rentPerHour }" name="uprentperhour" required>
+									</div>
+
 								</div>
+								<div class="col-md-3">
 
-							</div>
-							<div class="col-md-3">
+									<div class="form-group">
+										<label for="updistance">Distance mode:</label> <input type="text" class="form-control" id="updistance"
+											value="${car.distance }" name="updistance" required>
+									</div>
 
-								<div class="form-group">
-									<label for="upvalue">Value:</label> <input type="text" class="form-control" id="upvalue" value="${car.value }"
-										name="upvalue" required>
 								</div>
-
+								<div class="col-md-3"></div>
+								<div class="col-md-2"></div>
 							</div>
-							<div class="col-md-3"></div>
-							<div class="col-md-2"></div>
 						</div>
-					</div>
-					<br>
-					<div class="bs-docs-grid">
-						<div class="row show-grid">
-							<div class="col-md-3">
-
-								<div class="form-group">
-									<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
-										id="uprentperhour" value="${car.rentPerHour }" name="uprentperhour" required>
-								</div>
-
-							</div>
-							<div class="col-md-3">
-
-								<div class="form-group">
-									<label for="updistance">Distance mode:</label> <input type="text" class="form-control" id="updistance"
-										value="${car.distance }" name="updistance" required>
-								</div>
-
-							</div>
-							<div class="col-md-3"></div>
-							<div class="col-md-2"></div>
-						</div>
-					</div>
-					<br>
-					<div class="bs-docs-grid">
-						<div class="row show-grid">
-							<div class="col-md-3">
-								<div class="checkbox">
-									<label> <c:choose>
-											<c:when test="${car.available eq 'yes' }">
-												<input type="checkbox" id="visible" value="yes" name="upavailable" checked />Available
+						<br>
+						<div class="bs-docs-grid">
+							<div class="row show-grid">
+								<div class="col-md-3">
+									<div class="checkbox">
+										<label> <c:choose>
+												<c:when test="${car.available eq 'yes' }">
+													<input type="checkbox" id="visible" value="yes" name="upavailable" checked />Available
 												
 											</c:when>
-											<c:otherwise>
-												<input type="checkbox" id="visible" value="yes" name="upavailable" />Available
+												<c:otherwise>
+													<input type="checkbox" id="visible" value="yes" name="upavailable" />Available
 												
 												
 											</c:otherwise>
-										</c:choose> <input type="hidden" id="notvisible" value="no" name="upavailable" />
-									</label>
+											</c:choose> <input type="hidden" id="notvisible" value="no" name="upavailable" />
+										</label>
+									</div>
+								</div>
+								<div class="col-md-3"></div>
+								<div class="col-md-3"></div>
+								<div class="col-md-2"></div>
+							</div>
+						</div>
+						<br>
+						<div class="bs-docs-grid">
+							<div class="row show-grid">
+								<div class="col-md-9"></div>
+								<div class="col-md-1">
+
+									<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
+										data-target="#${car.idCar }">Cancel</button>
+
+								</div>
+								<div class="col-md-1">
+									<input type="hidden" name="IDcar" value="${car.idCar }" /> <input class="btn btn-md btn-primary" type="submit"
+										value="Update" name="update" />
 								</div>
 							</div>
-							<div class="col-md-3"></div>
-							<div class="col-md-3"></div>
-							<div class="col-md-2"></div>
 						</div>
-					</div>
-					<br>
-					<div class="bs-docs-grid">
-						<div class="row show-grid">
-							<div class="col-md-9"></div>
-							<div class="col-md-1">
-
-								<button class="btn btn-md btn-primary" type="reset" name="cancel" data-toggle="collapse"
-									data-target="#${car.idCar }">Cancel</button>
-
-							</div>
-							<div class="col-md-1">
-								<input type="hidden" name="IDcar" value="${car.idCar }" /> <input class="btn btn-md btn-primary" type="submit"
-									value="Update" name="update" />
-							</div>
-						</div>
-					</div>
 					</form>
 				</div>
 			</div>

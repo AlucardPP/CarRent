@@ -129,202 +129,207 @@ body {
 		<!-- Page Content -->
 		<div class="container">
 			<form action="RentCar" method="post">
-				
-					<div class="menu">
-						<div class="panel-group" id="accordion">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +RENTED </a>
-									</h4>
-								</div>
-								<c:choose>
-									<c:when test="${not empty sessionScope.user && user.role =='admin' }">
-									</c:when>
-									<c:otherwise>
-										<div id="collapseOne" class="panel-collapse collapse">
-											<div class="panel-body">
 
-												<div class="bs-docs-grid">
-													<div class="row show-grid">
-														<div class="col-md-3">
+				<div class="menu">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> +RENTED </a>
+								</h4>
+							</div>
+							<c:choose>
+								<c:when test="${not empty sessionScope.user && user.role =='admin' }">
+								</c:when>
+								<c:otherwise>
+									<div id="collapseOne" class="panel-collapse collapse">
+										<div class="panel-body">
 
-															<div class="form-group">
+											<div class="bs-docs-grid">
+												<div class="row show-grid">
+													<div class="col-md-3">
 
-																<label for="employee">Employee:</label> <select class="form-control" id="employee" name="employee">
-																	<c:forEach items="${employeelist }" var="employee">
-																		<option value="${employee.name } ${employee.surname}">${employee.name }${employee.surname}</option>
-																	</c:forEach>
-																</select>
+														<div class="form-group">
 
-															</div>
+															<label for="employee">Employee:</label> <select class="form-control" id="employee" name="employee">
+																<c:forEach items="${employeelist }" var="employee">
+																	<option value="${employee.name } ${employee.surname}">${employee.name } ${employee.surname}</option>
+																</c:forEach>
+															</select>
 
 														</div>
-														<div class="col-md-3">
 
-															<div class="form-group">
-																<label for="fromDate">From:</label> <input type="text" class="form-control" id="from"
-																	placeholder="From:" name="from" required>
-															</div>
+													</div>
+													<div class="col-md-3">
 
+														<div class="form-group">
+															<label for="fromDate">From:</label> <input type="text" class="form-control" id="from" placeholder="From:"
+																name="from" required>
 														</div>
+
 													</div>
 												</div>
-												<div class="bs-docs-grid">
-													<div class="row show-grid">
-														<div class="col-md-3">
+											</div>
+											<div class="bs-docs-grid">
+												<div class="row show-grid">
+													<div class="col-md-3">
 
-															<div class="form-group">
-																<label for="client">Client:</label> <select class="form-control" id="client" name="client">
-																	<c:forEach items="${clientlist }" var="client">
-																		<option value="${client.name } ${client.surname}">${client.name }${client.surname }</option>
-																	</c:forEach>
-																</select>
-
-															</div>
-
-														</div>
-														<div class="col-md-3">
-
-															<div class="form-group">
-																<label for="tillDate">Till:</label> <input type="text" class="form-control" id="till"
-																	placeholder="Till:" name="till" required>
-															</div>
+														<div class="form-group">
+															<label for="client">Client:</label> <select class="form-control" id="client" name="client">
+																<c:forEach items="${clientlist }" var="client">
+																	<option value="${client.name } ${client.surname}">${client.name } ${client.surname }</option>
+																</c:forEach>
+															</select>
 
 														</div>
-														<div class="col-md-3"></div>
-														<div class="col-md-1">
-															<input class="btn btn-md btn-primary" type="submit" value="Rent" name="rent" />
+
+													</div>
+													<div class="col-md-3">
+
+														<div class="form-group">
+															<label for="tillDate">Till:</label> <input type="text" class="form-control" id="till" placeholder="Till:"
+																name="till" required>
 														</div>
+
+													</div>
+													<div class="col-md-3"></div>
+													<div class="col-md-1">
+														<input class="btn btn-md btn-primary" type="submit" value="Rent" name="rent" />
 													</div>
 												</div>
-												<div class="bs-docs-grid">
-													<div class="row show-grid">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="car">Car:</label>
+											</div>
+											<div class="bs-docs-grid">
+												<div class="row show-grid">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="car">Car:</label>
 
-																<!--  <input type="hidden" value="${car.rentPerHour }"
+															<!--  <input type="hidden" value="${car.rentPerHour }"
 														name="pricePerHour" />		 -->
 
 
-																<select multiple class="form-control" id="car" name="cars">
-																	<c:forEach items="${carlist }" var="car">
-
-																		<c:if test="${car.available eq 'yes' }">
-
-																			<option value="${car.idCar}">${car.brand }/${car.model}/${car.engineSize}</option>
-
-																		</c:if>
-																	</c:forEach>
-																</select>
+															<select multiple class="form-control" id="car" name="cars">
 																<c:forEach items="${carlist }" var="car">
-																	<c:if test="${ param.cars == car.idCar }">
-																		<input type="hidden" value="${car.rentPerHour }" name="pricePerHour" />
+
+																	<c:if test="${car.available eq 'yes' }">
+
+																		<option value="${car.idCar}">${car.brand }/${car.model}/${car.engineSize}</option>
+
 																	</c:if>
 																</c:forEach>
-															</div>
+															</select>
+															<c:forEach items="${carlist }" var="car">
+																<c:if test="${ param.cars == car.idCar }">
+																	<input type="hidden" value="${car.rentPerHour }" name="pricePerHour" />
+																</c:if>
+															</c:forEach>
 														</div>
 													</div>
 												</div>
-
 											</div>
+
 										</div>
-									</c:otherwise>
-								</c:choose>
-							</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
-				
-
-
-				<!-- /.row -->
-				<table class="table table-bordered" id="thetable">
-
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>EMPLOYEE</th>
-							<th>CLIENT</th>
-							<th>CARS</th>
-							<th>FROM</th>
-							<th>TILL</th>
-							<th>DAYS</th>
-							<th>PRICE</th>
-							<th>ACTIONS</th>
-						</tr>
-					</thead>
-					<tbody>
-
-						<c:forEach items="${rentedlist }" var="rented">
-
-
-							<tr>
-								<td id="id${rented.idRented }"><c:out value="${rented.idRented }" /></td>
-								<td><c:out value="${rented.employee }" /></td>
-								<td><c:out value="${rented.client }" /></td>
-								<td><c:out value="${rented.cars }" /></td>
-								<td><c:out value="${rented.fromDate }" /></td>
-								<td><c:out value="${rented.tillDate }" /></td>
-								<td><c:out value="${rented.days }" /></td>
-								<td><c:out value="${rented.price }" /></td>
-
-								<c:choose>
-									<c:when test="${not empty sessionScope.user && user.role =='admin' }">
-									</c:when>
-									<c:otherwise>
-										<td id="buttons${rented.idRented }"><c:choose>
-
-
-												<c:when test="${rented.payed == '1' }">
-													<form action="Pay" method="post">
-
-														<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" />
-														<input type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input
-															type="hidden" name="Car_ID" value="${rented.carId }" />
-													</form>
-													<form action="CancelRent" method="post">
-														<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
-															name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
-															name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
-													</form>
-												</c:when>
-
-												<c:when test="${rented.payed == '0' && rented.rented == '1' }">
-													<form action="RentedServlet" method="post">
-
-														<input class="btn btn-md btn-primary" type="submit" value="Rented" id="rented${rented.idRented }"
-															name="rented" /> <input type="hidden" name="RentedID" value="${rented.idRented }" />
-
-
-
-
-													</form>
-												</c:when>
-
-												<c:when test="${rented.rented == '0' && rented.payed == '0' }">
-
-
-													<input class="btn btn-md btn-primary" type="submit" value="Returned" id="returned${rented.idRented }"
-														name="returned" />
-													<input class="btn btn-md btn-primary" type="submit" value="Destroyed" id="destroyed${rented.idRented }"
-														name="destroyed" />
-
-												</c:when>
-
-											</c:choose></td>
-									</c:otherwise>
-								</c:choose>
-
-							</tr>
-						</c:forEach>
-
-
-
-
-					</tbody>
-				</table>
+				</div>
 			</form>
+
+
+			<!-- /.row -->
+			<table class="table table-bordered" id="thetable">
+
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>EMPLOYEE</th>
+						<th>CLIENT</th>
+						<th>CARS</th>
+						<th>FROM</th>
+						<th>TILL</th>
+						<th>DAYS</th>
+						<th>PRICE</th>
+						<th>ACTIONS</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<c:forEach items="${rentedlist }" var="rented">
+
+
+						<tr class="mytable">
+							<td><c:out value="${rented.idRented }" /></td>
+							<td><c:out value="${rented.employee }" /></td>
+							<td><c:out value="${rented.client }" /></td>
+							<td><c:out value="${rented.cars }" /></td>
+							<td><c:out value="${rented.fromDate }" /></td>
+							<td><c:out value="${rented.tillDate }" /></td>
+							<td><c:out value="${rented.days }" /></td>
+							<td><c:out value="${rented.price }" /></td>
+
+
+							<c:if test="${not empty sessionScope.user && user.role =='admin' }">
+							</c:if>
+
+
+							<td><c:if test="${rented.payed == '1' && rented.rented == '0' && rented.status == 'none'  }">
+									<form action="Pay" method="post">
+
+										<input class="btn btn-primary" type="submit" name="Payed" id="payed${rented.idRented }" value="Payed" /> <input
+											type="hidden" name="PayedID" value="${rented.idRented }" id="${rented.idRented }" /> <input type="hidden"
+											name="Car_ID" value="${rented.carId }" />
+									</form>
+									<form action="CancelRent" method="post">
+										<input class="btn btn-md btn-primary" type="submit" id="cancel${rented.idRented }" value="Canceled"
+											name="cancel" /> <input type="hidden" name="Car_ID" value="${rented.carId }" /><input type="hidden"
+											name="PayedID" value="${rented.idRented }" id="${rented.idRented }" />
+									</form>
+								</c:if> <c:if test="${rented.payed == '0' && rented.rented == '1' && rented.status == 'Payed' }">
+									<form action="RentedServlet" method="post">
+
+										<input class="btn btn-md btn-primary" type="submit" value="Rented" id="rented${rented.idRented }"
+											name="rented" /> <input type="hidden" name="RentedID" value="${rented.idRented }" />
+
+
+
+
+									</form>
+								</c:if> <c:if test="${rented.payed == '0' && rented.rented == '0' && rented.status == 'Rented'}">
+
+									<form action="ReturnedServlet" method="post">
+										<input class="btn btn-md btn-primary" type="submit" value="Returned" id="returned${rented.idRented }"
+											name="returned" /> <input class="btn btn-md btn-primary" type="submit" value="Destroyed"
+											id="destroyed${rented.idRented }" name="destroyed" /> <input type="hidden" name="ReturnedID"
+											value="${rented.idRented }" /><input type="hidden" name="ReturnedCar_ID" value="${rented.carId }" />
+									</form>
+								</c:if> <c:if test="${rented.payed == '0' && rented.rented == '0' && rented.status == 'Returned' }">
+											Returned
+											</c:if> <c:if test="${rented.payed == '0' && rented.rented == '0' && rented.status == 'Destroyed' }">
+									<form action="RepairedServlet" method="post">
+										<input class="btn btn-md btn-primary" type="submit" value="Repaired" id="repaired${rented.idRented }"
+											name="repaired" /> <input class="btn btn-md btn-primary" type="submit" value="Scrap"
+											id="scrap${rented.idRented }" name="scrap" /> <input type="hidden" name="RentedID"
+											value="${rented.idRented }" /> <input type="hidden" name="Car_ID" value="${rented.carId }" />
+									</form>
+								</c:if> <c:if test="${rented.payed == '0' && rented.rented == '0' && rented.status == 'Repaired' }">
+									Repaired and Returned
+								</c:if> <c:if test="${rented.payed == '0' && rented.rented == '0' && rented.status == 'Scrap' }">
+									Discarded
+								</c:if></td>
+
+
+
+						</tr>
+					</c:forEach>
+
+
+
+
+				</tbody>
+			</table>
+
 		</div>
 	</div>
 	<!-- /.container -->
@@ -333,70 +338,12 @@ body {
 
 
 	<script>
-		/*	$(document).ready(
-				function(){
-					$('td[id^="buttons"]').on('click', 'input[id^="payed"]',
-							function() {
-
-								$('#thetable').find('tr').click(function() {
-									var id = $(this).index();
-									$.ajax({
-										url: 'response.jsp',
-										data: {'id':id},
-										type: 'POST',
-										
-										success: function(data){
-											$('div[id^="rentedcar"]').show();
-										}
-									});
-
-								});
-
-							});
-						
-					});
-			
-		
-		
 		/* $(document).ready(
 					function() {
 						$('div[id^="operations"]').hide();
 						$('div[id^="rentedcar"]').hide();
 					});
-						 	$('td[id^="buttons"]').on('click', 'input[id^="payed"]',
-								function() {
-									$(this).parents('div[id^="choose"]').remove();
-
-									$('#thetable').find('tr').click(function() {
-										var a = $('div[id^="rentedcar"]');
-										var row = $(this).index();
-										$(a[row]).show();
-
-									});
-
-								});
-
-					});
-
-			/* 			
-						$('div[id^="rentedcar"]').hide();
-						
-						$('div[id^="rentedcar"]').show();
-					});
-				
-				
-					$('input[id^="rented"]').click(function() {
-						$(this).hide();
-						$('div[id^="button"]').hide();
-						$('div[id^="rentedcar"]').hide();
-						
-
-						$('div[id^="button"]').show();
-
-						return false;
-
-				
-				}); */
+		 */
 	</script>
 
 

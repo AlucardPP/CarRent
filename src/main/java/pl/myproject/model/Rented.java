@@ -12,6 +12,8 @@ public class Rented {
 	private int payed;
 	private int rented;
 	private int carId;
+	private String status;
+
 
 	public int getIdRented() {
 		return idRented;
@@ -101,11 +103,21 @@ public class Rented {
 		this.carId = carId;
 	}
 
+
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Rented() {
 	}
 
 	public Rented(String employee, String client, String cars, String from, String till, String days, String price,
-			int isPayed, int isRented, int carId) {
+			int isPayed, int isRented, int carId, String status) {
 		this.employee = employee;
 		this.client = client;
 		this.cars = cars;
@@ -116,10 +128,11 @@ public class Rented {
 		this.payed = isPayed;
 		this.rented = isRented;
 		this.carId = carId;
+		this.status = status;
 	}
 
 	public Rented(int idRented, String employee, String client, String cars, String from, String till, String days,
-			String price, int isPayed, int isRented, int carId) {
+			String price, int isPayed, int isRented, int carId, String status) {
 		this.idRented = idRented;
 		this.employee = employee;
 		this.client = client;
@@ -131,6 +144,7 @@ public class Rented {
 		this.payed = isPayed;
 		this.rented = isRented;
 		this.carId = carId;
+		this.status = status;
 	}
 
 }

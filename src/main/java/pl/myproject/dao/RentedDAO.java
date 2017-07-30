@@ -15,10 +15,10 @@ import pl.myproject.util.ConnectionProvider;
 import pl.myproject.util.NamedParameterStatement;
 
 public class RentedDAO {
-	private final static String CREATE = "INSERT INTO rented (employee, client, cars, fromday, tillday, days, price, paid, isrented, carid) VALUES (:employee, :client, :cars, :fromday, :tillday, :days, :price, :paid, :isrented, :carid);";
+	private final static String CREATE = "INSERT INTO rented (employee, client, cars, fromday, tillday, days, price, paid, isrented, carid, status) VALUES (:employee, :client, :cars, :fromday, :tillday, :days, :price, :paid, :isrented, :carid, :status);";
 	private final static String READ = "SELECT * FROM rented;";
 	private final static String UPDATECAR = "UPDATE car SET available = :available WHERE idcar = :idcar;";
-	private final static String UPDATERENTED = "UPDATE rented SET paid = :paid, isrented = :isrented WHERE idrented = :idrented;";
+	private final static String UPDATERENTED = "UPDATE rented SET paid = :paid, isrented = :isrented, status = :status WHERE idrented = :idrented;";
 	private final static String DELETE = "DELETE FROM rented WHERE idrented = :idrented;";
 	private final static String READCARTABLE = "SELECT * FROM car WHERE idcar = :idcar;";
 
@@ -43,8 +43,8 @@ public class RentedDAO {
 		return rentedList;
 	}
 
-	public boolean udateRented(Rented rented, int id, int paid, int isRented) throws SQLException {
-		NamedParameterStatement named = updateRented(rented, id, paid, isRented);
+	public boolean udateRented(Rented rented, int id, int paid, int isRented, String status) throws SQLException {
+		NamedParameterStatement named = updateRented(rented, id, paid, isRented, status);
 		boolean result = false;
 		int rowAffected = named.executeUpdate();
 		if (rowAffected > 0) {
@@ -99,6 +99,7 @@ public class RentedDAO {
 		named.setInt("paid", rented.getPayed());
 		named.setInt("isrented", rented.getRented());
 		named.setInt("carid", id);
+		named.setString("status", rented.getStatus());
 
 		return named;
 
@@ -117,15 +118,18 @@ public class RentedDAO {
 		resultRented.setPayed(res.getInt("paid"));
 		resultRented.setRented(res.getInt("isrented"));
 		resultRented.setCarId(res.getInt("carid"));
+		resultRented.setStatus(res.getString("status"));
 		return resultRented;
 
 	}
 
-	private NamedParameterStatement updateRented(Rented rented, int id, int paid, int isRented) throws SQLException {
+	private NamedParameterStatement updateRented(Rented rented, int id, int paid, int isRented, String status)
+			throws SQLException {
 		NamedParameterStatement named = new NamedParameterStatement(ConnectionProvider.getConnection(), UPDATERENTED);
 		named.setInt("paid", paid);
 		named.setInt("isrented", isRented);
 		named.setInt("idrented", id);
+		named.setString("status", status);
 		return named;
 	}
 

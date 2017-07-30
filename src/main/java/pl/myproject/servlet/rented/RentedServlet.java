@@ -60,11 +60,12 @@ public class RentedServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		RentedDAO dao = new RentedDAO();
+		CarDAO carDao = new CarDAO();
 		Rented rented = null;
 		Car car = null;
 		boolean result = false;
 		try {
-			checkOption(request, response, dao, car, rented, result);
+			checkOption(request, response, dao, car, rented, carDao, result);
 		} catch (SQLException | NumberFormatException | ParseException e) {
 			e.printStackTrace();
 		}
@@ -72,20 +73,21 @@ public class RentedServlet extends HttpServlet {
 	}
 
 	private void checkOption(HttpServletRequest request, HttpServletResponse response, RentedDAO dao, Car car,
-			Rented rented, boolean result)
+			Rented rented, CarDAO carDao, boolean result)
 			throws IOException, ServletException, ParseException, NumberFormatException, SQLException {
 		if (request.getParameter("rented") != null) {
 			String idRented = request.getParameter("RentedID");
+			String status = request.getParameter("rented");
 			int id = Integer.parseInt(idRented);
 			int paid = 0;
 			int isRented = isPaid(request.getParameter("rented"));
-
-			result = dao.udateRented(rented, id, paid, isRented);
+			result = dao.udateRented(rented, id, paid, isRented, status);
 
 		}
 
 		if (rented != null || result == true) {
 			request.setAttribute("rentedlist", dao.read());
+			request.setAttribute("carlist", carDao.read());
 			request.getRequestDispatcher("WEB-INF/rented.jsp").forward(request, response);
 		}
 	}

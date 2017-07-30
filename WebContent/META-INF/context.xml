@@ -6,7 +6,7 @@
 	initialSize="10"
 	maxTotal="100"
 	maxIdle="30"
-	maxWaitMillis="15000"
+	maxWaitMillis="10000"
 	username="root"
 	password="admin"
 	driverClassName="com.mysql.jdbc.Driver"
