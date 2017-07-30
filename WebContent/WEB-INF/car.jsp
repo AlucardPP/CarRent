@@ -132,7 +132,7 @@ body {
 
 	<!-- Page Content -->
 	<div class="container">
-		<form action="AddCarServlet" method="post" enctype="multipart/form-data">
+		<form action="AddCarServlet" method="post" enctype="multipart/form-data" onsubmit="return ValidateForm(this);">
 
 			<div class="menu">
 				<div class="panel-group" id="accordion">
@@ -201,6 +201,7 @@ body {
 													<div class="form-group">
 														<label for="firstRegistration">First Registration:</label> <input type="text" class="form-control"
 															id="firstRegistration" placeholder="First Registration Date" name="firstregistration" required>
+															<span id="errmsg1"></span>
 													</div>
 
 												</div>
@@ -238,7 +239,7 @@ body {
 
 													<div class="form-group">
 														<label for="rentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
-															id="rentperhour" placeholder="Rent Price Per Hour" name="rentperhour" required>
+															id="rentperhour" placeholder="Rent Price Per Hour" name="rentperhour" required><span id="errmsg"></span>
 													</div>
 
 												</div>
@@ -281,7 +282,7 @@ body {
 												</div>
 												<div class="col-md-1">
 													<form action="AddCarServlet" method="post" enctype="multipart/form-data">
-														<input class="btn btn-md btn-primary" type="submit" value="Save" name="save" />
+														<input class="btn btn-md btn-primary" id="savebutton" type="submit" value="Save" name="save" />
 													</form>
 												</div>
 											</div>
@@ -432,8 +433,9 @@ body {
 								<div class="col-md-3">
 
 									<div class="form-group">
-										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
+										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="number" class="form-control"
 											id="uprentperhour" value="${car.rentPerHour }" name="uprentperhour" required>
+											
 									</div>
 
 								</div>
@@ -484,8 +486,10 @@ body {
 
 								</div>
 								<div class="col-md-1">
+
 									<input type="hidden" name="IDcar" value="${car.idCar }" /> <input class="btn btn-md btn-primary" type="submit"
 										value="Update" name="update" />
+
 								</div>
 							</div>
 						</div>
@@ -498,6 +502,29 @@ body {
 
 
 	<script>
+	$(document).ready(function () {
+		
+		  $("#rentperhour").keypress(function (e) {
+		     //if the letter is not digit then display error and don't type anything
+		     if (e.which != 8 && e.which != 0 && e.which != 190 && (e.which < 48 || e.which > 57  )) {
+		        //display error message
+		        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+		               return false;
+		    }
+		  });
+		 $("#firstRegistration").keypress(function (e) {
+		     //if the letter is not digit then display error and don't type anything
+		     if (e.which != 8 && e.which != 0 && e.which != 190 && (e.which < 48 || e.which > 57  )) {
+		        //display error message
+		        $("#errmsg1").html("Digits Only").show().fadeOut("slow");
+		               return false;
+		    }
+		  });
+	});
+
+
+
+	
 		if (document.getElementById("visible").checked) {
 			document.getElementById('notvisible').disabled = true;
 		}
