@@ -45,8 +45,12 @@ public class AddCustomerServlet extends HttpServlet {
 			HttpServletResponse response) throws SQLException, ServletException, IOException {
 		if (request.getParameter("save") != null || ServletFileUpload.isMultipartContent(request)) {
 			customer = getData(request);
-			uploadFile(customer, request);
-			result = dao.create(customer);
+			if (FileOperations.isFile(request) == true) {
+				uploadFile(customer, request);
+				result = dao.create(customer);
+			} else {
+				result = dao.create(customer);
+			}
 		}
 		if (customer != null || result) {
 			request.setAttribute("clientlist", dao.read());

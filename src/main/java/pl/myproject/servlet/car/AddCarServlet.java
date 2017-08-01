@@ -20,8 +20,8 @@ import pl.myproject.util.FileOperations;
  */
 @WebServlet("/AddCarServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-maxFileSize = 1024 * 1024 * 10, // 10MB
-maxRequestSize = 1024 * 1024 * 50) // 50MB
+		maxFileSize = 1024 * 1024 * 10, // 10MB
+		maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class AddCarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final String SAVE_DIR = "C:/CarFiles";
@@ -48,11 +48,16 @@ public class AddCarServlet extends HttpServlet {
 			CarDAO dao) throws Exception {
 		if (request.getParameter("save") != null || ServletFileUpload.isMultipartContent(request)) {
 			car = getData(request);
-			String saveDir = request.getParameter("plate");
-			FileOperations.saveFile(request, SAVE_DIR, saveDir);
-			result = dao.create(car);
-			
+			if (FileOperations.isFile(request) == true) {
+				String saveDir = request.getParameter("plate");
+				FileOperations.saveFile(request, SAVE_DIR, saveDir);
+				result = dao.create(car);
+			} else {
+				result = dao.create(car);
+			}
+
 		}
+
 		if (car != null || result) {
 			request.setAttribute("carlist", dao.read());
 			request.getRequestDispatcher("WEB-INF/car.jsp").forward(request, response);

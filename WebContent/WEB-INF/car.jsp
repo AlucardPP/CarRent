@@ -322,7 +322,18 @@ body {
 						<c:choose>
 							<c:when test="${not empty sessionScope.user && user.role =='admin' }">
 							</c:when>
-							<c:otherwise>
+							<c:when test="${list.file == '[]' }">
+								<td>No attachments</td>
+									<td>
+								<form name="frm" action="DeleteCarServlet" method="post" enctype="multipart/form-data">
+									<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCar}"
+										aria-expanded="false" aria-controls="id" name="edit" value="${list.idCar }">Edit</button>
+									<input type="hidden" name="carID" value="${list.idCar }" /> <input class="btn btn-md btn-primary"
+										type="submit" value="Delete" name="delete" />
+								</form>
+								</td>
+								</c:when>
+								<c:otherwise>
 								<form name="frm" action="download" method="post" enctype="multipart/form-data">
 									<td><input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input
 										type="hidden" name="carPlate" value="${list.plate }" /></td>
@@ -334,7 +345,6 @@ body {
 									<input type="hidden" name="carID" value="${list.idCar }" /> <input class="btn btn-md btn-primary"
 										type="submit" value="Delete" name="delete" />
 								</form>
-								</td>
 							</c:otherwise>
 						</c:choose>
 					</tr>
@@ -434,7 +444,7 @@ body {
 								<div class="col-md-3">
 
 									<div class="form-group">
-										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="text" class="form-control"
+										<label for="uprentPerHour">Rent Price Per Hour:</label> <input type="number" class="form-control"
 											id="uprentperhour" value="${car.rentPerHour }" name="uprentperhour" required>
 											
 											

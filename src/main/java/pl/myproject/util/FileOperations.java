@@ -25,18 +25,19 @@ public class FileOperations {
 															// File.separator +
 		File saveFolder = new File(servletDir);
 		File fileSaveDir = new File(savePath);
-		if(!saveFolder.exists()){
+		if (!saveFolder.exists()) {
 			saveFolder.mkdirs();
 		}
 		if (!fileSaveDir.exists()) {
 			fileSaveDir.mkdir();
 		}
-		
+
 		for (Part part : request.getParts()) {
 			if (part.getContentType() != null) {
 				String fileName = extractFileName(part);
 				fileName = new File(fileName).getName();
 				part.write(savePath + File.separator + fileName);
+
 			}
 		}
 
@@ -106,6 +107,20 @@ public class FileOperations {
 			sos.write(zip);
 			sos.flush();
 		}
+	}
+	public static boolean isFile(HttpServletRequest request) throws ServletException, IOException {
+		boolean check;
+		String filename = null;
+		for (Part part : request.getParts()) {
+			filename = FileOperations.extractFileName(part);
+		}
+		if (filename == null || filename == "")
+			check = false;
+		else
+			check = true;
+
+		return check;
+
 	}
 
 }

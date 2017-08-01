@@ -305,6 +305,20 @@ body {
 						<c:choose>
 							<c:when test="${not empty sessionScope.user && user.role =='admin' }">
 							</c:when>
+							<c:when test="${list.file == '[]' }">
+							<td>No attachments</td> 
+							<td>
+
+									<form name="frm" action="delete" method="post" enctype="multipart/form-data">
+										<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idCustomer}"
+											aria-expanded="false" aria-controls="id" name="edit" value="${list.idCustomer }">Edit</button>
+
+										<input type="hidden" name="clientID" value="${list.idCustomer }" /> <input class="btn btn-md btn-primary"
+											type="submit" value="Delete" name="delete" />
+									</form>
+
+								</td>
+							</c:when>
 							<c:otherwise>
 								<td>
 									<form name="frm" action="downloadCustomerFile" method="post" enctype="multipart/form-data">

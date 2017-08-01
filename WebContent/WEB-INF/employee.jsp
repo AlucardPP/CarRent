@@ -293,13 +293,19 @@ body {
 							<td><c:out value="${list.telephone }" /></td>
 							<td><c:out value="${list.createDate }" /></td>
 							<td><c:out value="${list.edited }" /></td>
+							<td><c:choose>
+									<c:when test="${list.files == '[]' }">
+										No attachments
+									</c:when>
+									<c:otherwise>
+										<form name="frm" action="DownloadEmployeeFile" method="post" enctype="multipart/form-data">
+											<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
+												name="id" value="${list.idEmployee }" />
+										</form>
+									</c:otherwise>
+								</c:choose></td>
 							<td>
-								<form name="frm" action="DownloadEmployeeFile" method="post" enctype="multipart/form-data">
-									<input class="btn btn-md btn-primary" type="submit" value="Download" name="download" /><input type="hidden"
-										name="id" value="${list.idEmployee }" />
-							</td>
-							<td>
-								</form>
+
 								<form name="frm" action="DeleteEmployee" method="post" enctype="multipart/form-data">
 									<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#${ list.idEmployee}"
 										aria-expanded="false" aria-controls="id" name="edit" value="${list.idEmployee }">Edit</button>

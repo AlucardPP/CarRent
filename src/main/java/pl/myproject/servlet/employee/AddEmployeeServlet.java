@@ -49,10 +49,16 @@ public class AddEmployeeServlet extends HttpServlet {
 			throws ServletException, SQLException, IOException, NoSuchAlgorithmException {
 		if (request.getParameter("save") != null || ServletFileUpload.isMultipartContent(request)) {
 			employee = getData(request);
-			uploadFile(employee, request);
-			dao.create(employee);
-			String email = employee.getEmail();
-			result = user.create(email);
+			if (FileOperations.isFile(request) == true) {
+				uploadFile(employee, request);
+				dao.create(employee);
+				String email = employee.getEmail();
+				result = user.create(email);
+			} else {
+				dao.create(employee);
+				String email = employee.getEmail();
+				result = user.create(email);
+			}
 
 		}
 		if (employee != null || result) {
@@ -63,8 +69,8 @@ public class AddEmployeeServlet extends HttpServlet {
 
 	private void uploadFile(Employee employee, HttpServletRequest request) throws ServletException, IOException {
 		String name = employee.getSurname();
-		String email = employee.getEmail();
-		String fileDir = name + "_" + email;
+		String telephone = employee.getTelephone();
+		String fileDir = name + "_" + telephone;
 		FileOperations.saveFile(request, SAVE_DIR, fileDir);
 	}
 
